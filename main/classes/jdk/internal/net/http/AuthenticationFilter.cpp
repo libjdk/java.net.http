@@ -363,7 +363,7 @@ $HttpRequestImpl* AuthenticationFilter::response($Response* r) {
 				$Log::logError("{0} disabled"_s, $$new($ObjectArray, {$of("Proxy-Authorization"_s)}));
 				return nullptr;
 			}
-		} else if (req->proxy() != nullptr) {
+		} else if ($nc(req)->proxy() != nullptr) {
 			$init($Utils);
 			if (!$nc($Utils::PROXY_FILTER)->test("Proxy-Authorization"_s, AuthenticationFilter::BASIC_DUMMY)) {
 				$Log::logError("{0} disabled"_s, $$new($ObjectArray, {$of("Proxy-Authorization"_s)}));
@@ -389,7 +389,7 @@ $HttpRequestImpl* AuthenticationFilter::response($Response* r) {
 		$assign(req, $HttpRequestImpl::newInstanceForAuthentication(req));
 		addBasicCredentials(req, proxy, pw, isUTF8);
 		return req;
-	} else if (au->retries > AuthenticationFilter::retry_limit) {
+	} else if ($nc(au)->retries > AuthenticationFilter::retry_limit) {
 		$throwNew($IOException, $$str({"too many authentication attempts. Limit: "_s, $($Integer::toString(AuthenticationFilter::retry_limit))}));
 	} else {
 		if (au->fromcache) {
@@ -409,8 +409,8 @@ $HttpRequestImpl* AuthenticationFilter::response($Response* r) {
 			$set($nc(this->exchange), serverauth, au);
 		}
 		$assign(req, $HttpRequestImpl::newInstanceForAuthentication(req));
-		addBasicCredentials(req, proxy, au->credentials, isUTF8);
-		++au->retries;
+		addBasicCredentials(req, proxy, $nc(au)->credentials, isUTF8);
+		++$nc(au)->retries;
 		return req;
 	}
 }

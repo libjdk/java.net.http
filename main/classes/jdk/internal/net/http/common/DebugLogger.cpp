@@ -311,8 +311,8 @@ $StringBuilder* DebugLogger::getFormat($StringBuilder* sb, $String* format, $Obj
 	if (format == nullptr || params == nullptr || $nc(params)->length == 0) {
 		return decorate(sb, format);
 	} else {
-		bool var$1 = format->contains("{0}"_s);
-		if (var$1 || format->contains("{1}"_s)) {
+		bool var$1 = $nc(format)->contains("{0}"_s);
+		if (var$1 || $nc(format)->contains("{1}"_s)) {
 			return decorate(sb, format);
 		} else {
 			bool var$3 = format->contains("%s"_s);
@@ -334,8 +334,8 @@ $StringBuilder* DebugLogger::format($StringBuilder* sb, $String* format, $Object
 	if (format == nullptr || params == nullptr || $nc(params)->length == 0) {
 		return decorate(sb, format);
 	} else {
-		bool var$1 = format->contains("{0}"_s);
-		if (var$1 || format->contains("{1}"_s)) {
+		bool var$1 = $nc(format)->contains("{0}"_s);
+		if (var$1 || $nc(format)->contains("{1}"_s)) {
 			return decorate(sb, $($MessageFormat::format(format, params)));
 		} else {
 			bool var$3 = format->contains("%s"_s);

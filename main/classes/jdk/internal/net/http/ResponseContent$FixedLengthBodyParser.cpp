@@ -257,7 +257,7 @@ void ResponseContent$FixedLengthBodyParser::accept($ByteBuffer* b) {
 			$nc(this->this$0->pusher)->onComplete();
 			completed = true;
 			$nc(this->onComplete)->accept(this->closedExceptionally);
-		} else if (!ResponseContent$FixedLengthBodyParser::$assertionsDisabled && !(b->remaining() == 0)) {
+		} else if (!ResponseContent$FixedLengthBodyParser::$assertionsDisabled && !($nc(b)->remaining() == 0)) {
 			$throwNew($AssertionError);
 		}
 	} catch ($Throwable&) {

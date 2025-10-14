@@ -443,7 +443,7 @@ $BiPredicate* HttpConnection::headerFilter($HttpRequestImpl* request) {
 		}
 		$init($Utils);
 		return $Utils::NO_PROXY_HEADERS_FILTER;
-	} else if (request->isConnect()) {
+	} else if ($nc(request)->isConnect()) {
 		if (!HttpConnection::$assertionsDisabled && !(request->proxy() == nullptr)) {
 			$throwNew($AssertionError);
 		}
@@ -460,7 +460,7 @@ $BiPredicate* HttpConnection::headerFilter($HttpRequestImpl* request) {
 
 $BiPredicate* HttpConnection::contextRestricted($HttpRequestImpl* request, $HttpClient* client) {
 	bool var$0 = !isTunnel();
-	if (var$0 && request->isConnect()) {
+	if (var$0 && $nc(request)->isConnect()) {
 		if (!HttpConnection::$assertionsDisabled && !(request->proxy() == nullptr)) {
 			$throwNew($AssertionError);
 		}
@@ -473,14 +473,14 @@ $BiPredicate* HttpConnection::contextRestricted($HttpRequestImpl* request, $Http
 $Utils$ProxyHeaders* HttpConnection::proxyTunnelHeaders($HttpRequestImpl* request) {
 	$init(HttpConnection);
 	$init($Utils);
-	$var($HttpHeaders, userHeaders, $HttpHeaders::of($($nc($(request->headers()))->map()), $Utils::PROXY_TUNNEL_FILTER));
-	$var($HttpHeaders, systemHeaders, $HttpHeaders::of($($nc($(request->getSystemHeadersBuilder()))->map()), $Utils::PROXY_TUNNEL_FILTER));
+	$var($HttpHeaders, userHeaders, $HttpHeaders::of($($nc($($nc(request)->headers()))->map()), $Utils::PROXY_TUNNEL_FILTER));
+	$var($HttpHeaders, systemHeaders, $HttpHeaders::of($($nc($($nc(request)->getSystemHeadersBuilder()))->map()), $Utils::PROXY_TUNNEL_FILTER));
 	return $new($Utils$ProxyHeaders, userHeaders, systemHeaders);
 }
 
 HttpConnection* HttpConnection::getPlainConnection($InetSocketAddress* addr, $InetSocketAddress* proxy, $HttpRequestImpl* request, $HttpClientImpl* client) {
 	$init(HttpConnection);
-	if (request->isWebSocket() && proxy != nullptr) {
+	if ($nc(request)->isWebSocket() && proxy != nullptr) {
 		return $new($PlainTunnelingConnection, addr, proxy, client, $(proxyTunnelHeaders(request)));
 	}
 	if (proxy == nullptr) {

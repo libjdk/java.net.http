@@ -350,7 +350,7 @@ void HttpHeaders::lambda$headersOf$1($BiPredicate* filter, $ArrayList* tempList,
 			$throwNew($IllegalArgumentException, $$str({"duplicate key: "_s, headerName}));
 		}
 		$nc(notAdded)->add($(headerName->toLowerCase($Locale::ROOT)));
-	} else if (other->put(headerName, $($List::copyOf(static_cast<$Collection*>(static_cast<$AbstractCollection*>(static_cast<$AbstractList*>(tempList)))))) != nullptr) {
+	} else if ($nc(other)->put(headerName, $($List::copyOf(static_cast<$Collection*>(static_cast<$AbstractCollection*>(static_cast<$AbstractList*>(tempList)))))) != nullptr) {
 		$throwNew($IllegalArgumentException, $$str({"duplicate key: "_s, headerName}));
 	}
 	$nc(tempList)->clear();

@@ -582,7 +582,7 @@ $String* OpeningHandshake::requireSingle($HttpHeaders* responseHeaders, $String*
 			$($of($Utils::stringOf(values)))
 		}))))));
 	}
-	return $cast($String, values->get(0));
+	return $cast($String, $nc(values)->get(0));
 }
 
 $String* OpeningHandshake::createNonce() {
