@@ -20,11 +20,11 @@ add_executable(${JCPP_PROJECT_FULL_NAME}-test "${local_object}" "${source_SRCS}"
 SET_TARGET_PROPERTIES(${JCPP_PROJECT_FULL_NAME}-test PROPERTIES OUTPUT_NAME "${JCPP_PROJECT_FULL_NAME}-test")
 if(JCPP_OS MATCHES "linux")
 	SET_TARGET_PROPERTIES(${JCPP_PROJECT_FULL_NAME}-test PROPERTIES INSTALL_RPATH "\\\$ORIGIN;\\\$ORIGIN/../lib")
-elseif(JCPP_OS MATCHES "macosx")
+elseif(JCPP_OS MATCHES "macos")
 	SET_TARGET_PROPERTIES(${JCPP_PROJECT_FULL_NAME}-test PROPERTIES INSTALL_RPATH ".;../lib")
 endif()
 
-jcpp_enable_debug_info(${JCPP_PROJECT_FULL_NAME}-test)
+jcpp_encode_symbol(${JCPP_PROJECT_FULL_NAME}-test)
 
 if(BUILD_SHARED_LIB)
 	target_link_libraries(${JCPP_PROJECT_FULL_NAME}-test
