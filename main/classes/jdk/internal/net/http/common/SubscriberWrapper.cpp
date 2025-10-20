@@ -331,6 +331,7 @@ void SubscriberWrapper::finalize() {
 bool SubscriberWrapper::$assertionsDisabled = false;
 
 void SubscriberWrapper::init$() {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(SubscriberWrapper$$Lambda$dbgString, this)), $Utils::DEBUG));
 	$set(this, errorRef, $new($AtomicReference));
@@ -392,6 +393,7 @@ bool SubscriberWrapper::closing() {
 }
 
 void SubscriberWrapper::outgoing($List* buffers, bool complete) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(buffers);
 	if (complete) {
 		if (!SubscriberWrapper::$assertionsDisabled && !($Utils::remaining(buffers) == 0)) {
@@ -434,6 +436,7 @@ bool SubscriberWrapper::hasNoOutputData() {
 }
 
 void SubscriberWrapper::upstreamWindowUpdate() {
+	$useLocalCurrentObjectStackCache();
 	int64_t downstreamQueueSize = $nc(this->outputQ)->size();
 	int64_t upstreamWindowSize = $nc(this->upstreamWindow$)->get();
 	int64_t n = upstreamWindowUpdate(upstreamWindowSize, downstreamQueueSize);
@@ -473,6 +476,7 @@ void SubscriberWrapper::onNext($List* item) {
 }
 
 void SubscriberWrapper::upstreamRequest(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("requesting %d"_s, $$new($ObjectArray, {$($of($Long::valueOf(n)))}));
 	}
@@ -535,6 +539,7 @@ void SubscriberWrapper::incomingCaller($List* l, bool complete) {
 }
 
 void SubscriberWrapper::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"upstream completed: "_s, $(toString())}));
 	}
@@ -582,6 +587,7 @@ void SubscriberWrapper::resetDownstreamDemand() {
 }
 
 $String* SubscriberWrapper::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append("SubscriberWrapper:"_s)->append(" upstreamCompleted: "_s)->append($($Boolean::toString(this->upstreamCompleted)))->append(" upstreamWindow: "_s)->append($($nc(this->upstreamWindow$)->toString()))->append(" downstreamCompleted: "_s)->append($($Boolean::toString(this->downstreamCompleted)))->append(" completionAcknowledged: "_s)->append($($Boolean::toString(this->completionAcknowledged)))->append(" outputQ size: "_s)->append($($Integer::toString($nc(this->outputQ)->size())))->append(" cf: "_s)->append($($nc(this->cf)->toString()))->append(" downstreamSubscription: "_s)->append($of(this->downstreamSubscription))->append(" downstreamSubscriber: "_s)->append($of(this->downstreamSubscriber));
 	return sb->toString();

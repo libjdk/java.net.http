@@ -220,6 +220,7 @@ void HttpClientImpl$SelectorAttachment::init$($SelectableChannel* chan, $Selecto
 }
 
 void HttpClientImpl$SelectorAttachment::register$($AsyncEvent* e) {
+	$useLocalCurrentObjectStackCache();
 	int32_t newOps = $nc(e)->interestOps();
 	bool reRegister = ((int32_t)(this->interestOps & (uint32_t)newOps)) != newOps;
 	this->interestOps |= newOps;
@@ -244,10 +245,12 @@ void HttpClientImpl$SelectorAttachment::register$($AsyncEvent* e) {
 }
 
 $Stream* HttpClientImpl$SelectorAttachment::events(int32_t interestOps) {
+	$useLocalCurrentObjectStackCache();
 	return $nc($($nc(this->pending)->stream()))->filter(static_cast<$Predicate*>($$new(HttpClientImpl$SelectorAttachment$$Lambda$lambda$events$0$1, interestOps)));
 }
 
 void HttpClientImpl$SelectorAttachment::resetInterestOps(int32_t interestOps) {
+	$useLocalCurrentObjectStackCache();
 	int32_t newOps = 0;
 	$var($Iterator, itr, $nc(this->pending)->iterator());
 	while ($nc(itr)->hasNext()) {
@@ -291,6 +294,7 @@ void HttpClientImpl$SelectorAttachment::resetInterestOps(int32_t interestOps) {
 }
 
 void HttpClientImpl$SelectorAttachment::abortPending($Throwable* x) {
+	$useLocalCurrentObjectStackCache();
 	if (!$nc(this->pending)->isEmpty()) {
 		$var($AsyncEventArray, evts, $fcast($AsyncEventArray, $nc(this->pending)->toArray($$new($AsyncEventArray, 0))));
 		$nc(this->pending)->clear();

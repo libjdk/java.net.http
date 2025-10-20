@@ -145,6 +145,7 @@ void LineSubscriberAdapter::onError($Throwable* throwable) {
 }
 
 void LineSubscriberAdapter::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {
@@ -166,6 +167,7 @@ $CompletionStage* LineSubscriberAdapter::getBody() {
 
 LineSubscriberAdapter* LineSubscriberAdapter::create($Flow$Subscriber* subscriber, $Function* finisher, $Charset* charset, $String* eol) {
 	$init(LineSubscriberAdapter);
+	$useLocalCurrentObjectStackCache();
 	if (eol != nullptr && eol->isEmpty()) {
 		$throwNew($IllegalArgumentException, "empty line separator"_s);
 	}

@@ -78,6 +78,7 @@ void IntegerWriter::init$() {
 }
 
 IntegerWriter* IntegerWriter::configure(int32_t value, int32_t N, int32_t payload) {
+	$useLocalCurrentObjectStackCache();
 	if (this->state != IntegerWriter::NEW) {
 		$throwNew($IllegalStateException, "Already configured"_s);
 	}
@@ -93,6 +94,7 @@ IntegerWriter* IntegerWriter::configure(int32_t value, int32_t N, int32_t payloa
 }
 
 bool IntegerWriter::write($ByteBuffer* output) {
+	$useLocalCurrentObjectStackCache();
 	if (this->state == IntegerWriter::NEW) {
 		$throwNew($IllegalStateException, "Configure first"_s);
 	}
@@ -134,6 +136,7 @@ bool IntegerWriter::write($ByteBuffer* output) {
 }
 
 void IntegerWriter::checkPrefix(int32_t N) {
+	$useLocalCurrentObjectStackCache();
 	if (N < 1 || N > 8) {
 		$throwNew($IllegalArgumentException, $$str({"1 <= N <= 8: N= "_s, $$str(N)}));
 	}

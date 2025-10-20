@@ -170,6 +170,7 @@ void RequestPublishers$StreamIterator::closeStream() {
 
 bool RequestPublishers$StreamIterator::hasNext() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		if (this->need2Read) {
 			{
 				$var($Throwable, var$0, nullptr);

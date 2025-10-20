@@ -205,6 +205,7 @@ $Object* allocate$SSLFlowDelegate$Writer($Class* clazz) {
 bool SSLFlowDelegate$Writer::$assertionsDisabled = false;
 
 void SSLFlowDelegate$Writer::init$($SSLFlowDelegate* this$0) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, this$0, this$0);
 	$SubscriberWrapper::init$();
 	$init($Utils);
@@ -214,6 +215,7 @@ void SSLFlowDelegate$Writer::init$($SSLFlowDelegate* this$0) {
 }
 
 void SSLFlowDelegate$Writer::incoming($List* buffers, bool complete) {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	if (!SSLFlowDelegate$Writer::$assertionsDisabled && !(complete ? buffers == $Utils::EMPTY_BB_LIST : true)) {
 		$throwNew($AssertionError);
@@ -279,6 +281,7 @@ int64_t SSLFlowDelegate$Writer::upstreamWindowUpdate(int64_t currentWindow, int6
 }
 
 bool SSLFlowDelegate$Writer::hsTriggered() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->writeList) {
 		{
 			$var($Iterator, i$, $nc(this->writeList)->iterator());
@@ -305,6 +308,7 @@ void SSLFlowDelegate$Writer::triggerWrite() {
 }
 
 void SSLFlowDelegate$Writer::processData() {
+	$useLocalCurrentObjectStackCache();
 	bool completing = isCompleting();
 	try {
 		if ($nc(this->debugw)->on()) {
@@ -385,6 +389,7 @@ void SSLFlowDelegate$Writer::processData() {
 }
 
 $SSLFlowDelegate$EngineResult* SSLFlowDelegate$Writer::wrapBuffers($ByteBufferArray* src) {
+	$useLocalCurrentObjectStackCache();
 	int64_t len = $Utils::remaining(src);
 	if ($nc(this->debugw)->on()) {
 		$nc(this->debugw)->log($$str({"wrapping "_s, $$str(len), " bytes"_s}));
@@ -481,6 +486,7 @@ bool SSLFlowDelegate$Writer::needWrap() {
 }
 
 void SSLFlowDelegate$Writer::sendResultBytes($SSLFlowDelegate$EngineResult* result) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(result)->bytesProduced() > 0) {
 		if ($nc(this->debugw)->on()) {
 			$nc(this->debugw)->log("Sending %d bytes downstream"_s, $$new($ObjectArray, {$($of($Integer::valueOf(result->bytesProduced())))}));
@@ -490,6 +496,7 @@ void SSLFlowDelegate$Writer::sendResultBytes($SSLFlowDelegate$EngineResult* resu
 }
 
 $String* SSLFlowDelegate$Writer::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$4, $$str({"WRITER: "_s, $($SubscriberWrapper::toString()), ", writeList size: "_s}));
 	$var($String, var$3, $$concat(var$4, $($Integer::toString($nc(this->writeList)->size()))));
 	$var($String, var$2, $$concat(var$3, ", scheduler: "));

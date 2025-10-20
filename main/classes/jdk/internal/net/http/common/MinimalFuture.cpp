@@ -163,6 +163,7 @@ $CompletableFuture* MinimalFuture::failedFuture($Throwable* ex) {
 
 $CompletableFuture* MinimalFuture::supply($MinimalFuture$ExceptionalSupplier* supplier) {
 	$init(MinimalFuture);
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, $new(MinimalFuture));
 	try {
 		$var($Object, value, $nc(supplier)->get());
@@ -197,6 +198,7 @@ void MinimalFuture::obtrudeException($Throwable* ex) {
 }
 
 $String* MinimalFuture::toString() {
+	$useLocalCurrentObjectStackCache();
 	return $str({$($CompletableFuture::toString()), " (id="_s, $$str(this->id), ")"_s});
 }
 
@@ -214,6 +216,7 @@ $Cancelable* MinimalFuture::cancelable() {
 
 MinimalFuture* MinimalFuture::of($CompletionStage* stage) {
 	$init(MinimalFuture);
+	$useLocalCurrentObjectStackCache();
 	$var($Cancelable, cancelable, $instanceOf(MinimalFuture, stage) ? $nc(($cast(MinimalFuture, stage)))->cancelable() : ($Cancelable*)nullptr);
 	$var(MinimalFuture, cf, $new(MinimalFuture, cancelable));
 	$nc(stage)->whenComplete(static_cast<$BiConsumer*>($$new(MinimalFuture$$Lambda$lambda$of$0, cf)));

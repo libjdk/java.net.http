@@ -747,6 +747,7 @@ $HttpResponse$BodyHandler* HttpResponse$BodyHandlers::ofString($Charset* charset
 }
 
 $HttpResponse$BodyHandler* HttpResponse$BodyHandlers::ofFile($Path* file, $OpenOptionArray* openOptions) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(file);
 	$var($List, opts, $List::of(openOptions));
 	$init($StandardOpenOption);
@@ -766,6 +767,7 @@ $HttpResponse$BodyHandler* HttpResponse$BodyHandlers::ofFile($Path* file) {
 }
 
 $HttpResponse$BodyHandler* HttpResponse$BodyHandlers::ofFileDownload($Path* directory, $OpenOptionArray* openOptions) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(directory);
 	$var($List, opts, $List::of(openOptions));
 	$init($StandardOpenOption);
@@ -817,6 +819,7 @@ $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$ofPublisher$14($
 }
 
 $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$ofString$13($HttpResponse$ResponseInfo* responseInfo) {
+	$useLocalCurrentObjectStackCache();
 	return $HttpResponse$BodySubscribers::ofString($($Utils::charsetFrom($($nc(responseInfo)->headers()))));
 }
 
@@ -829,6 +832,7 @@ $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$ofByteArrayConsu
 }
 
 $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$ofLines$10($HttpResponse$ResponseInfo* responseInfo) {
+	$useLocalCurrentObjectStackCache();
 	return $HttpResponse$BodySubscribers::ofLines($($Utils::charsetFrom($($nc(responseInfo)->headers()))));
 }
 
@@ -849,10 +853,12 @@ $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$discarding$6($Ht
 }
 
 $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$fromLineSubscriber$5($Flow$Subscriber* subscriber, $Function* finisher, $String* lineSeparator, $HttpResponse$ResponseInfo* responseInfo) {
+	$useLocalCurrentObjectStackCache();
 	return $HttpResponse$BodySubscribers::fromLineSubscriber(subscriber, finisher, $($Utils::charsetFrom($($nc(responseInfo)->headers()))), lineSeparator);
 }
 
 $HttpResponse$BodySubscriber* HttpResponse$BodyHandlers::lambda$fromLineSubscriber$4($Flow$Subscriber* subscriber, $HttpResponse$ResponseInfo* responseInfo) {
+	$useLocalCurrentObjectStackCache();
 	$var($Flow$Subscriber, var$0, subscriber);
 	$var($Function, var$1, static_cast<$Function*>($new(HttpResponse$BodyHandlers$$Lambda$lambda$fromSubscriber$0$14)));
 	return $HttpResponse$BodySubscribers::fromLineSubscriber(var$0, var$1, $($Utils::charsetFrom($($nc(responseInfo)->headers()))), nullptr);

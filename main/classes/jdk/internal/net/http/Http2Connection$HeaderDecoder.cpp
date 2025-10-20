@@ -74,6 +74,7 @@ void Http2Connection$HeaderDecoder::init$() {
 }
 
 void Http2Connection$HeaderDecoder::onDecoded($CharSequence* name, $CharSequence* value) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, n, $nc(name)->toString());
 	$var($String, v, $nc(value)->toString());
 	$Http2Connection$ValidatingHeadersConsumer::onDecoded(n, v);

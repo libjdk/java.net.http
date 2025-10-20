@@ -168,6 +168,7 @@ void RequestPublishers$AggregatePublisher::init$($List* bodies) {
 }
 
 int64_t RequestPublishers$AggregatePublisher::contentLength() {
+	$useLocalCurrentObjectStackCache();
 	int64_t length = $nc($($nc($($nc($($nc(this->bodies)->stream()))->mapToLong(static_cast<$ToLongFunction*>($$new(RequestPublishers$AggregatePublisher$$Lambda$contentLength)))))->reduce(static_cast<$LongBinaryOperator*>($$new(RequestPublishers$AggregatePublisher$$Lambda$lambda$contentLength$0$1)))))->orElse(0);
 	if (length < 0) {
 		return -1;

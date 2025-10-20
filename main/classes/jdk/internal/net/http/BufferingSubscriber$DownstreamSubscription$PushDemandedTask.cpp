@@ -94,6 +94,7 @@ void BufferingSubscriber$DownstreamSubscription$PushDemandedTask::init$($Bufferi
 }
 
 void BufferingSubscriber$DownstreamSubscription$PushDemandedTask::run() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($Throwable, t, $nc(this->this$1->this$0)->throwable);
 		if (t != nullptr) {

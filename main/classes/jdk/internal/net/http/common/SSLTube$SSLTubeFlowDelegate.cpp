@@ -115,6 +115,7 @@ $SubscriberWrapper$SchedulingAction* SSLTube$SSLTubeFlowDelegate::enterReadSched
 }
 
 void SSLTube$SSLTubeFlowDelegate::connect($Flow$Subscriber* downReader, $Flow$Subscriber* downWriter) {
+	$useLocalCurrentObjectStackCache();
 	if (!SSLTube$SSLTubeFlowDelegate::$assertionsDisabled && !$equals(downWriter, this->this$0->tube)) {
 		$throwNew($AssertionError);
 	}

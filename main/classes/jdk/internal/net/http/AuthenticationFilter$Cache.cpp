@@ -79,6 +79,7 @@ void AuthenticationFilter$Cache::init$() {
 
 $AuthenticationFilter$CacheEntry* AuthenticationFilter$Cache::get($URI* uri, bool proxy) {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		{
 			$var($Iterator, i$, $nc(this->entries)->iterator());
 			for (; $nc(i$)->hasNext();) {
@@ -100,6 +101,7 @@ bool AuthenticationFilter$Cache::equalsIgnoreCase($String* s1, $String* s2) {
 
 void AuthenticationFilter$Cache::remove($String* authscheme, $URI* domain, bool proxy) {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$var($Iterator, iterator, $nc(this->entries)->iterator());
 		while ($nc(iterator)->hasNext()) {
 			$var($AuthenticationFilter$CacheEntry, entry, $cast($AuthenticationFilter$CacheEntry, iterator->next()));

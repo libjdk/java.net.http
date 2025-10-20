@@ -1078,6 +1078,7 @@ void Exchange::nullBody($HttpResponse* resp, $Throwable* t) {
 }
 
 $CompletableFuture* Exchange::readBodyAsync($HttpResponse$BodyHandler* handler) {
+	$useLocalCurrentObjectStackCache();
 	if (this->bodyIgnored != nullptr) {
 		return $MinimalFuture::completedFuture(nullptr);
 	}
@@ -1107,6 +1108,7 @@ void Exchange::cancel() {
 }
 
 void Exchange::cancel($IOException* cause) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("cancel exchImpl: %s, with \"%s\""_s, $$new($ObjectArray, {
 			$of(this->exchImpl),
@@ -1127,6 +1129,7 @@ void Exchange::cancel($IOException* cause) {
 }
 
 void Exchange::checkCancelled() {
+	$useLocalCurrentObjectStackCache();
 	$var($ExchangeImpl, impl, nullptr);
 	$var($IOException, cause, nullptr);
 	$var($CompletableFuture, cf, nullptr);
@@ -1166,6 +1169,7 @@ void Exchange::checkCancelled() {
 }
 
 $CompletableFuture* Exchange::checkCancelled($CompletableFuture* cf, $HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc(cf)->handle(static_cast<$BiFunction*>($$new(Exchange$$Lambda$lambda$checkCancelled$1$2, this, connection, cf))))))->thenCompose($($Function::identity())));
 }
 
@@ -1181,6 +1185,7 @@ $IOException* Exchange::getCancelCause() {
 }
 
 $CompletableFuture* Exchange::establishExchange($HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("establishing exchange for %s,%n\t proxy=%s"_s, $$new($ObjectArray, {
 			$of(this->request$),
@@ -1220,6 +1225,7 @@ $CompletableFuture* Exchange::responseAsyncImpl($HttpConnection* connection) {
 }
 
 $CompletableFuture* Exchange::checkFor407($ExchangeImpl* ex, $Throwable* t$renamed, $Function* andThen) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	$assign(t, $Utils::getCompletionCause(t));
 	if ($instanceOf($ProxyAuthenticationRequired, t)) {
@@ -1245,6 +1251,7 @@ $CompletableFuture* Exchange::checkFor407($ExchangeImpl* ex, $Throwable* t$renam
 }
 
 $CompletableFuture* Exchange::expectContinue($ExchangeImpl* ex) {
+	$useLocalCurrentObjectStackCache();
 	if (!Exchange::$assertionsDisabled && !$nc(this->request$)->expectContinue()) {
 		$throwNew($AssertionError);
 	}
@@ -1252,6 +1259,7 @@ $CompletableFuture* Exchange::expectContinue($ExchangeImpl* ex) {
 }
 
 $CompletableFuture* Exchange::sendRequestBody($ExchangeImpl* ex) {
+	$useLocalCurrentObjectStackCache();
 	if (!Exchange::$assertionsDisabled && ! !$nc(this->request$)->expectContinue()) {
 		$throwNew($AssertionError);
 	}
@@ -1265,6 +1273,7 @@ $CompletableFuture* Exchange::sendRequestBody($ExchangeImpl* ex) {
 }
 
 $CompletableFuture* Exchange::responseAsyncImpl0($HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	$var($Function, after407Check, nullptr);
 	$set(this, bodyIgnored, nullptr);
 	if ($nc(this->request$)->expectContinue()) {
@@ -1297,6 +1306,7 @@ $HttpResponse$BodySubscriber* Exchange::ignoreBody($HttpResponse$ResponseInfo* h
 }
 
 $CompletableFuture* Exchange::checkForUpgradeAsync($Response* resp, $ExchangeImpl* ex) {
+	$useLocalCurrentObjectStackCache();
 	int32_t rcode = $nc(resp)->statusCode();
 	if (this->upgrading && (rcode == 101)) {
 		$var($Http1Exchange, e, $cast($Http1Exchange, ex));
@@ -1309,6 +1319,7 @@ $CompletableFuture* Exchange::checkForUpgradeAsync($Response* resp, $ExchangeImp
 }
 
 $URI* Exchange::getURIForSecurityCheck() {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, u, nullptr);
 	$var($String, method, $nc(this->request$)->method());
 	$var($InetSocketAddress, authority, $nc(this->request$)->authority());
@@ -1330,6 +1341,7 @@ $URI* Exchange::getURIForSecurityCheck() {
 
 $URLPermission* Exchange::permissionForServer($URI* uri, $String* method, $Map* headers) {
 	$init(Exchange);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(method)->equals("CONNECT"_s)) {
 		return $new($URLPermission, $($nc(uri)->toString()), "CONNECT"_s);
 	} else {
@@ -1338,6 +1350,7 @@ $URLPermission* Exchange::permissionForServer($URI* uri, $String* method, $Map* 
 }
 
 $SecurityException* Exchange::checkPermissions() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, method, $nc(this->request$)->method());
 	$var($SecurityManager, sm, $System::getSecurityManager());
 	if (sm == nullptr || $nc(method)->equals("CONNECT"_s)) {
@@ -1388,6 +1401,7 @@ $SecurityException* Exchange::checkPermissions() {
 
 $URI* Exchange::replaceHostInURI($URI* u, $String* hostPort) {
 	$init(Exchange);
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($($nc(u)->getScheme()))->append("://"_s)->append(hostPort)->append($($nc(u)->getRawPath()));
 	return $URI::create($(sb->toString()));
@@ -1402,6 +1416,7 @@ $String* Exchange::dbgString() {
 }
 
 $CompletionStage* Exchange::lambda$checkForUpgradeAsync$14($ExchangeImpl* ex, $Http1Exchange* e, Object$* v) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->debug)->log("Ignored body"_s);
 	$nc(ex)->upgraded();
 	this->upgraded = true;
@@ -1411,6 +1426,7 @@ $CompletionStage* Exchange::lambda$checkForUpgradeAsync$14($ExchangeImpl* ex, $H
 }
 
 $CompletionStage* Exchange::lambda$checkForUpgradeAsync$13($Http1Exchange* e, $Http2Connection* c) {
+	$useLocalCurrentObjectStackCache();
 	bool cached = $nc(c)->offerConnection();
 	if (cached) {
 		$nc(this->connectionAborter)->disable();
@@ -1462,6 +1478,7 @@ $CompletionStage* Exchange::lambda$wrapForUpgrade$11($Response* r) {
 }
 
 $CompletableFuture* Exchange::lambda$responseAsyncImpl0$9($Function* after407Check, $ExchangeImpl* ex) {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc($($nc(ex)->sendHeadersAsync()))->handle(static_cast<$BiFunction*>($$new(Exchange$$Lambda$lambda$responseAsyncImpl0$8$10, this, after407Check))))))->thenCompose($($Function::identity())));
 }
 
@@ -1470,6 +1487,7 @@ $CompletableFuture* Exchange::lambda$responseAsyncImpl0$8($Function* after407Che
 }
 
 $CompletionStage* Exchange::lambda$expectContinue$6($Response* r1) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logResponse(static_cast<$Supplier*>($$new(Exchange$$Lambda$toString$17, static_cast<$Response*>($nc(r1)))));
 	int32_t rcode = $nc(r1)->statusCode();
 	if (rcode == 100) {
@@ -1526,6 +1544,7 @@ void Exchange::lambda$establishExchange$2($CompletableFuture* cf, $ExchangeImpl*
 }
 
 $CompletableFuture* Exchange::lambda$checkCancelled$1($HttpConnection* connection, $CompletableFuture* cf, Object$* r, $Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if (t == nullptr) {
 		if ($nc(this->multi)->requestCancelled()) {

@@ -77,6 +77,7 @@ void PullPublisher$Subscription$PullTask::init$($PullPublisher$Subscription* thi
 }
 
 void PullPublisher$Subscription$PullTask::run() {
+	$useLocalCurrentObjectStackCache();
 	if (this->this$1->completed || this->this$1->cancelled) {
 		return;
 	}

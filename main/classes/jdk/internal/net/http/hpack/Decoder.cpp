@@ -757,6 +757,7 @@ $AtomicLong* Decoder::DECODERS_IDS = nullptr;
 $List* Decoder::states = nullptr;
 
 void Decoder::init$(int32_t capacity) {
+	$useLocalCurrentObjectStackCache();
 	$init($Decoder$State);
 	$set(this, state, $Decoder$State::READY);
 	this->id = $nc(Decoder::DECODERS_IDS)->incrementAndGet();
@@ -785,6 +786,7 @@ void Decoder::setMaxCapacity(int32_t capacity) {
 }
 
 void Decoder::setMaxCapacity0(int32_t capacity) {
+	$useLocalCurrentObjectStackCache();
 	if (capacity < 0) {
 		$throwNew($IllegalArgumentException, $$str({"capacity >= 0: "_s, $$str(capacity)}));
 	}
@@ -792,6 +794,7 @@ void Decoder::setMaxCapacity0(int32_t capacity) {
 }
 
 void Decoder::decode($ByteBuffer* headerBlock, bool endOfHeaderBlock, $DecodingCallback* consumer) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull($of(headerBlock), "headerBlock"_s);
 	$Objects::requireNonNull($of(consumer), "consumer"_s);
 	$init($HPACK$Logger$Level);
@@ -849,6 +852,7 @@ void Decoder::proceed($ByteBuffer* input, $DecodingCallback* action) {
 }
 
 void Decoder::resumeReady($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	int32_t b = (int32_t)($nc(input)->get(input->position()) & (uint32_t)255);
 	$Decoder$State* s = $cast($Decoder$State, $nc(Decoder::states)->get(b));
 	$init($HPACK$Logger$Level);
@@ -914,6 +918,7 @@ void Decoder::resumeReady($ByteBuffer* input) {
 }
 
 void Decoder::resumeIndexed($ByteBuffer* input, $DecodingCallback* action) {
+	$useLocalCurrentObjectStackCache();
 	if (!$nc(this->integerReader)->read(input)) {
 		return;
 	}
@@ -941,6 +946,7 @@ void Decoder::resumeIndexed($ByteBuffer* input, $DecodingCallback* action) {
 }
 
 $SimpleHeaderTable$HeaderField* Decoder::getHeaderFieldAt(int32_t index) {
+	$useLocalCurrentObjectStackCache();
 	$var($SimpleHeaderTable$HeaderField, f, nullptr);
 	try {
 		$assign(f, $nc(this->table)->get(index));
@@ -952,6 +958,7 @@ $SimpleHeaderTable$HeaderField* Decoder::getHeaderFieldAt(int32_t index) {
 }
 
 void Decoder::resumeLiteral($ByteBuffer* input, $DecodingCallback* action) {
+	$useLocalCurrentObjectStackCache();
 	if (!completeReading(input)) {
 		return;
 	}
@@ -984,6 +991,7 @@ void Decoder::resumeLiteral($ByteBuffer* input, $DecodingCallback* action) {
 }
 
 void Decoder::resumeLiteralWithIndexing($ByteBuffer* input, $DecodingCallback* action) {
+	$useLocalCurrentObjectStackCache();
 	if (!completeReading(input)) {
 		return;
 	}
@@ -1021,6 +1029,7 @@ void Decoder::resumeLiteralWithIndexing($ByteBuffer* input, $DecodingCallback* a
 }
 
 void Decoder::resumeLiteralNeverIndexed($ByteBuffer* input, $DecodingCallback* action) {
+	$useLocalCurrentObjectStackCache();
 	if (!completeReading(input)) {
 		return;
 	}
@@ -1053,6 +1062,7 @@ void Decoder::resumeLiteralNeverIndexed($ByteBuffer* input, $DecodingCallback* a
 }
 
 void Decoder::resumeSizeUpdate($ByteBuffer* input, $DecodingCallback* action) {
+	$useLocalCurrentObjectStackCache();
 	if (!$nc(this->integerReader)->read(input)) {
 		return;
 	}
@@ -1126,10 +1136,12 @@ $SimpleHeaderTable* Decoder::getTable() {
 }
 
 $String* Decoder::lambda$resumeSizeUpdate$13() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("dynamic table size update %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->intValue)))}));
 }
 
 $String* Decoder::lambda$resumeLiteralNeverIndexed$12() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal never indexed (\'%s\', huffman=%b, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$of(this->name),
 		$($of($Boolean::valueOf(this->nameHuffmanEncoded))),
@@ -1139,6 +1151,7 @@ $String* Decoder::lambda$resumeLiteralNeverIndexed$12() {
 }
 
 $String* Decoder::lambda$resumeLiteralNeverIndexed$11() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal never indexed (%s, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf(this->intValue))),
 		$of(this->value),
@@ -1147,6 +1160,7 @@ $String* Decoder::lambda$resumeLiteralNeverIndexed$11() {
 }
 
 $String* Decoder::lambda$resumeLiteralWithIndexing$10($String* n) {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal with incremental indexing (\'%s\', huffman=%b, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$of(n),
 		$($of($Boolean::valueOf(this->nameHuffmanEncoded))),
@@ -1156,6 +1170,7 @@ $String* Decoder::lambda$resumeLiteralWithIndexing$10($String* n) {
 }
 
 $String* Decoder::lambda$resumeLiteralWithIndexing$9() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal with incremental indexing (%s, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf(this->intValue))),
 		$of(this->value),
@@ -1164,6 +1179,7 @@ $String* Decoder::lambda$resumeLiteralWithIndexing$9() {
 }
 
 $String* Decoder::lambda$resumeLiteral$8() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal without indexing (\'%s\', huffman=%b, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$of(this->name),
 		$($of($Boolean::valueOf(this->nameHuffmanEncoded))),
@@ -1173,6 +1189,7 @@ $String* Decoder::lambda$resumeLiteral$8() {
 }
 
 $String* Decoder::lambda$resumeLiteral$7() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal without indexing (%s, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf(this->intValue))),
 		$of(this->value),
@@ -1181,11 +1198,13 @@ $String* Decoder::lambda$resumeLiteral$7() {
 }
 
 $String* Decoder::lambda$resumeIndexed$6() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("indexed %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->intValue)))}));
 }
 
 $String* Decoder::lambda$resumeReady$5($Decoder$State* s, int32_t b) {
 	$init(Decoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("next binary representation %s (first byte 0x%02x)"_s, $$new($ObjectArray, {
 		$of(s),
 		$($of($Integer::valueOf(b)))
@@ -1198,6 +1217,7 @@ $String* Decoder::lambda$decode$4() {
 
 $String* Decoder::lambda$decode$3($ByteBuffer* headerBlock, bool endOfHeaderBlock) {
 	$init(Decoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("reading %s, end of header block? %s"_s, $$new($ObjectArray, {
 		$of(headerBlock),
 		$($of($Boolean::valueOf(endOfHeaderBlock)))
@@ -1206,10 +1226,12 @@ $String* Decoder::lambda$decode$3($ByteBuffer* headerBlock, bool endOfHeaderBloc
 
 $String* Decoder::lambda$setMaxCapacity$2(int32_t capacity) {
 	$init(Decoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("setting maximum table size to %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(capacity)))}));
 }
 
 $String* Decoder::lambda$new$1() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, hashCode, $Integer::toHexString($System::identityHashCode(this)));
 	return $String::format("toString=\'%s\', identityHashCode=%s"_s, $$new($ObjectArray, {
 		$($of(toString())),
@@ -1219,10 +1241,12 @@ $String* Decoder::lambda$new$1() {
 
 $String* Decoder::lambda$new$0(int32_t capacity) {
 	$init(Decoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("new decoder with maximum table size %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(capacity)))}));
 }
 
 void clinit$Decoder($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	Decoder::$assertionsDisabled = !Decoder::class$->desiredAssertionStatus();
 	$assignStatic(Decoder::DECODERS_IDS, $new($AtomicLong));
 	{

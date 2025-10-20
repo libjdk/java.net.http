@@ -413,6 +413,7 @@ $String* HttpRequestImpl::USER_AGENT = nullptr;
 
 $String* HttpRequestImpl::userAgent() {
 	$init(HttpRequestImpl);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$var($PrivilegedAction, pa, static_cast<$PrivilegedAction*>($new(HttpRequestImpl$$Lambda$lambda$userAgent$0)));
 	$var($String, version, $cast($String, $AccessController::doPrivileged(pa)));
@@ -420,6 +421,7 @@ $String* HttpRequestImpl::userAgent() {
 }
 
 void HttpRequestImpl::init$($HttpRequestBuilderImpl* builder) {
+	$useLocalCurrentObjectStackCache();
 	$HttpRequest::init$();
 	$var($String, method, $nc(builder)->method());
 	$set(this, method$, method == nullptr ? "GET"_s : method);
@@ -441,6 +443,7 @@ void HttpRequestImpl::init$($HttpRequestBuilderImpl* builder) {
 }
 
 void HttpRequestImpl::init$($HttpRequest* request, $ProxySelector* ps) {
+	$useLocalCurrentObjectStackCache();
 	$HttpRequest::init$();
 	$var($String, method, $nc(request)->method());
 	if (method != nullptr && !$Utils::isValidName(method)) {
@@ -499,6 +502,7 @@ HttpRequestImpl* HttpRequestImpl::newInstanceForRedirection($URI* uri, $String* 
 
 HttpRequestImpl* HttpRequestImpl::newInstanceForAuthentication(HttpRequestImpl* other) {
 	$init(HttpRequestImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($URI, var$0, $nc(other)->uri());
 	$var(HttpRequestImpl, request, $new(HttpRequestImpl, var$0, $(other->method()), other, true));
 	if (request->isWebSocket()) {
@@ -508,6 +512,7 @@ HttpRequestImpl* HttpRequestImpl::newInstanceForAuthentication(HttpRequestImpl* 
 }
 
 void HttpRequestImpl::init$($URI* uri, $String* method, HttpRequestImpl* other, bool mayHaveBody) {
+	$useLocalCurrentObjectStackCache();
 	$HttpRequest::init$();
 	if (!HttpRequestImpl::$assertionsDisabled && !(method == nullptr || $Utils::isValidName(method))) {
 		$throwNew($AssertionError);
@@ -540,6 +545,7 @@ $HttpRequest$BodyPublisher* HttpRequestImpl::publisher(HttpRequestImpl* other) {
 }
 
 void HttpRequestImpl::init$($String* method, $InetSocketAddress* authority, $Utils$ProxyHeaders* headers) {
+	$useLocalCurrentObjectStackCache();
 	$HttpRequest::init$();
 	if (!HttpRequestImpl::$assertionsDisabled && !"CONNECT"_s->equalsIgnoreCase(method)) {
 		$throwNew($AssertionError);
@@ -571,6 +577,7 @@ HttpRequestImpl* HttpRequestImpl::createPushRequest(HttpRequestImpl* parent, $Ht
 }
 
 void HttpRequestImpl::init$(HttpRequestImpl* parent, $HttpHeaders* headers) {
+	$useLocalCurrentObjectStackCache();
 	$HttpRequest::init$();
 	$set(this, method$, $cast($String, $nc($($nc(headers)->firstValue(":method"_s)))->orElseThrow(static_cast<$Supplier*>($$new(HttpRequestImpl$$Lambda$lambda$new$1$1)))));
 	$var($String, path, $cast($String, $nc($(headers->firstValue(":path"_s)))->orElseThrow(static_cast<$Supplier*>($$new(HttpRequestImpl$$Lambda$lambda$new$2$2)))));
@@ -616,6 +623,7 @@ bool HttpRequestImpl::expectContinue() {
 
 $Proxy* HttpRequestImpl::retrieveProxy($ProxySelector* ps, $URI* uri) {
 	$init(HttpRequestImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($Proxy, proxy, nullptr);
 	$var($List, pl, $nc(ps)->select(uri));
 	if (!$nc(pl)->isEmpty()) {
@@ -693,6 +701,7 @@ void HttpRequestImpl::setSystemHeader($String* name, $String* value) {
 }
 
 $InetSocketAddress* HttpRequestImpl::getAddress() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$var($URI, uri, this->uri());
 	if (uri == nullptr) {

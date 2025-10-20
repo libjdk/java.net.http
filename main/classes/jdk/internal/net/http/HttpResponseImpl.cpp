@@ -123,6 +123,7 @@ void HttpResponseImpl::finalize() {
 }
 
 void HttpResponseImpl::init$($HttpRequest* initialRequest, $Response* response, $HttpResponse* previousResponse, Object$* body, $Exchange* exch) {
+	$useLocalCurrentObjectStackCache();
 	this->responseCode = $nc(response)->statusCode();
 	$set(this, initialRequest, initialRequest);
 	$set(this, previousResponse$, $Optional::ofNullable(previousResponse));
@@ -185,6 +186,7 @@ void HttpResponseImpl::closeRawChannel() {
 }
 
 $String* HttpResponseImpl::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	$var($String, method, $nc($(request()))->method());
 	$var($URI, uri, $nc($(request()))->uri());

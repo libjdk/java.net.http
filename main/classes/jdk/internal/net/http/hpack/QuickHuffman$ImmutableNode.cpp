@@ -87,6 +87,7 @@ $Object* allocate$QuickHuffman$ImmutableNode($Class* clazz) {
 
 QuickHuffman$ImmutableNode* QuickHuffman$ImmutableNode::copyOf($QuickHuffman$Node* node) {
 	$init(QuickHuffman$ImmutableNode);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(node)->isLeaf()) {
 		char16_t var$0 = node->getSymbol();
 		bool var$1 = node->isEOSPath();

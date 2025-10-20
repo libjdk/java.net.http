@@ -117,6 +117,7 @@ $String* SettingsFrame::flagAsString(int32_t flag) {
 }
 
 $String* SettingsFrame::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($($Http2Frame::toString()))->append(" Settings: "_s);
 	for (int32_t i = 0; i < SettingsFrame::MAX_PARAM; ++i) {
@@ -236,6 +237,7 @@ void SettingsFrame::toByteBuffer($ByteBuffer* buf) {
 }
 
 $bytes* SettingsFrame::toByteArray() {
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, bytes, $new($bytes, length()));
 	$var($ByteBuffer, buf, $ByteBuffer::wrap(bytes));
 	toByteBuffer(buf);

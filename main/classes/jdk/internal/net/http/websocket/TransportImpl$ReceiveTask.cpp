@@ -108,6 +108,7 @@ void TransportImpl$ReceiveTask::init$($TransportImpl* this$0) {
 }
 
 void TransportImpl$ReceiveTask::run() {
+	$useLocalCurrentObjectStackCache();
 	$init($TransportImpl);
 	if ($nc($TransportImpl::debug)->on()) {
 		$nc($TransportImpl::debug)->log("enter receive task"_s);

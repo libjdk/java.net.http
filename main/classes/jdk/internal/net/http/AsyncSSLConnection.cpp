@@ -243,6 +243,7 @@ $Object* allocate$AsyncSSLConnection($Class* clazz) {
 }
 
 void AsyncSSLConnection::init$($InetSocketAddress* addr, $HttpClientImpl* client, $StringArray* alpn) {
+	$useLocalCurrentObjectStackCache();
 	$var($InetSocketAddress, var$0, addr);
 	$var($HttpClientImpl, var$1, client);
 	$var($Utils$ServerName, var$2, $Utils::getServerName(addr));
@@ -252,10 +253,12 @@ void AsyncSSLConnection::init$($InetSocketAddress* addr, $HttpClientImpl* client
 }
 
 $CompletableFuture* AsyncSSLConnection::connectAsync($Exchange* exchange) {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($nc(this->plainConnection)->connectAsync(exchange)))->thenApply(static_cast<$Function*>($$new(AsyncSSLConnection$$Lambda$lambda$connectAsync$0, this))));
 }
 
 $CompletableFuture* AsyncSSLConnection::finishConnect() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc($(getALPN()))->handle(static_cast<$BiFunction*>($$new(AsyncSSLConnection$$Lambda$lambda$finishConnect$1$1, this))))))->thenCompose($($Function::identity())));
 }
 
@@ -301,6 +304,7 @@ $CompletableFuture* AsyncSSLConnection::lambda$finishConnect$1($String* unused, 
 }
 
 $Void* AsyncSSLConnection::lambda$connectAsync$0($Void* unused) {
+	$useLocalCurrentObjectStackCache();
 	$var($SSLEngine, var$0, this->engine);
 	$var($Executor, var$1, static_cast<$Executor*>($nc($(client()))->theExecutor()));
 	$var($Consumer, var$2, static_cast<$Consumer*>($new(AsyncSSLConnection$$Lambda$recycle$2, static_cast<$BufferSupplier*>($nc($($nc($(client()))->getSSLBufferSupplier()))))));

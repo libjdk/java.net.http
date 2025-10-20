@@ -147,6 +147,7 @@ void ISO_8859_1$Reader::init$() {
 }
 
 void ISO_8859_1$Reader::read($ByteBuffer* source, $Appendable* destination) {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		int32_t nBytes = $HPACK::read(source, this->buffer, this->bufferLen, this->UPDATER);
 		if (nBytes == 0) {

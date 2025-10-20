@@ -84,6 +84,7 @@ LiteralWithIndexingWriter* LiteralWithIndexingWriter::value($CharSequence* value
 }
 
 bool LiteralWithIndexingWriter::write($HeaderTable* table, $ByteBuffer* destination) {
+	$useLocalCurrentObjectStackCache();
 	if (!this->tableUpdated) {
 		$var($CharSequence, n, nullptr);
 		if (this->indexedRepresentation) {

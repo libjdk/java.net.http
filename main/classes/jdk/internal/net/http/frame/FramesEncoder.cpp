@@ -123,6 +123,7 @@ void FramesEncoder::init$() {
 }
 
 $List* FramesEncoder::encodeFrames($List* frames) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, bufs, $new($ArrayList, $nc(frames)->size() * 2));
 	{
 		$var($Iterator, i$, $nc(frames)->iterator());
@@ -146,6 +147,7 @@ $ByteBuffer* FramesEncoder::encodeConnectionPreface($bytes* preface, $SettingsFr
 }
 
 $List* FramesEncoder::encodeFrame($Http2Frame* frame) {
+	$useLocalCurrentObjectStackCache();
 
 	$var($List, var$0, nullptr)
 	switch ($nc(frame)->type()) {
@@ -210,6 +212,7 @@ $List* FramesEncoder::encodeFrame($Http2Frame* frame) {
 }
 
 $List* FramesEncoder::encodeDataFrame($DataFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() != 0)) {
 		$throwNew($AssertionError);
 	}
@@ -224,6 +227,7 @@ $List* FramesEncoder::encodeDataFrame($DataFrame* frame) {
 }
 
 $ByteBuffer* FramesEncoder::encodeDataFrameStart($DataFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	bool isPadded = $nc(frame)->getFlag($DataFrame::PADDED);
 	int32_t var$0 = frame->getDataLength();
 	int32_t length = var$0 + (isPadded ? (frame->getPadLength() + 1) : 0);
@@ -240,6 +244,7 @@ $ByteBuffer* FramesEncoder::encodeDataFrameStart($DataFrame* frame) {
 }
 
 $List* FramesEncoder::encodeHeadersFrame($HeadersFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() != 0)) {
 		$throwNew($AssertionError);
 	}
@@ -254,6 +259,7 @@ $List* FramesEncoder::encodeHeadersFrame($HeadersFrame* frame) {
 }
 
 $ByteBuffer* FramesEncoder::encodeHeadersFrameStart($HeadersFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	bool isPadded = $nc(frame)->getFlag($HeadersFrame::PADDED);
 	bool hasPriority = frame->getFlag($HeadersFrame::PRIORITY);
 	int32_t var$0 = frame->getHeaderLength();
@@ -277,6 +283,7 @@ $ByteBuffer* FramesEncoder::encodeHeadersFrameStart($HeadersFrame* frame) {
 }
 
 $List* FramesEncoder::encodePriorityFrame($PriorityFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() != 0)) {
 		$throwNew($AssertionError);
 	}
@@ -315,6 +322,7 @@ $List* FramesEncoder::encodeSettingsFrame($SettingsFrame* frame) {
 }
 
 $List* FramesEncoder::encodePushPromiseFrame($PushPromiseFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() != 0)) {
 		$throwNew($AssertionError);
 	}
@@ -340,6 +348,7 @@ $List* FramesEncoder::encodePushPromiseFrame($PushPromiseFrame* frame) {
 }
 
 $List* FramesEncoder::encodePingFrame($PingFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() == 0)) {
 		$throwNew($AssertionError);
 	}
@@ -352,6 +361,7 @@ $List* FramesEncoder::encodePingFrame($PingFrame* frame) {
 }
 
 $List* FramesEncoder::encodeGoAwayFrame($GoAwayFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() == 0)) {
 		$throwNew($AssertionError);
 	}
@@ -378,6 +388,7 @@ $List* FramesEncoder::encodeWindowUpdateFrame($WindowUpdateFrame* frame) {
 }
 
 $List* FramesEncoder::encodeContinuationFrame($ContinuationFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesEncoder::$assertionsDisabled && !($nc(frame)->streamid() != 0)) {
 		$throwNew($AssertionError);
 	}
@@ -392,6 +403,7 @@ $List* FramesEncoder::encodeContinuationFrame($ContinuationFrame* frame) {
 }
 
 $List* FramesEncoder::joinWithPadding($ByteBuffer* buf, $List* data, int32_t padLength) {
+	$useLocalCurrentObjectStackCache();
 	int32_t len = $nc(data)->size();
 	if (len == 0) {
 		return $List::of(buf, $(getPadding(padLength)));
@@ -413,6 +425,7 @@ $List* FramesEncoder::joinWithPadding($ByteBuffer* buf, $List* data, int32_t pad
 }
 
 $List* FramesEncoder::join($ByteBuffer* buf, $List* data) {
+	$useLocalCurrentObjectStackCache();
 	int32_t len = $nc(data)->size();
 	if (len == 0) {
 		return $List::of($of(buf));

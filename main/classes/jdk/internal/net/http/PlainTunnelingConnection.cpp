@@ -366,6 +366,7 @@ void PlainTunnelingConnection::init$($InetSocketAddress* addr, $InetSocketAddres
 }
 
 $CompletableFuture* PlainTunnelingConnection::connectAsync($Exchange* exchange) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Connecting plain connection"_s);
 	}
@@ -419,6 +420,7 @@ $InetSocketAddress* PlainTunnelingConnection::proxy() {
 }
 
 $CompletionStage* PlainTunnelingConnection::lambda$connectAsync$4($Void* v) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("sending HTTP/1.1 CONNECT"_s);
 	}
@@ -433,6 +435,7 @@ $CompletionStage* PlainTunnelingConnection::lambda$connectAsync$4($Void* v) {
 }
 
 $CompletableFuture* PlainTunnelingConnection::lambda$connectAsync$3($Void* result, $Throwable* ex) {
+	$useLocalCurrentObjectStackCache();
 	if (ex == nullptr) {
 		return $MinimalFuture::completedFuture(result);
 	} else {
@@ -453,6 +456,7 @@ $CompletableFuture* PlainTunnelingConnection::lambda$connectAsync$3($Void* resul
 }
 
 $CompletionStage* PlainTunnelingConnection::lambda$connectAsync$2($Exchange* connectExchange, $Response* resp) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, $new($MinimalFuture));
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("got response: %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(resp)->statusCode())))}));

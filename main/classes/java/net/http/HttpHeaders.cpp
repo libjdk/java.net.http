@@ -257,14 +257,17 @@ $Object* allocate$HttpHeaders($Class* clazz) {
 HttpHeaders* HttpHeaders::NO_HEADERS = nullptr;
 
 $Optional* HttpHeaders::firstValue($String* name) {
+	$useLocalCurrentObjectStackCache();
 	return $nc($($nc($(allValues(name)))->stream()))->findFirst();
 }
 
 $OptionalLong* HttpHeaders::firstValueAsLong($String* name) {
+	$useLocalCurrentObjectStackCache();
 	return $nc($($nc($($nc($(allValues(name)))->stream()))->mapToLong(static_cast<$ToLongFunction*>($$new(HttpHeaders$$Lambda$valueOf)))))->findFirst();
 }
 
 $List* HttpHeaders::allValues($String* name) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(name);
 	$var($List, values, $cast($List, $nc($(map()))->get(name)));
 	return values != nullptr ? values : $List::of();
@@ -275,6 +278,7 @@ $Map* HttpHeaders::map() {
 }
 
 bool HttpHeaders::equals(Object$* obj) {
+	$useLocalCurrentObjectStackCache();
 	if (!($instanceOf(HttpHeaders, obj))) {
 		return false;
 	}
@@ -283,6 +287,7 @@ bool HttpHeaders::equals(Object$* obj) {
 }
 
 int32_t HttpHeaders::hashCode() {
+	$useLocalCurrentObjectStackCache();
 	int32_t h = 0;
 	{
 		$var($Iterator, i$, $nc($($nc($(map()))->entrySet()))->iterator());
@@ -297,6 +302,7 @@ int32_t HttpHeaders::hashCode() {
 }
 
 $String* HttpHeaders::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($($Object::toString()))->append(" { "_s);
 	sb->append($($of(map())));
@@ -317,6 +323,7 @@ void HttpHeaders::init$($Map* headers) {
 
 int32_t HttpHeaders::entryHash($Map$Entry* e) {
 	$init(HttpHeaders);
+	$useLocalCurrentObjectStackCache();
 	$var($String, key, $cast($String, $nc(e)->getKey()));
 	$var($List, value, $cast($List, e->getValue()));
 	$init($Locale);
@@ -327,6 +334,7 @@ int32_t HttpHeaders::entryHash($Map$Entry* e) {
 
 HttpHeaders* HttpHeaders::headersOf($Map* map, $BiPredicate* filter) {
 	$init(HttpHeaders);
+	$useLocalCurrentObjectStackCache();
 	$init($String);
 	$var($TreeMap, other, $new($TreeMap, $String::CASE_INSENSITIVE_ORDER));
 	$var($TreeSet, notAdded, $new($TreeSet, $String::CASE_INSENSITIVE_ORDER));
@@ -337,6 +345,7 @@ HttpHeaders* HttpHeaders::headersOf($Map* map, $BiPredicate* filter) {
 
 void HttpHeaders::lambda$headersOf$1($BiPredicate* filter, $ArrayList* tempList, $TreeMap* other, $TreeSet* notAdded, $String* key, $List* value) {
 	$init(HttpHeaders);
+	$useLocalCurrentObjectStackCache();
 	$var($String, headerName, $nc(($cast($String, $Objects::requireNonNull(key))))->trim());
 	if (headerName->isEmpty()) {
 		$throwNew($IllegalArgumentException, "empty key"_s);

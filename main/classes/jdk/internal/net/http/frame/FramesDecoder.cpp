@@ -238,6 +238,7 @@ void FramesDecoder::init$($FramesDecoder$FrameProcessor* frameProcessor, int32_t
 }
 
 void FramesDecoder::decode($ByteBuffer* inBoundBuffer) {
+	$useLocalCurrentObjectStackCache();
 	if (this->closed) {
 		if ($nc(FramesDecoder::debug)->on()) {
 			$nc(FramesDecoder::debug)->log("closed: ignoring buffer (%s bytes)"_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(inBoundBuffer)->remaining())))}));
@@ -297,6 +298,7 @@ void FramesDecoder::decode($ByteBuffer* inBoundBuffer) {
 }
 
 $Http2Frame* FramesDecoder::nextFrame() {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		if (this->currentBuffer == nullptr) {
 			return nullptr;
@@ -407,6 +409,7 @@ $bytes* FramesDecoder::getBytes(int32_t n) {
 }
 
 $List* FramesDecoder::getBuffers(bool isDataFrame, int32_t bytecount) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, res, $new($ArrayList));
 	while (bytecount > 0) {
 		int32_t remaining = $nc(this->currentBuffer)->remaining();
@@ -426,6 +429,7 @@ $List* FramesDecoder::getBuffers(bool isDataFrame, int32_t bytecount) {
 }
 
 void FramesDecoder::close($String* msg) {
+	$useLocalCurrentObjectStackCache();
 	this->closed = true;
 	$nc(this->tailBuffers)->clear();
 	int32_t bytes = this->tailSize;
@@ -455,6 +459,7 @@ void FramesDecoder::skipBytes(int32_t bytecount) {
 }
 
 $Http2Frame* FramesDecoder::parseFrameBody() {
+	$useLocalCurrentObjectStackCache();
 	if (!FramesDecoder::$assertionsDisabled && !this->frameHeaderParsed) {
 		$throwNew($AssertionError);
 	}
@@ -509,6 +514,7 @@ $Http2Frame* FramesDecoder::parseFrameBody() {
 }
 
 $Http2Frame* FramesDecoder::parseDataFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid == 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "zero streamId for DataFrame"_s);
 	}
@@ -526,6 +532,7 @@ $Http2Frame* FramesDecoder::parseDataFrame(int32_t frameLength, int32_t streamid
 }
 
 $Http2Frame* FramesDecoder::parseHeadersFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid == 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "zero streamId for HeadersFrame"_s);
 	}
@@ -557,6 +564,7 @@ $Http2Frame* FramesDecoder::parseHeadersFrame(int32_t frameLength, int32_t strea
 }
 
 $Http2Frame* FramesDecoder::parsePriorityFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid == 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "zero streamId for PriorityFrame"_s);
 	}
@@ -570,6 +578,7 @@ $Http2Frame* FramesDecoder::parsePriorityFrame(int32_t frameLength, int32_t stre
 }
 
 $Http2Frame* FramesDecoder::parseResetFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid == 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "zero streamId for ResetFrame"_s);
 	}
@@ -580,6 +589,7 @@ $Http2Frame* FramesDecoder::parseResetFrame(int32_t frameLength, int32_t streami
 }
 
 $Http2Frame* FramesDecoder::parseSettingsFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid != 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "non-zero streamId for SettingsFrame"_s);
 	}
@@ -602,6 +612,7 @@ $Http2Frame* FramesDecoder::parseSettingsFrame(int32_t frameLength, int32_t stre
 }
 
 $Http2Frame* FramesDecoder::parsePushPromiseFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid == 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "zero streamId for PushPromiseFrame"_s);
 	}
@@ -621,6 +632,7 @@ $Http2Frame* FramesDecoder::parsePushPromiseFrame(int32_t frameLength, int32_t s
 }
 
 $Http2Frame* FramesDecoder::parsePingFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid != 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "non-zero streamId for PingFrame"_s);
 	}
@@ -631,6 +643,7 @@ $Http2Frame* FramesDecoder::parsePingFrame(int32_t frameLength, int32_t streamid
 }
 
 $Http2Frame* FramesDecoder::parseGoAwayFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (streamid != 0) {
 		return $new($MalformedFrame, $ErrorFrame::PROTOCOL_ERROR, "non-zero streamId for GoAwayFrame"_s);
 	}
@@ -648,6 +661,7 @@ $Http2Frame* FramesDecoder::parseGoAwayFrame(int32_t frameLength, int32_t stream
 }
 
 $Http2Frame* FramesDecoder::parseWindowUpdateFrame(int32_t frameLength, int32_t streamid, int32_t flags) {
+	$useLocalCurrentObjectStackCache();
 	if (frameLength != 4) {
 		return $new($MalformedFrame, $ErrorFrame::FRAME_SIZE_ERROR, $$str({"WindowUpdateFrame length is "_s, $$str(frameLength), ", expected 4"_s}));
 	}

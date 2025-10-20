@@ -142,6 +142,7 @@ void ResponseSubscribers$ByteArraySubscriber::onError($Throwable* throwable) {
 
 $bytes* ResponseSubscribers$ByteArraySubscriber::join($List* bytes) {
 	$init(ResponseSubscribers$ByteArraySubscriber);
+	$useLocalCurrentObjectStackCache();
 	int32_t size = $Utils::remaining(bytes, $Integer::MAX_VALUE);
 	$var($bytes, res, $new($bytes, size));
 	int32_t from = 0;
@@ -160,6 +161,7 @@ $bytes* ResponseSubscribers$ByteArraySubscriber::join($List* bytes) {
 }
 
 void ResponseSubscribers$ByteArraySubscriber::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$nc(this->result)->complete($($nc(this->finisher)->apply($(join(this->received)))));
 		$nc(this->received)->clear();

@@ -117,6 +117,7 @@ $Object* allocate$MessageQueue($Class* clazz) {
 bool MessageQueue::$assertionsDisabled = false;
 
 void MessageQueue::init$(int32_t capacity) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, tail, $new($AtomicInteger));
 	if (capacity < 1) {
 		$throwNew($IllegalArgumentException);
@@ -200,6 +201,7 @@ void MessageQueue::addClose(int32_t statusCode, $CharBuffer* reason, Object$* at
 }
 
 $Object* MessageQueue::peek($MessageQueue$QueueCallback* callback) {
+	$useLocalCurrentObjectStackCache();
 	$var($MessageQueue$Message, h, $nc(this->elements)->get(this->head));
 	if (!$nc(h)->ready) {
 		return $of($nc(callback)->onEmpty());

@@ -1119,6 +1119,7 @@ bool Utils::hostnameVerificationDisabledValue() {
 
 $Set* Utils::getDisallowedHeaders() {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$init($String);
 	$var($Set, headers, static_cast<$Set*>(static_cast<$AbstractSet*>($new($TreeSet, $String::CASE_INSENSITIVE_ORDER))));
 	headers->addAll($($Set::of("connection"_s, "content-length"_s, "expect"_s, "host"_s, "upgrade"_s)));
@@ -1154,6 +1155,7 @@ $BiPredicate* Utils::PROXY_TUNNEL_RESTRICTED($HttpClient* client) {
 
 $CompletableFuture* Utils::wrapForDebug($Logger* logger, $String* name, $CompletableFuture* cf) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(logger)->on()) {
 		return $cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc(cf)->handle(static_cast<$BiFunction*>($$new(Utils$$Lambda$lambda$wrapForDebug$9$11, logger, name, cf))))))->thenCompose($($Function::identity())));
 	} else {
@@ -1163,6 +1165,7 @@ $CompletableFuture* Utils::wrapForDebug($Logger* logger, $String* name, $Complet
 
 bool Utils::isAllowedForProxy($String* name, $String* value, $Set* disabledSchemes, $Predicate* allowedKeys) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	if (!$nc(allowedKeys)->test(name)) {
 		return false;
 	}
@@ -1257,6 +1260,7 @@ $IOException* Utils::getIOException($Throwable* t) {
 
 $Throwable* Utils::wrapWithExtraDetail($Throwable* t$renamed, $Supplier* messageSupplier) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if (!($instanceOf($IOException, t))) {
 		return t;
@@ -1286,6 +1290,7 @@ void Utils::init$() {
 
 $URLPermission* Utils::permissionForProxy($InetSocketAddress* proxyAddress) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	if (proxyAddress == nullptr) {
 		return nullptr;
 	}
@@ -1297,6 +1302,7 @@ $URLPermission* Utils::permissionForProxy($InetSocketAddress* proxyAddress) {
 
 $URLPermission* Utils::permissionForServer($URI* uri, $String* method, $Stream* headers) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($String, urlString, $$new($StringBuilder)->append($($nc(uri)->getScheme()))->append("://"_s)->append($($nc(uri)->getRawAuthority()))->append($($nc(uri)->getRawPath()))->toString());
 	$var($StringBuilder, actionStringBuilder, $new($StringBuilder, method));
 	$var($String, collected, $cast($String, $nc(headers)->collect($($Collectors::joining(","_s)))));
@@ -1319,6 +1325,7 @@ bool Utils::isValidName($String* token) {
 
 $Utils$ServerName* Utils::getServerName($InetSocketAddress* addr) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($String, host, $nc(addr)->getHostString());
 	$var($bytes, literal, $IPAddressUtil::textToNumericFormatV4(host));
 	if (literal == nullptr) {
@@ -1368,6 +1375,7 @@ bool Utils::isValidValue($String* token) {
 
 int32_t Utils::getIntegerNetProperty($String* name, int32_t defaultValue) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	return $nc(($cast($Integer, $($AccessController::doPrivileged(static_cast<$PrivilegedAction*>($$new(Utils$$Lambda$lambda$getIntegerNetProperty$13$12, name, defaultValue)))))))->intValue();
 }
@@ -1380,6 +1388,7 @@ $String* Utils::getNetProperty($String* name) {
 
 bool Utils::getBooleanProperty($String* name, bool def) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	return $nc(($cast($Boolean, $($AccessController::doPrivileged(static_cast<$PrivilegedAction*>($$new(Utils$$Lambda$lambda$getBooleanProperty$15$14, name, def)))))))->booleanValue();
 }
@@ -1392,12 +1401,14 @@ $String* Utils::getProperty($String* name) {
 
 int32_t Utils::getIntegerProperty($String* name, int32_t defaultValue) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	return $nc(($cast($Integer, $($AccessController::doPrivileged(static_cast<$PrivilegedAction*>($$new(Utils$$Lambda$lambda$getIntegerProperty$17$16, name, defaultValue)))))))->intValue();
 }
 
 $SSLParameters* Utils::copySSLParameters($SSLParameters* p) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($SSLParameters, p1, $new($SSLParameters));
 	p1->setAlgorithmConstraints($($nc(p)->getAlgorithmConstraints()));
 	p1->setCipherSuites($($nc(p)->getCipherSuites()));
@@ -1424,6 +1435,7 @@ void Utils::flipToMark($ByteBuffer* buffer, int32_t mark) {
 
 $String* Utils::stackTrace($Throwable* t) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($ByteArrayOutputStream, bos, $new($ByteArrayOutputStream));
 	$init($StandardCharsets);
 	$var($PrintStream, p, $new($PrintStream, static_cast<$OutputStream*>(bos), true, $StandardCharsets::US_ASCII));
@@ -1449,6 +1461,7 @@ int32_t Utils::copy($ByteBuffer* src, $ByteBuffer* dst) {
 
 int64_t Utils::accumulateBuffers($List* currentList, $List* buffersToAdd) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	int64_t accumulatedBytes = 0;
 	{
 		$var($Iterator, i$, $nc(buffersToAdd)->iterator());
@@ -1518,6 +1531,7 @@ $String* Utils::stringOf($Collection* source) {
 
 int64_t Utils::remaining($ByteBufferArray* bufs) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	int64_t remain = 0;
 	{
 		$var($ByteBufferArray, arr$, bufs);
@@ -1535,6 +1549,7 @@ int64_t Utils::remaining($ByteBufferArray* bufs) {
 
 bool Utils::hasRemaining($List* bufs) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Iterator, i$, $nc(bufs)->iterator());
 		for (; $nc(i$)->hasNext();) {
@@ -1551,6 +1566,7 @@ bool Utils::hasRemaining($List* bufs) {
 
 int64_t Utils::remaining($List* bufs) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	int64_t remain = 0;
 	{
 		$var($Iterator, i$, $nc(bufs)->iterator());
@@ -1573,6 +1589,7 @@ int64_t Utils::synchronizedRemaining($List* bufs) {
 
 int32_t Utils::remaining($List* bufs, int32_t max) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	int64_t remain = 0;
 	{
 		$var($Iterator, i$, $nc(bufs)->iterator());
@@ -1591,6 +1608,7 @@ int32_t Utils::remaining($List* bufs, int32_t max) {
 
 int32_t Utils::remaining($ByteBufferArray* refs, int32_t max) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	int64_t remain = 0;
 	{
 		$var($ByteBufferArray, arr$, refs);
@@ -1611,6 +1629,7 @@ int32_t Utils::remaining($ByteBufferArray* refs, int32_t max) {
 
 void Utils::close($CloseableArray* closeables) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($CloseableArray, arr$, closeables);
 		int32_t len$ = $nc(arr$)->length;
@@ -1646,6 +1665,7 @@ $ByteBuffer* Utils::sliceWithLimitedCapacity($ByteBuffer* buffer, int32_t amount
 
 $Charset* Utils::charsetFrom($HttpHeaders* headers) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($String, type, $cast($String, $nc($($nc(headers)->firstValue("Content-type"_s)))->orElse("text/html; charset=utf-8"_s)));
 	int32_t i = $nc(type)->indexOf(";"_s);
 	if (i >= 0) {
@@ -1696,6 +1716,7 @@ $Logger* Utils::getDebugLogger($Supplier* dbgTag, bool on) {
 
 $String* Utils::hostString($HttpRequestImpl* request) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($URI, uri, $nc(request)->uri());
 	int32_t port = $nc(uri)->getPort();
 	$var($String, host, uri->getHost());
@@ -1758,6 +1779,7 @@ bool Utils::isHostnameVerificationDisabled() {
 
 $InetSocketAddress* Utils::resolveAddress($InetSocketAddress* address$renamed) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($InetSocketAddress, address, address$renamed);
 	if (address != nullptr && address->isUnresolved()) {
 		$var($String, var$0, address->getHostString());
@@ -1768,6 +1790,7 @@ $InetSocketAddress* Utils::resolveAddress($InetSocketAddress* address$renamed) {
 
 $Throwable* Utils::toConnectException($Throwable* e$renamed) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, e, e$renamed);
 	if (e == nullptr) {
 		return nullptr;
@@ -1809,6 +1832,7 @@ int32_t Utils::pow2Size(int32_t n) {
 
 $String* Utils::encode($String* s) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	int32_t n = $nc(s)->length();
 	if (n == 0) {
 		return s;
@@ -1850,6 +1874,7 @@ $String* Utils::encode($String* s) {
 
 $Integer* Utils::lambda$getIntegerProperty$17($String* name, int32_t defaultValue) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	return $Integer::valueOf($Integer::parseInt($($System::getProperty(name, $($String::valueOf(defaultValue))))));
 }
 
@@ -1860,6 +1885,7 @@ $String* Utils::lambda$getProperty$16($String* name) {
 
 $Boolean* Utils::lambda$getBooleanProperty$15($String* name, bool def) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	return $Boolean::valueOf($Boolean::parseBoolean($($System::getProperty(name, $($String::valueOf(def))))));
 }
 
@@ -1930,6 +1956,7 @@ bool Utils::lambda$CONTEXT_RESTRICTED$3($HttpClient* client, $String* k, $String
 
 bool Utils::lambda$static$2($String* name, $String* value) {
 	$init(Utils);
+	$useLocalCurrentObjectStackCache();
 	if (!Utils::$assertionsDisabled && !(name != nullptr)) {
 		$throwNew($AssertionError, $of("null header name"_s));
 	}
@@ -1962,6 +1989,7 @@ bool Utils::lambda$static$0($String* x, $String* y) {
 }
 
 void clinit$Utils($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(Utils::WSPACES, " \t\r\n"_s);
 	$assignStatic(Utils::HEADER_CONNECTION, "Connection"_s);
 	$assignStatic(Utils::HEADER_UPGRADE, "Upgrade"_s);

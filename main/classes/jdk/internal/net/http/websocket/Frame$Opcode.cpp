@@ -158,6 +158,7 @@ Frame$Opcode* Frame$Opcode::ofCode(int32_t code) {
 }
 
 void clinit$Frame$Opcode($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(Frame$Opcode::CONTINUATION, $new(Frame$Opcode, "CONTINUATION"_s, 0, 0));
 	$assignStatic(Frame$Opcode::TEXT, $new(Frame$Opcode, "TEXT"_s, 1, 1));
 	$assignStatic(Frame$Opcode::BINARY, $new(Frame$Opcode, "BINARY"_s, 2, 2));

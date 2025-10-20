@@ -279,6 +279,7 @@ void Http2ClientImpl::init$($HttpClientImpl* client) {
 }
 
 $CompletableFuture* Http2ClientImpl::getConnectionFor($HttpRequestImpl* req, $Exchange* exchange) {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, uri, $nc(req)->uri());
 	$var($InetSocketAddress, proxy, req->proxy());
 	$var($String, key, $Http2Connection::keyFor(uri, proxy));
@@ -314,6 +315,7 @@ $CompletableFuture* Http2ClientImpl::getConnectionFor($HttpRequestImpl* req, $Ex
 }
 
 bool Http2ClientImpl::offerConnection($Http2Connection* c) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(Http2ClientImpl::debug)->on()) {
 		$nc(Http2ClientImpl::debug)->log("offering to the connection pool: %s"_s, $$new($ObjectArray, {$of(c)}));
 	}
@@ -341,6 +343,7 @@ bool Http2ClientImpl::offerConnection($Http2Connection* c) {
 }
 
 void Http2ClientImpl::deleteConnection($Http2Connection* c) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(Http2ClientImpl::debug)->on()) {
 		$nc(Http2ClientImpl::debug)->log("removing from the connection pool: %s"_s, $$new($ObjectArray, {$of(c)}));
 	}
@@ -356,6 +359,7 @@ void Http2ClientImpl::deleteConnection($Http2Connection* c) {
 }
 
 void Http2ClientImpl::stop() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(Http2ClientImpl::debug)->on()) {
 		$nc(Http2ClientImpl::debug)->log("stopping"_s);
 	}
@@ -383,6 +387,7 @@ $HttpClientImpl* Http2ClientImpl::client() {
 }
 
 $String* Http2ClientImpl::getSettingsString() {
+	$useLocalCurrentObjectStackCache();
 	$var($SettingsFrame, sf, getClientSettings());
 	$var($bytes, settings, $nc(sf)->toByteArray());
 	$var($Base64$Encoder, encoder, $nc($($Base64::getUrlEncoder()))->withoutPadding());
@@ -391,6 +396,7 @@ $String* Http2ClientImpl::getSettingsString() {
 
 int32_t Http2ClientImpl::getParameter($String* property, int32_t min, int32_t max, int32_t defaultValue) {
 	$init(Http2ClientImpl);
+	$useLocalCurrentObjectStackCache();
 	int32_t value = $Utils::getIntegerNetProperty(property, defaultValue);
 	if (value < min || value > max) {
 		$Log::logError("Property value for {0}={1} not in [{2}..{3}]: using default={4}"_s, $$new($ObjectArray, {
@@ -422,6 +428,7 @@ $SettingsFrame* Http2ClientImpl::getClientSettings() {
 }
 
 void Http2ClientImpl::lambda$getConnectionFor$0($String* key, $Http2Connection* conn, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this) {
 		if (conn != nullptr) {
 			try {

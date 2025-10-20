@@ -225,6 +225,7 @@ $HttpHeaders* Http1HeaderParser::headers() {
 }
 
 $String* Http1HeaderParser::currentStateMessage() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, stateName, $nc(this->state)->name());
 	$var($String, msg, nullptr);
 	if ($nc(stateName)->contains("INITIAL"_s)) {
@@ -247,6 +248,7 @@ $String* Http1HeaderParser::currentStateMessage() {
 }
 
 bool Http1HeaderParser::parse($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull($of(input), "null input"_s);
 	while (canContinueParsing(input)) {
 		$init($Http1HeaderParser$1);
@@ -369,6 +371,7 @@ void Http1HeaderParser::readResumeStatusLine($ByteBuffer* input) {
 }
 
 void Http1HeaderParser::readStatusLineFeed($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1HeaderParser$State);
 	char16_t c = this->state == $Http1HeaderParser$State::STATUS_LINE_FOUND_LF ? Http1HeaderParser::LF : get(input);
 	if (c != Http1HeaderParser::LF) {
@@ -417,6 +420,7 @@ void Http1HeaderParser::maybeStartHeaders($ByteBuffer* input) {
 }
 
 void Http1HeaderParser::maybeEndHeaders($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1HeaderParser$State);
 	if (!Http1HeaderParser::$assertionsDisabled && !(this->state == $Http1HeaderParser$State::STATUS_LINE_END_CR || this->state == $Http1HeaderParser$State::STATUS_LINE_END_LF)) {
 		$throwNew($AssertionError);
@@ -460,6 +464,7 @@ void Http1HeaderParser::readResumeHeader($ByteBuffer* input) {
 }
 
 void Http1HeaderParser::addHeaderFromString($String* headerString) {
+	$useLocalCurrentObjectStackCache();
 	if (!Http1HeaderParser::$assertionsDisabled && !($nc(this->sb)->length() == 0)) {
 		$throwNew($AssertionError);
 	}
@@ -505,6 +510,7 @@ void Http1HeaderParser::resumeOrLF($ByteBuffer* input) {
 }
 
 void Http1HeaderParser::resumeOrSecondCR($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1HeaderParser$State);
 	if (!Http1HeaderParser::$assertionsDisabled && !(this->state == $Http1HeaderParser$State::HEADER_FOUND_CR_LF)) {
 		$throwNew($AssertionError);
@@ -542,6 +548,7 @@ void Http1HeaderParser::resumeOrSecondCR($ByteBuffer* input) {
 }
 
 void Http1HeaderParser::resumeOrEndHeaders($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1HeaderParser$State);
 	if (!Http1HeaderParser::$assertionsDisabled && !(this->state == $Http1HeaderParser$State::HEADER_FOUND_CR_LF_CR)) {
 		$throwNew($AssertionError);

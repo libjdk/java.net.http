@@ -154,6 +154,7 @@ void RawChannelTube$ReadSubscriber::init$($RawChannelTube* this$0) {
 }
 
 void RawChannelTube$ReadSubscriber::checkEvents() {
+	$useLocalCurrentObjectStackCache();
 	$var($Flow$Subscription, subscription, this->readSubscription);
 	if (subscription != nullptr) {
 		$var($Throwable, error, $cast($Throwable, $nc(this->errorRef)->get()));
@@ -177,6 +178,7 @@ void RawChannelTube$ReadSubscriber::checkEvents() {
 }
 
 void RawChannelTube$ReadSubscriber::onSubscribe($Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	int64_t n = 0;
 	$synchronized(this) {
 		$set(this, readSubscription, subscription);

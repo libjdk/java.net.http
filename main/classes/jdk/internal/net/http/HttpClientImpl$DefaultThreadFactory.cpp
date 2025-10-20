@@ -78,6 +78,7 @@ void HttpClientImpl$DefaultThreadFactory::init$(int64_t clientID) {
 }
 
 $Thread* HttpClientImpl$DefaultThreadFactory::newThread($Runnable* r) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, name, $str({this->namePrefix, $$str($nc(this->nextId)->getAndIncrement())}));
 	$var($Thread, t, nullptr);
 	if ($System::getSecurityManager() == nullptr) {

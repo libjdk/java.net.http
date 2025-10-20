@@ -195,6 +195,7 @@ void Log::logError($String* s, $ObjectArray* s1) {
 
 void Log::logError($Throwable* t) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	if (errors()) {
 		$var($String, s, $Utils::stackTrace(t));
 		$init($System$Logger$Level);
@@ -212,6 +213,7 @@ void Log::logSSL($String* s, $ObjectArray* s1) {
 
 void Log::logSSL($Supplier* msgSupplier) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	if (ssl()) {
 		$init($System$Logger$Level);
 		$nc(Log::logger)->log($System$Logger$Level::INFO, $$str({"SSL: "_s, $cast($String, $($nc(msgSupplier)->get()))}));
@@ -228,6 +230,7 @@ void Log::logChannel($String* s, $ObjectArray* s1) {
 
 void Log::logChannel($Supplier* msgSupplier) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	if (channel()) {
 		$init($System$Logger$Level);
 		$nc(Log::logger)->log($System$Logger$Level::INFO, $$str({"CHANNEL: "_s, $cast($String, $($nc(msgSupplier)->get()))}));
@@ -253,6 +256,7 @@ void Log::logRequest($String* s, $ObjectArray* s1) {
 
 void Log::logResponse($Supplier* supplier) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	if (requests()) {
 		$init($System$Logger$Level);
 		$nc(Log::logger)->log($System$Logger$Level::INFO, $$str({"RESPONSE: "_s, $cast($String, $($nc(supplier)->get()))}));
@@ -287,6 +291,7 @@ bool Log::loggingFrame($Class* clazz) {
 
 void Log::logFrames($Http2Frame* f, $String* direction) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	bool var$0 = frames();
 	if (var$0 && loggingFrame($nc($of(f))->getClass())) {
 		$init($System$Logger$Level);
@@ -296,6 +301,7 @@ void Log::logFrames($Http2Frame* f, $String* direction) {
 
 void Log::logParams($SSLParameters* p) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	if (!Log::ssl()) {
 		return;
 	}
@@ -368,6 +374,7 @@ void Log::logParams($SSLParameters* p) {
 
 void Log::dumpHeaders($StringBuilder* sb, $String* prefix, $HttpHeaders* headers) {
 	$init(Log);
+	$useLocalCurrentObjectStackCache();
 	if (headers != nullptr) {
 		$var($Map, h, headers->map());
 		$var($Set, entries, $nc(h)->entrySet());
@@ -408,6 +415,7 @@ void Log::init$() {
 }
 
 void clinit$Log($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(Log::logProp, "jdk.httpclient.HttpClient.log"_s);
 	$beforeCallerSensitive();
 	{

@@ -418,6 +418,7 @@ bool HttpClientImpl$SelectorManager::$assertionsDisabled = false;
 int64_t HttpClientImpl$SelectorManager::NODEADLINE = 0;
 
 void HttpClientImpl$SelectorManager::init$($HttpClientImpl* ref) {
+	$useLocalCurrentObjectStackCache();
 	$Thread::init$(nullptr, nullptr, $$str({"HttpClient-"_s, $$str($nc(ref)->id), "-SelectorManager"_s}), 0, false);
 	$set(this, owner, ref);
 	$set(this, debug, $nc(ref)->debug);
@@ -429,6 +430,7 @@ void HttpClientImpl$SelectorManager::init$($HttpClientImpl* ref) {
 }
 
 void HttpClientImpl$SelectorManager::eventUpdated($AsyncEvent* e) {
+	$useLocalCurrentObjectStackCache();
 	if ($equals($Thread::currentThread(), this)) {
 		$var($SelectionKey, key, $nc($($nc(e)->channel()))->keyFor(this->selector));
 		if (key != nullptr && key->isValid()) {
@@ -468,6 +470,7 @@ void HttpClientImpl$SelectorManager::wakeupSelector() {
 
 void HttpClientImpl$SelectorManager::shutdown() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$Log::logTrace("{0}: shutting down"_s, $$new($ObjectArray, {$($of(getName()))}));
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("SelectorManager shutting down"_s);
@@ -494,6 +497,7 @@ void HttpClientImpl$SelectorManager::shutdown() {
 }
 
 void HttpClientImpl$SelectorManager::run() {
+	$useLocalCurrentObjectStackCache();
 	$var($List, errorList, $new($ArrayList));
 	$var($List, readyList, $new($ArrayList));
 	$var($List, resetList, $new($ArrayList));

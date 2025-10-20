@@ -227,6 +227,7 @@ $CompletionStage* ResponseSubscribers$HttpResponseInputStream::getBody() {
 }
 
 $ByteBuffer* ResponseSubscribers$HttpResponseInputStream::current() {
+	$useLocalCurrentObjectStackCache();
 	while (this->currentBuffer == nullptr || !$nc(this->currentBuffer)->hasRemaining()) {
 		if (this->closed || this->failed != nullptr) {
 			$throwNew($IOException, "closed"_s, this->failed);
@@ -312,6 +313,7 @@ int32_t ResponseSubscribers$HttpResponseInputStream::read() {
 }
 
 int32_t ResponseSubscribers$HttpResponseInputStream::available() {
+	$useLocalCurrentObjectStackCache();
 	if (this->closed) {
 		return 0;
 	}
@@ -337,6 +339,7 @@ int32_t ResponseSubscribers$HttpResponseInputStream::available() {
 }
 
 void ResponseSubscribers$HttpResponseInputStream::onSubscribe($Flow$Subscription* s) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(s);
 	try {
 		if (!$nc(this->subscribed)->compareAndSet(false, true)) {
@@ -385,6 +388,7 @@ void ResponseSubscribers$HttpResponseInputStream::onSubscribe($Flow$Subscription
 }
 
 void ResponseSubscribers$HttpResponseInputStream::onNext($List* t) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(t);
 	try {
 		if ($nc(ResponseSubscribers$HttpResponseInputStream::debug)->on()) {
@@ -431,6 +435,7 @@ void ResponseSubscribers$HttpResponseInputStream::onComplete() {
 }
 
 void ResponseSubscribers$HttpResponseInputStream::close() {
+	$useLocalCurrentObjectStackCache();
 	$var($Flow$Subscription, s, nullptr);
 	$synchronized(this) {
 		if (this->closed) {
@@ -463,6 +468,7 @@ void ResponseSubscribers$HttpResponseInputStream::onNext(Object$* t) {
 }
 
 void clinit$ResponseSubscribers$HttpResponseInputStream($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$load($ResponseSubscribers);
 	ResponseSubscribers$HttpResponseInputStream::$assertionsDisabled = !$ResponseSubscribers::class$->desiredAssertionStatus();
 	$assignStatic(ResponseSubscribers$HttpResponseInputStream::LAST_BUFFER, $ByteBuffer::wrap($$new($bytes, 0)));

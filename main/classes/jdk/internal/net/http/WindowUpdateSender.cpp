@@ -140,6 +140,7 @@ void WindowUpdateSender::init$($Http2Connection* connection, int32_t initWindowS
 }
 
 void WindowUpdateSender::init$($Http2Connection* connection, int32_t maxFrameSize, int32_t initWindowSize) {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(WindowUpdateSender$$Lambda$dbgString, this)), $Utils::DEBUG));
 	$set(this, received, $new($AtomicInteger));
@@ -158,6 +159,7 @@ void WindowUpdateSender::init$($Http2Connection* connection, int32_t maxFrameSiz
 }
 
 void WindowUpdateSender::update(int32_t delta) {
+	$useLocalCurrentObjectStackCache();
 	int32_t rcv = $nc(this->received)->addAndGet(delta);
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("update: %d, received: %d, limit: %d"_s, $$new($ObjectArray, {
@@ -178,6 +180,7 @@ void WindowUpdateSender::update(int32_t delta) {
 }
 
 void WindowUpdateSender::sendWindowUpdate(int32_t delta) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("sending window update: %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(delta)))}));
 	}
@@ -185,6 +188,7 @@ void WindowUpdateSender::sendWindowUpdate(int32_t delta) {
 }
 
 $String* WindowUpdateSender::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, dbg, this->dbgString$);
 	if (dbg != nullptr) {
 		return dbg;

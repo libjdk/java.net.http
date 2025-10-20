@@ -150,6 +150,7 @@ ISO_8859_1$Writer* ISO_8859_1$Writer::configure($CharSequence* source, int32_t s
 }
 
 bool ISO_8859_1$Writer::write($ByteBuffer* destination) {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		while (true) {
 			if (this->pos >= this->end) {

@@ -170,6 +170,7 @@ void SSLTube$DelegateWrapper::onSubscribe($Flow$Subscription* subscription) {
 }
 
 void SSLTube$DelegateWrapper::onSubscribe($Consumer* method, $Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	this->subscribedCalled = true;
 	$nc(method)->accept(subscription);
 	$var($Throwable, x, nullptr);
@@ -193,6 +194,7 @@ void SSLTube$DelegateWrapper::onSubscribe($Consumer* method, $Flow$Subscription*
 }
 
 void SSLTube$DelegateWrapper::onError($Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if (this->completed) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Subscriber already completed: ignoring %s"_s, $$new($ObjectArray, {$of(t)}));
@@ -238,6 +240,7 @@ void SSLTube$DelegateWrapper::onComplete() {
 }
 
 $String* SSLTube$DelegateWrapper::toString() {
+	$useLocalCurrentObjectStackCache();
 	return $str({"DelegateWrapper[subscribedCalled: "_s, $$str(this->subscribedCalled), ", subscribedDone: "_s, $$str(this->subscribedDone), ", completed: "_s, $$str(this->completed), ", error: "_s, this->error, "]: "_s, this->delegate});
 }
 

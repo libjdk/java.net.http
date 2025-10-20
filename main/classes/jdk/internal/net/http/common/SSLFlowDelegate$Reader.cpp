@@ -208,6 +208,7 @@ $Object* allocate$SSLFlowDelegate$Reader($Class* clazz) {
 bool SSLFlowDelegate$Reader::$assertionsDisabled = false;
 
 void SSLFlowDelegate$Reader::init$($SSLFlowDelegate* this$0) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, this$0, this$0);
 	$SubscriberWrapper::init$();
 	$set(this, readBufferLock, $new($Object));
@@ -232,6 +233,7 @@ $String* SSLFlowDelegate$Reader::dbgString() {
 }
 
 void SSLFlowDelegate$Reader::incoming($List* buffers, bool complete) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debugr)->on()) {
 		$nc(this->debugr)->log("Adding %d bytes to read buffer"_s, $$new($ObjectArray, {$($of($Long::valueOf($Utils::remaining(buffers))))}));
 	}
@@ -240,6 +242,7 @@ void SSLFlowDelegate$Reader::incoming($List* buffers, bool complete) {
 }
 
 $String* SSLFlowDelegate$Reader::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$10, $$str({"READER: "_s, $($SubscriberWrapper::toString()), ", readBuf: "_s}));
 	$var($String, var$9, $$concat(var$10, $($nc(this->readBuf)->toString())));
 	$var($String, var$8, $$concat(var$9, ", count: "));
@@ -263,6 +266,7 @@ void SSLFlowDelegate$Reader::reallocReadBuf() {
 }
 
 int64_t SSLFlowDelegate$Reader::upstreamWindowUpdate(int64_t currentWindow, int64_t downstreamQsize) {
+	$useLocalCurrentObjectStackCache();
 	if (needsMoreData()) {
 		if ($nc(this->debugr)->on()) {
 			int32_t remaining = $nc(this->readBuf)->remaining();
@@ -276,6 +280,7 @@ int64_t SSLFlowDelegate$Reader::upstreamWindowUpdate(int64_t currentWindow, int6
 }
 
 void SSLFlowDelegate$Reader::addToReadBuf($List* buffers, bool complete) {
+	$useLocalCurrentObjectStackCache();
 	bool var$0 = !SSLFlowDelegate$Reader::$assertionsDisabled;
 	if (var$0) {
 		bool var$1 = $Utils::remaining(buffers) > 0;
@@ -356,6 +361,7 @@ void SSLFlowDelegate$Reader::requestMoreDataIfNeeded() {
 }
 
 void SSLFlowDelegate$Reader::processData() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		if ($nc(this->debugr)->on()) {
 			$var($String, var$2, $$str({"processData: readBuf remaining:"_s, $$str($nc(this->readBuf)->remaining()), ", state:"_s}));
@@ -470,6 +476,7 @@ void SSLFlowDelegate$Reader::processData() {
 }
 
 $SSLFlowDelegate$EngineResult* SSLFlowDelegate$Reader::unwrapBuffer($ByteBuffer* src) {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, dst, this->this$0->getAppBuffer());
 	int32_t len = $nc(src)->remaining();
 	while (true) {

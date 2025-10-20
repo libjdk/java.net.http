@@ -164,6 +164,7 @@ $Optional* HttpClientFacade::executor() {
 }
 
 $HttpResponse* HttpClientFacade::send($HttpRequest* req, $HttpResponse$BodyHandler* responseBodyHandler) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		$var($HttpResponse, var$2, nullptr);
@@ -188,6 +189,7 @@ $HttpResponse* HttpClientFacade::send($HttpRequest* req, $HttpResponse$BodyHandl
 }
 
 $CompletableFuture* HttpClientFacade::sendAsync($HttpRequest* req, $HttpResponse$BodyHandler* responseBodyHandler) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		$var($CompletableFuture, var$2, nullptr);
@@ -212,6 +214,7 @@ $CompletableFuture* HttpClientFacade::sendAsync($HttpRequest* req, $HttpResponse
 }
 
 $CompletableFuture* HttpClientFacade::sendAsync($HttpRequest* req, $HttpResponse$BodyHandler* responseBodyHandler, $HttpResponse$PushPromiseHandler* pushPromiseHandler) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		$var($CompletableFuture, var$2, nullptr);
@@ -236,6 +239,7 @@ $CompletableFuture* HttpClientFacade::sendAsync($HttpRequest* req, $HttpResponse
 }
 
 $WebSocket$Builder* HttpClientFacade::newWebSocketBuilder() {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		$var($WebSocket$Builder, var$2, nullptr);

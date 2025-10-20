@@ -159,6 +159,7 @@ HttpRequestBuilderImpl* HttpRequestBuilderImpl::uri($URI* uri) {
 
 void HttpRequestBuilderImpl::checkURI($URI* uri) {
 	$init(HttpRequestBuilderImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($String, scheme, $nc(uri)->getScheme());
 	if (scheme == nullptr) {
 		$throw($($Utils::newIAE("URI with undefined scheme"_s, $$new($ObjectArray, 0))));
@@ -188,6 +189,7 @@ HttpRequestBuilderImpl* HttpRequestBuilderImpl::copy() {
 }
 
 void HttpRequestBuilderImpl::checkNameAndValue($String* name, $String* value) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull($of(name), "name"_s);
 	$Objects::requireNonNull($of(value), "value"_s);
 	if (!$Utils::isValidName(name)) {
@@ -214,6 +216,7 @@ HttpRequestBuilderImpl* HttpRequestBuilderImpl::header($String* name, $String* v
 }
 
 HttpRequestBuilderImpl* HttpRequestBuilderImpl::headers($StringArray* params) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(params);
 	if (params->length == 0 || params->length % 2 != 0) {
 		$throw($($Utils::newIAE("wrong number, %d, of parameters"_s, $$new($ObjectArray, {$($of($Integer::valueOf(params->length)))}))));
@@ -278,6 +281,7 @@ $HttpRequest$Builder* HttpRequestBuilderImpl::PUT($HttpRequest$BodyPublisher* bo
 }
 
 $HttpRequest$Builder* HttpRequestBuilderImpl::method($String* method, $HttpRequest$BodyPublisher* body) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(method);
 	if (method->isEmpty()) {
 		$throw($($Utils::newIAE("illegal method <empty string>"_s, $$new($ObjectArray, 0))));

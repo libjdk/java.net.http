@@ -126,6 +126,7 @@ void Http1Response$Http1BodySubscriber::propagateError($Throwable* t) {
 }
 
 void Http1Response$Http1BodySubscriber::complete($Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if ($nc(this->completed)->compareAndSet(false, true)) {
 		$assign(t, ($assignField(this, withError, $Utils::getCompletionCause(t))));

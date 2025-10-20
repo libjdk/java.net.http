@@ -104,6 +104,7 @@ void ErrorFrame::init$(int32_t streamid, int32_t flags, int32_t errorCode) {
 }
 
 $String* ErrorFrame::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({$($Http2Frame::toString()), " Error: "_s}));
 	return $concat(var$0, $(stringForCode(this->errorCode)));
 }

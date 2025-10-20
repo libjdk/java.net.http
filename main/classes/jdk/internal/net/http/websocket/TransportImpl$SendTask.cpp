@@ -126,6 +126,7 @@ void TransportImpl$SendTask::init$($TransportImpl* this$0) {
 }
 
 void TransportImpl$SendTask::run() {
+	$useLocalCurrentObjectStackCache();
 	$init($TransportImpl);
 	if ($nc($TransportImpl::debug)->on()) {
 		$nc($TransportImpl::debug)->log("enter send task"_s);
@@ -176,6 +177,7 @@ void TransportImpl$SendTask::run() {
 }
 
 bool TransportImpl$SendTask::tryCompleteWrite() {
+	$useLocalCurrentObjectStackCache();
 	$init($TransportImpl);
 	if ($nc($TransportImpl::debug)->on()) {
 		$nc($TransportImpl::debug)->log("enter writing"_s);
@@ -253,6 +255,7 @@ bool TransportImpl$SendTask::tryCompleteWrite() {
 }
 
 void TransportImpl$SendTask::removeAndComplete($Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	$init($TransportImpl);
 	if ($nc($TransportImpl::debug)->on()) {
 		$nc($TransportImpl::debug)->log("removeAndComplete error=%s"_s, $$new($ObjectArray, {$of(error)}));

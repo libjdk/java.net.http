@@ -249,6 +249,7 @@ $Object* allocate$AsyncSSLTunnelConnection($Class* clazz) {
 }
 
 void AsyncSSLTunnelConnection::init$($InetSocketAddress* addr, $HttpClientImpl* client, $StringArray* alpn, $InetSocketAddress* proxy, $Utils$ProxyHeaders* proxyHeaders) {
+	$useLocalCurrentObjectStackCache();
 	$var($InetSocketAddress, var$0, addr);
 	$var($HttpClientImpl, var$1, client);
 	$var($Utils$ServerName, var$2, $Utils::getServerName(addr));
@@ -258,6 +259,7 @@ void AsyncSSLTunnelConnection::init$($InetSocketAddress* addr, $HttpClientImpl* 
 }
 
 $CompletableFuture* AsyncSSLTunnelConnection::connectAsync($Exchange* exchange) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Connecting plain tunnel connection"_s);
 	}
@@ -265,6 +267,7 @@ $CompletableFuture* AsyncSSLTunnelConnection::connectAsync($Exchange* exchange) 
 }
 
 $CompletableFuture* AsyncSSLTunnelConnection::finishConnect() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc($(getALPN()))->handle(static_cast<$BiFunction*>($$new(AsyncSSLTunnelConnection$$Lambda$lambda$finishConnect$1$1, this))))))->thenCompose($($Function::identity())));
 }
 
@@ -318,6 +321,7 @@ $CompletableFuture* AsyncSSLTunnelConnection::lambda$finishConnect$1($String* un
 }
 
 $Void* AsyncSSLTunnelConnection::lambda$connectAsync$0($Void* unused) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("creating SSLTube"_s);
 	}

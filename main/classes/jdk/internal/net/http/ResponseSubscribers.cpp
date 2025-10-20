@@ -364,6 +364,7 @@ $HttpResponse$BodySubscriber* ResponseSubscribers::createLineStream() {
 
 $HttpResponse$BodySubscriber* ResponseSubscribers::createLineStream($Charset* charset) {
 	$init(ResponseSubscribers);
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(charset);
 	$var($HttpResponse$BodySubscriber, s, $new($ResponseSubscribers$HttpResponseInputStream));
 	return $new($ResponseSubscribers$MappingSubscriber, s, static_cast<$Function*>($$new(ResponseSubscribers$$Lambda$lambda$createLineStream$1, charset)), true);
@@ -390,6 +391,7 @@ $CompletableFuture* ResponseSubscribers::getBodyAsync($Executor* e, $HttpRespons
 
 $CompletableFuture* ResponseSubscribers::getBodyAsync($Executor* e$renamed, $HttpResponse$BodySubscriber* bs, $CompletableFuture* cf, $Consumer* errorHandler) {
 	$init(ResponseSubscribers);
+	$useLocalCurrentObjectStackCache();
 	$var($Executor, e, e$renamed);
 	if (!ResponseSubscribers::$assertionsDisabled && !(errorHandler != nullptr)) {
 		$throwNew($AssertionError);
@@ -415,6 +417,7 @@ $CompletableFuture* ResponseSubscribers::getBodyAsync($Executor* e$renamed, $Htt
 
 void ResponseSubscribers::lambda$getBodyAsync$3($HttpResponse$BodySubscriber* bs, $CompletableFuture* cf, $Consumer* errorHandler) {
 	$init(ResponseSubscribers);
+	$useLocalCurrentObjectStackCache();
 	try {
 		$nc($($nc(bs)->getBody()))->whenComplete(static_cast<$BiConsumer*>($$new(ResponseSubscribers$$Lambda$lambda$getBodyAsync$2$3, cf)));
 	} catch ($Throwable&) {
@@ -434,6 +437,7 @@ void ResponseSubscribers::lambda$getBodyAsync$2($CompletableFuture* cf, Object$*
 
 $Stream* ResponseSubscribers::lambda$createLineStream$1($Charset* charset, $InputStream* stream) {
 	$init(ResponseSubscribers);
+	$useLocalCurrentObjectStackCache();
 	return $cast($Stream, $nc($($$new($BufferedReader, $$new($InputStreamReader, stream, charset))->lines()))->onClose(static_cast<$Runnable*>($$new(ResponseSubscribers$$Lambda$lambda$createLineStream$0$4, stream))));
 }
 

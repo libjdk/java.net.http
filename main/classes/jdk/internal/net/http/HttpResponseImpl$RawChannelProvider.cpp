@@ -153,6 +153,7 @@ void HttpResponseImpl$RawChannelProvider::init$($HttpConnection* conn, $Exchange
 
 HttpResponseImpl$RawChannelProvider* HttpResponseImpl$RawChannelProvider::create($Response* resp, $Exchange* exch) {
 	$init(HttpResponseImpl$RawChannelProvider);
+	$useLocalCurrentObjectStackCache();
 	if ($nc($($nc(resp)->request()))->isWebSocket()) {
 		return $new(HttpResponseImpl$RawChannelProvider, $(connection(resp, exch)), exch);
 	}
@@ -161,6 +162,7 @@ HttpResponseImpl$RawChannelProvider* HttpResponseImpl$RawChannelProvider::create
 
 $RawChannel* HttpResponseImpl$RawChannelProvider::rawChannel() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		if (this->rawchan == nullptr) {
 			$var($ExchangeImpl, exchImpl, exchangeImpl());
 			if (!($instanceOf($Http1Exchange, exchImpl))) {

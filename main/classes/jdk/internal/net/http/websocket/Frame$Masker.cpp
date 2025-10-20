@@ -89,6 +89,7 @@ void Frame$Masker::init$() {
 
 void Frame$Masker::transferMasking($ByteBuffer* src, $ByteBuffer* dst, int32_t mask) {
 	$init(Frame$Masker);
+	$useLocalCurrentObjectStackCache();
 	int32_t var$0 = $nc(src)->remaining();
 	if (var$0 > $nc(dst)->remaining()) {
 		$throwNew($IllegalArgumentException, $($Utils::dump($$new($ObjectArray, {
@@ -100,6 +101,7 @@ void Frame$Masker::transferMasking($ByteBuffer* src, $ByteBuffer* dst, int32_t m
 }
 
 Frame$Masker* Frame$Masker::mask(int32_t value) {
+	$useLocalCurrentObjectStackCache();
 	$nc($($nc($($nc($($nc(this->acc)->clear()))->putInt(value)))->putInt(value)))->flip();
 	for (int32_t i = 0; i < $nc(this->maskBytes)->length; ++i) {
 		$nc(this->maskBytes)->set(i, $nc(this->acc)->get(i));

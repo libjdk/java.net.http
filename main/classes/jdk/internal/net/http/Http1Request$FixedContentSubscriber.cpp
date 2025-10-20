@@ -114,6 +114,7 @@ void Http1Request$FixedContentSubscriber::onSubscribe($Flow$Subscription* subscr
 }
 
 void Http1Request$FixedContentSubscriber::onNext($ByteBuffer* item) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("onNext"_s);
 	}
@@ -140,6 +141,7 @@ void Http1Request$FixedContentSubscriber::onNext($ByteBuffer* item) {
 }
 
 $String* Http1Request$FixedContentSubscriber::currentStateMessage() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("fixed content-length: %d, bytes sent: %d"_s, $$new($ObjectArray, {
 		$($of($Long::valueOf(this->this$0->contentLength))),
 		$($of($Long::valueOf(this->contentWritten)))
@@ -158,6 +160,7 @@ void Http1Request$FixedContentSubscriber::onError($Throwable* throwable) {
 }
 
 void Http1Request$FixedContentSubscriber::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("onComplete"_s);
 	}

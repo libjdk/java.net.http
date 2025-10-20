@@ -142,6 +142,7 @@ void RequestPublishers$InputStreamPublisher::init$($Supplier* streamSupplier) {
 }
 
 void RequestPublishers$InputStreamPublisher::subscribe($Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$var($PullPublisher, publisher, nullptr);
 	$var($InputStream, is, $cast($InputStream, $nc(this->streamSupplier)->get()));
 	if (is == nullptr) {

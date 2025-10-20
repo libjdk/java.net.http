@@ -228,6 +228,7 @@ void BufferingSubscriber::init$($HttpResponse$BodySubscriber* downstreamSubscrib
 
 int64_t BufferingSubscriber::remaining($List* buffers) {
 	$init(BufferingSubscriber);
+	$useLocalCurrentObjectStackCache();
 	return $nc($($nc($($nc(buffers)->stream()))->mapToLong(static_cast<$ToLongFunction*>($$new(BufferingSubscriber$$Lambda$remaining)))))->sum();
 }
 
@@ -243,6 +244,7 @@ bool BufferingSubscriber::hasEnoughAccumulatedBytes() {
 }
 
 $List* BufferingSubscriber::fromInternalBuffers() {
+	$useLocalCurrentObjectStackCache();
 	if (!BufferingSubscriber::$assertionsDisabled && !$Thread::holdsLock(this->buffersLock)) {
 		$throwNew($AssertionError);
 	}
@@ -326,6 +328,7 @@ void BufferingSubscriber::onNext($List* item) {
 }
 
 void BufferingSubscriber::onError($Throwable* incomingThrowable) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(incomingThrowable);
 	int32_t s = this->state;
 	if (!BufferingSubscriber::$assertionsDisabled && !(s == BufferingSubscriber::ACTIVE)) {
@@ -341,6 +344,7 @@ void BufferingSubscriber::onError($Throwable* incomingThrowable) {
 }
 
 void BufferingSubscriber::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	int32_t s = this->state;
 	if (!BufferingSubscriber::$assertionsDisabled && !(s == BufferingSubscriber::ACTIVE)) {
 		$throwNew($AssertionError, $of($$str({"Expected ACTIVE, got:"_s, $$str(s)})));

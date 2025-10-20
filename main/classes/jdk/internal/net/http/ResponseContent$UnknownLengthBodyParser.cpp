@@ -173,6 +173,7 @@ $String* ResponseContent$UnknownLengthBodyParser::dbgString() {
 }
 
 void ResponseContent$UnknownLengthBodyParser::onSubscribe($AbstractSubscription* sub) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"onSubscribe: "_s, $($nc($of(this->this$0->pusher))->getClass()->getName())}));
 	}
@@ -180,10 +181,12 @@ void ResponseContent$UnknownLengthBodyParser::onSubscribe($AbstractSubscription*
 }
 
 $String* ResponseContent$UnknownLengthBodyParser::currentStateMessage() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("http1_0 content, bytes received: %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->breceived)))}));
 }
 
 void ResponseContent$UnknownLengthBodyParser::accept($ByteBuffer* b) {
+	$useLocalCurrentObjectStackCache();
 	if (this->closedExceptionally != nullptr) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log($$str({"already closed: "_s, this->closedExceptionally}));

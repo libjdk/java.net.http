@@ -108,6 +108,7 @@ void SubscriptionBase::request(int64_t n) {
 
 $String* SubscriptionBase::toString() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$var($String, var$0, $$str({"SubscriptionBase: window = "_s, $$str($nc(this->demand)->get()), " cancelled = "_s}));
 		return $concat(var$0, $($nc(this->cancelled)->toString()));
 	}

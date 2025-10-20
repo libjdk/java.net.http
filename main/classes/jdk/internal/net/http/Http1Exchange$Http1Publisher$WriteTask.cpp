@@ -150,6 +150,7 @@ void Http1Exchange$Http1Publisher$WriteTask::init$($Http1Exchange$Http1Publisher
 }
 
 void Http1Exchange$Http1Publisher$WriteTask::run() {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1Exchange$State);
 	if (!Http1Exchange$Http1Publisher$WriteTask::$assertionsDisabled && !($nc(this->this$1->this$0)->state != $Http1Exchange$State::COMPLETED)) {
 		$throwNew($AssertionError, $of($$str({"Unexpected state:"_s, $nc(this->this$1->this$0)->state})));

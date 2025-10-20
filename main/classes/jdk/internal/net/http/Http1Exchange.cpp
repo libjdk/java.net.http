@@ -879,6 +879,7 @@ $HttpRequestImpl* Http1Exchange::request() {
 }
 
 void Http1Exchange::init$($Exchange* exchange, $HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	$ExchangeImpl::init$(exchange);
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(Http1Exchange$$Lambda$dbgString, this)), $Utils::DEBUG));
@@ -911,6 +912,7 @@ $HttpConnection* Http1Exchange::connection() {
 }
 
 void Http1Exchange::connectFlows($HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	$var($FlowTube, tube, $nc(connection)->getConnectionFlow());
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("%s connecting flows"_s, $$new($ObjectArray, {$of(tube)}));
@@ -919,6 +921,7 @@ void Http1Exchange::connectFlows($HttpConnection* connection) {
 }
 
 $CompletableFuture* Http1Exchange::sendHeadersAsync() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Sending headers only"_s);
 	}
@@ -960,6 +963,7 @@ void Http1Exchange::cancelIfFailed($Flow$Subscription* s) {
 }
 
 $CompletableFuture* Http1Exchange::sendBodyAsync() {
+	$useLocalCurrentObjectStackCache();
 	if (!Http1Exchange::$assertionsDisabled && !$nc(this->headersSentCF)->isDone()) {
 		$throwNew($AssertionError);
 	}
@@ -986,6 +990,7 @@ $CompletableFuture* Http1Exchange::sendBodyAsync() {
 }
 
 $CompletableFuture* Http1Exchange::getResponseAsync($Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("reading headers"_s);
 	}
@@ -1018,6 +1023,7 @@ $CompletableFuture* Http1Exchange::getResponseAsync($Executor* executor) {
 }
 
 $CompletableFuture* Http1Exchange::readBodyAsync($HttpResponse$BodyHandler* handler, bool returnConnectionToPool, $Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	int32_t var$0 = $nc(this->response)->responseCode();
 	$init($HttpClient$Version);
 	$var($HttpResponse$BodySubscriber, bs, $nc(handler)->apply($$new($ResponseInfoImpl, var$0, $($nc(this->response)->responseHeaders()), $HttpClient$Version::HTTP_1_1)));
@@ -1065,6 +1071,7 @@ void Http1Exchange::cancel($IOException* cause) {
 }
 
 void Http1Exchange::cancelImpl($Throwable* cause) {
+	$useLocalCurrentObjectStackCache();
 	$var($LinkedList, toComplete, nullptr);
 	int32_t count = 0;
 	$var($Throwable, error, nullptr);
@@ -1197,6 +1204,7 @@ void Http1Exchange::requestMoreBody() {
 }
 
 void Http1Exchange::cancelUpstreamSubscription() {
+	$useLocalCurrentObjectStackCache();
 	$var($Executor, exec, $nc(this->client$)->theExecutor());
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("cancelling upstream publisher"_s);
@@ -1209,6 +1217,7 @@ void Http1Exchange::cancelUpstreamSubscription() {
 }
 
 $Http1Exchange$DataPair* Http1Exchange::getOutgoing() {
+	$useLocalCurrentObjectStackCache();
 	$var($Executor, exec, $nc(this->client$)->theExecutor());
 	$var($Http1Exchange$DataPair, dp, $cast($Http1Exchange$DataPair, $nc(this->outgoing)->pollFirst()));
 	if ($nc(this->writePublisher)->cancelled) {
@@ -1292,6 +1301,7 @@ void Http1Exchange::lambda$getOutgoing$12($Http1Exchange$DataPair* dp) {
 }
 
 void Http1Exchange::lambda$cancelImpl$9($CompletableFuture* cf, $Throwable* x) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(cf)->completeExceptionally(x)) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("%s: completed cf with %s"_s, $$new($ObjectArray, {
@@ -1325,6 +1335,7 @@ $CompletionStage* Http1Exchange::lambda$sendHeadersAsync$5($Void* unused) {
 }
 
 $CompletionStage* Http1Exchange::lambda$sendHeadersAsync$4($Void* unused) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, $new($MinimalFuture));
 	try {
 		$nc($nc(this->asyncReceiver)->whenFinished)->whenComplete(static_cast<$BiConsumer*>($$new(Http1Exchange$$Lambda$lambda$sendHeadersAsync$3$14, this)));
@@ -1361,6 +1372,7 @@ $CompletionStage* Http1Exchange::lambda$sendHeadersAsync$4($Void* unused) {
 }
 
 void Http1Exchange::lambda$sendHeadersAsync$3($Void* r, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if (t != nullptr) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("asyncReceiver finished (failed=%s)"_s, $$new($ObjectArray, {$of(t)}));

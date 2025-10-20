@@ -195,6 +195,7 @@ $Object* allocate$LineSubscriberAdapter$LineSubscription($Class* clazz) {
 bool LineSubscriberAdapter$LineSubscription::$assertionsDisabled = false;
 
 void LineSubscriberAdapter$LineSubscription::init$($Flow$Subscription* s, $CharsetDecoder* dec, $String* separator, $Flow$Subscriber* subscriber, $CompletableFuture* completion) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, errorRef, $new($AtomicReference));
 	$set(this, demanded, $new($AtomicLong));
 	$set(this, chars, $new($chars, 1024));
@@ -334,6 +335,7 @@ $String* LineSubscriberAdapter$LineSubscription::nextLine($StringBuilder* b, $St
 }
 
 $String* LineSubscriberAdapter$LineSubscription::nextLine() {
+	$useLocalCurrentObjectStackCache();
 	if (!LineSubscriberAdapter$LineSubscription::$assertionsDisabled && !(this->nextLine$ == nullptr)) {
 		$throwNew($AssertionError);
 	}
@@ -434,6 +436,7 @@ $String* LineSubscriberAdapter$LineSubscription::nextLine() {
 }
 
 void LineSubscriberAdapter$LineSubscription::loop() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		while (!this->cancelled) {
 			$var($Throwable, error, $cast($Throwable, $nc(this->errorRef)->get()));
@@ -509,6 +512,7 @@ void LineSubscriberAdapter$LineSubscription::loop() {
 
 LineSubscriberAdapter$LineSubscription* LineSubscriberAdapter$LineSubscription::create($Flow$Subscription* s, $Charset* charset, $String* lineSeparator, $Flow$Subscriber* upstream, $CompletableFuture* cf) {
 	$init(LineSubscriberAdapter$LineSubscription);
+	$useLocalCurrentObjectStackCache();
 	$var($Flow$Subscription, var$0, $cast($Flow$Subscription, $Objects::requireNonNull(s)));
 	$init($CodingErrorAction);
 	$var($CharsetDecoder, var$1, $nc($($nc($($nc(($cast($Charset, $Objects::requireNonNull(charset))))->newDecoder()))->onMalformedInput($CodingErrorAction::REPLACE)))->onUnmappableCharacter($CodingErrorAction::REPLACE));

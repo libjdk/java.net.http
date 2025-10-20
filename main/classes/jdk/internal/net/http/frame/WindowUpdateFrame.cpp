@@ -66,6 +66,7 @@ int32_t WindowUpdateFrame::length() {
 }
 
 $String* WindowUpdateFrame::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($($Http2Frame::toString()))->append(" WindowUpdate: "_s)->append(this->windowUpdate);
 	return sb->toString();

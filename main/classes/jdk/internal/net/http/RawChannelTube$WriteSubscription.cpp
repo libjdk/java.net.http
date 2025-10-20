@@ -86,6 +86,7 @@ void RawChannelTube$WriteSubscription::init$($RawChannelTube* this$0, $Flow$Subs
 }
 
 void RawChannelTube$WriteSubscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("WriteSubscription::request %d"_s, $$new($ObjectArray, {$($of($Long::valueOf(n)))}));
 	}

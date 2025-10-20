@@ -271,6 +271,7 @@ $Object* allocate$SocketTube$InternalReadPublisher$InternalReadSubscription($Cla
 bool SocketTube$InternalReadPublisher$InternalReadSubscription::$assertionsDisabled = false;
 
 void SocketTube$InternalReadPublisher$InternalReadSubscription::init$($SocketTube$InternalReadPublisher* this$1) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, this$1, this$1);
 	$set(this, demand, $new($Demand));
 	$set(this, readScheduler, $new($SequentialScheduler, $$new($SocketTube$SocketFlowTask, static_cast<$Runnable*>($$new(SocketTube$InternalReadPublisher$InternalReadSubscription$$Lambda$read, this)))));
@@ -300,6 +301,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::signalSubscribe(
 }
 
 void SocketTube$InternalReadPublisher$InternalReadSubscription::handleSubscribeEvent() {
+	$useLocalCurrentObjectStackCache();
 	if (!SocketTube$InternalReadPublisher$InternalReadSubscription::$assertionsDisabled && !$nc($nc(this->this$1->this$0)->client)->isSelectorThread()) {
 		$throwNew($AssertionError);
 	}
@@ -317,6 +319,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::handleSubscribeE
 }
 
 void SocketTube$InternalReadPublisher$InternalReadSubscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (n > (int64_t)0) {
 		bool wasFulfilled = $nc(this->demand)->increase(n);
 		if (wasFulfilled) {
@@ -332,6 +335,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::request(int64_t 
 }
 
 void SocketTube$InternalReadPublisher$InternalReadSubscription::cancel() {
+	$useLocalCurrentObjectStackCache();
 	pauseReadEvent();
 	if ($nc($nc(this->this$1->this$0)->debug)->on()) {
 		$nc($nc(this->this$1->this$0)->debug)->log("Read subscription cancelled"_s);
@@ -367,6 +371,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::handleError() {
 }
 
 void SocketTube$InternalReadPublisher$InternalReadSubscription::signalError($Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc($nc(this->this$1->this$0)->debug)->on()) {
 		$nc($nc(this->this$1->this$0)->debug)->log($$str({"signal read error: "_s, error}));
 	}
@@ -390,6 +395,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::signalReadable()
 }
 
 void SocketTube$InternalReadPublisher$InternalReadSubscription::read() {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		bool return$1 = false;
@@ -538,6 +544,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::read() {
 }
 
 bool SocketTube$InternalReadPublisher$InternalReadSubscription::handlePending() {
+	$useLocalCurrentObjectStackCache();
 	$var($SocketTube$InternalReadPublisher$ReadSubscription, pending, $cast($SocketTube$InternalReadPublisher$ReadSubscription, $nc(this->this$1->pendingSubscription)->getAndSet(nullptr)));
 	if (pending == nullptr) {
 		return false;

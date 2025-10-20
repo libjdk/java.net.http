@@ -487,14 +487,17 @@ $HttpResponse$BodyHandler* Stream$PushedStream::getPushHandler() {
 }
 
 $CompletableFuture* Stream$PushedStream::sendBodyAsync() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($Stream::sendBodyAsync()))->whenComplete(static_cast<$BiConsumer*>($$new(Stream$PushedStream$$Lambda$lambda$sendBodyAsync$0, this))));
 }
 
 $CompletableFuture* Stream$PushedStream::sendHeadersAsync() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($Stream::sendHeadersAsync()))->whenComplete(static_cast<$BiConsumer*>($$new(Stream$PushedStream$$Lambda$lambda$sendBodyAsync$0, this))));
 }
 
 $CompletableFuture* Stream$PushedStream::getResponseAsync($Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, $cast($CompletableFuture, $nc(this->pushCF)->whenComplete(static_cast<$BiConsumer*>($$new(Stream$PushedStream$$Lambda$lambda$getResponseAsync$2$1, this)))));
 	if (executor != nullptr && !$nc(cf)->isDone()) {
 		$assign(cf, $cast($CompletableFuture, cf->thenApplyAsync(static_cast<$Function*>($$new(Stream$PushedStream$$Lambda$lambda$getResponseAsync$3$2)), executor)));
@@ -503,10 +506,12 @@ $CompletableFuture* Stream$PushedStream::getResponseAsync($Executor* executor) {
 }
 
 $CompletableFuture* Stream$PushedStream::readBodyAsync($HttpResponse$BodyHandler* handler, bool returnConnectionToPool, $Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($Stream::readBodyAsync(handler, returnConnectionToPool, executor)))->whenComplete(static_cast<$BiConsumer*>($$new(Stream$PushedStream$$Lambda$lambda$readBodyAsync$4$3, this))));
 }
 
 void Stream$PushedStream::completeResponse($Response* r) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logResponse(static_cast<$Supplier*>($$new(Stream$PushedStream$$Lambda$toString$4, static_cast<$Response*>($nc(r)))));
 	$nc(this->pushCF)->complete(r);
 	$var($CompletableFuture, start, $new($MinimalFuture));
@@ -520,6 +525,7 @@ void Stream$PushedStream::completeResponseExceptionally($Throwable* t) {
 }
 
 void Stream$PushedStream::handleResponse() {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpHeaders, responseHeaders, $nc(this->responseHeadersBuilder)->build());
 	this->responseCode = (int32_t)$nc($($nc(responseHeaders)->firstValueAsLong(":status"_s)))->orElse(-1);
 	if (this->responseCode == -1) {
@@ -544,6 +550,7 @@ $Void* Stream$PushedStream::lambda$completeResponse$7() {
 }
 
 void Stream$PushedStream::lambda$completeResponse$6($Response* r, Object$* body, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if (t != nullptr) {
 		$nc(this->responseCF$)->completeExceptionally(t);
 	} else {
@@ -553,6 +560,7 @@ void Stream$PushedStream::lambda$completeResponse$6($Response* r, Object$* body,
 }
 
 $CompletionStage* Stream$PushedStream::lambda$completeResponse$5($Void* v) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpResponse$BodyHandler, var$0, getPushHandler());
 	return readBodyAsync(var$0, false, $($nc($(getExchange()))->executor()));
 }

@@ -173,6 +173,7 @@ $Object* allocate$Http1Exchange$Http1Publisher($Class* clazz) {
 bool Http1Exchange$Http1Publisher::$assertionsDisabled = false;
 
 void Http1Exchange$Http1Publisher::init$($Http1Exchange* this$0) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, this$0, this$0);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(Http1Exchange$Http1Publisher$$Lambda$dbgString, this))));
 	$set(this, subscription, $new($Http1Exchange$Http1Publisher$Http1WriteSubscription, this));
@@ -197,6 +198,7 @@ void Http1Exchange$Http1Publisher::subscribe($Flow$Subscriber* s) {
 }
 
 $String* Http1Exchange$Http1Publisher::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, tag, this->dbgTag);
 	$var($Object, flow, $nc(this->this$0->connection$)->getConnectionFlow());
 	if (tag == nullptr && flow != nullptr) {

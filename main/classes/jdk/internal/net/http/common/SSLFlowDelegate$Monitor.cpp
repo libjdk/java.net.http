@@ -112,6 +112,7 @@ void SSLFlowDelegate$Monitor::addTarget($SSLFlowDelegate$Monitorable* o) {
 }
 
 void SSLFlowDelegate$Monitor::removeTarget($SSLFlowDelegate$Monitorable* o) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->list) {
 		$var($Iterator, it, $nc(this->list)->iterator());
 		while ($nc(it)->hasNext()) {
@@ -141,6 +142,7 @@ void SSLFlowDelegate$Monitor::remove($SSLFlowDelegate$Monitorable* o) {
 }
 
 void SSLFlowDelegate$Monitor::run() {
+	$useLocalCurrentObjectStackCache();
 	$init($System);
 	$nc($System::out)->println("Monitor starting"_s);
 	try {

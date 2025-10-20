@@ -151,6 +151,7 @@ void QuickHuffman$Reader::init$() {
 }
 
 void QuickHuffman$Reader::read($ByteBuffer* source, $Appendable* destination, bool isLast) {
+	$useLocalCurrentObjectStackCache();
 	while (!this->done) {
 		int32_t remaining = $nc(source)->remaining();
 		int32_t nBytes = $HPACK::read(source, this->buffer, this->bufferLen, this->UPDATER);

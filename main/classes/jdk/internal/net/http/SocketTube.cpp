@@ -275,6 +275,7 @@ void SocketTube::onComplete() {
 }
 
 void SocketTube::signalClosed() {
+	$useLocalCurrentObjectStackCache();
 	if ($Log::channel()) {
 		$Log::logChannel("Connection close signalled: connection closed locally ({0})"_s, $$new($ObjectArray, {$($of(channelDescr()))}));
 	}
@@ -282,6 +283,7 @@ void SocketTube::signalClosed() {
 }
 
 void SocketTube::debugState($String* when) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$var($StringBuilder, state, $new($StringBuilder));
 		$var($SocketTube$InternalReadPublisher$InternalReadSubscription, sub, $nc(this->readPublisher)->subscriptionImpl);
@@ -299,6 +301,7 @@ void SocketTube::debugState($String* when) {
 }
 
 $List* SocketTube::readAvailable($SocketTube$BufferSource* buffersSource) {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, buf, $nc(buffersSource)->getBuffer());
 	if (!SocketTube::$assertionsDisabled && !$nc(buf)->hasRemaining()) {
 		$throwNew($AssertionError);
@@ -345,6 +348,7 @@ $List* SocketTube::readAvailable($SocketTube$BufferSource* buffersSource) {
 
 $List* SocketTube::listOf($List* list, Object$* item) {
 	$init(SocketTube);
+	$useLocalCurrentObjectStackCache();
 	int32_t size = list == nullptr ? 0 : $nc(list)->size();
 	{
 		$var($List, res, nullptr)
@@ -373,6 +377,7 @@ $List* SocketTube::listOf($List* list, Object$* item) {
 }
 
 int64_t SocketTube::writeAvailable($List* bytes) {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$var($ByteBufferArray, srcs, $fcast($ByteBufferArray, $nc(bytes)->toArray($Utils::EMPTY_BB_ARRAY)));
 	int64_t remaining = $Utils::remaining(srcs);

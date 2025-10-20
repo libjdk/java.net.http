@@ -100,6 +100,7 @@ void PullPublisher$Subscription::init$($PullPublisher* this$0, $Flow$Subscriber*
 }
 
 void PullPublisher$Subscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (this->cancelled) {
 		return;
 	}

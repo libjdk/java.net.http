@@ -474,6 +474,7 @@ $Logger* WebSocketImpl::debug = nullptr;
 
 $CompletableFuture* WebSocketImpl::newInstanceAsync($BuilderImpl* b) {
 	$init(WebSocketImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($Function, newWebSocket, static_cast<$Function*>($new(WebSocketImpl$$Lambda$lambda$newInstanceAsync$0$1, b)));
 	$var($OpeningHandshake, h, nullptr);
 	try {
@@ -493,6 +494,7 @@ WebSocketImpl* WebSocketImpl::newInstance($URI* uri, $String* subprotocol, $WebS
 }
 
 void WebSocketImpl::init$($URI* uri, $String* subprotocol, $WebSocket$Listener* listener, $TransportFactory* transportFactory) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, sendCounter, $new($AtomicLong));
 	$set(this, receiveCounter, $new($AtomicLong));
 	$set(this, lastAutomaticPong, $new($AtomicReference));
@@ -513,6 +515,7 @@ void WebSocketImpl::init$($URI* uri, $String* subprotocol, $WebSocket$Listener* 
 }
 
 $CompletableFuture* WebSocketImpl::sendText($CharSequence* message, bool last) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(message);
 	int64_t id = 0;
 	if ($nc(WebSocketImpl::debug)->on()) {
@@ -539,6 +542,7 @@ $CompletableFuture* WebSocketImpl::sendText($CharSequence* message, bool last) {
 }
 
 $CompletableFuture* WebSocketImpl::sendBinary($ByteBuffer* message, bool last) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(message);
 	int64_t id = 0;
 	if ($nc(WebSocketImpl::debug)->on()) {
@@ -581,6 +585,7 @@ $CompletableFuture* WebSocketImpl::replaceNull($CompletableFuture* cf) {
 }
 
 $CompletableFuture* WebSocketImpl::sendPing($ByteBuffer* message) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(message);
 	int64_t id = 0;
 	if ($nc(WebSocketImpl::debug)->on()) {
@@ -606,6 +611,7 @@ $CompletableFuture* WebSocketImpl::sendPing($ByteBuffer* message) {
 }
 
 $CompletableFuture* WebSocketImpl::sendPong($ByteBuffer* message) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(message);
 	int64_t id = 0;
 	if ($nc(WebSocketImpl::debug)->on()) {
@@ -639,6 +645,7 @@ void WebSocketImpl::clearPendingPingOrPong() {
 }
 
 $CompletableFuture* WebSocketImpl::sendClose(int32_t statusCode, $String* reason) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(reason);
 	int64_t id = 0;
 	if ($nc(WebSocketImpl::debug)->on()) {
@@ -670,6 +677,7 @@ $CompletableFuture* WebSocketImpl::sendClose(int32_t statusCode, $String* reason
 
 bool WebSocketImpl::isLegalReason($String* reason) {
 	$init(WebSocketImpl);
+	$useLocalCurrentObjectStackCache();
 	if ($nc(reason)->length() > 123) {
 		return false;
 	}
@@ -705,6 +713,7 @@ void WebSocketImpl::processCloseError($Throwable* e) {
 }
 
 void WebSocketImpl::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(WebSocketImpl::debug)->on()) {
 		$nc(WebSocketImpl::debug)->log("request %s"_s, $$new($ObjectArray, {$($of($Long::valueOf(n)))}));
 	}
@@ -736,12 +745,14 @@ void WebSocketImpl::abort() {
 }
 
 $String* WebSocketImpl::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$1, $$str({$($WebSocket::toString()), "[uri="_s, this->uri}));
 	$var($String, var$0, $$concat(var$1, (!$nc(this->subprotocol)->isEmpty() ? $$str({", subprotocol="_s, this->subprotocol}) : ""_s)));
 	return $concat(var$0, "]");
 }
 
 void WebSocketImpl::sendCloseSilently(int32_t statusCode) {
+	$useLocalCurrentObjectStackCache();
 	$nc($(sendClose0(statusCode, ""_s)))->whenComplete(static_cast<$BiConsumer*>($$new(WebSocketImpl$$Lambda$lambda$sendCloseSilently$6$5)));
 }
 
@@ -757,6 +768,7 @@ $ByteBuffer* WebSocketImpl::clearAutomaticPong() {
 }
 
 bool WebSocketImpl::trySwapAutomaticPong($ByteBuffer* copy) {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, message, nullptr);
 	bool swapped = false;
 	while (true) {
@@ -805,6 +817,7 @@ void WebSocketImpl::signalError($Throwable* error) {
 }
 
 void WebSocketImpl::close() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(WebSocketImpl::debug)->on()) {
 		$nc(WebSocketImpl::debug)->log("close"_s);
 	}
@@ -861,6 +874,7 @@ void WebSocketImpl::close() {
 }
 
 void WebSocketImpl::signalClose(int32_t statusCode, $String* reason) {
+	$useLocalCurrentObjectStackCache();
 	this->inputClosed = true;
 	this->statusCode = statusCode;
 	$set(this, reason, reason);
@@ -886,6 +900,7 @@ void WebSocketImpl::signalClose(int32_t statusCode, $String* reason) {
 }
 
 bool WebSocketImpl::trySetState($WebSocketImpl$State* newState) {
+	$useLocalCurrentObjectStackCache();
 	$WebSocketImpl$State* currentState = nullptr;
 	bool success = false;
 	while (true) {
@@ -910,6 +925,7 @@ bool WebSocketImpl::trySetState($WebSocketImpl$State* newState) {
 }
 
 bool WebSocketImpl::tryChangeState($WebSocketImpl$State* expectedState, $WebSocketImpl$State* newState) {
+	$useLocalCurrentObjectStackCache();
 	$WebSocketImpl$State* witness = $cast($WebSocketImpl$State, $nc(this->state)->compareAndExchange(expectedState, newState));
 	bool success = false;
 	if (witness == expectedState) {
@@ -958,6 +974,7 @@ void WebSocketImpl::lambda$sendText$1($WebSocket* r, $Throwable* e) {
 
 $WebSocket* WebSocketImpl::lambda$newInstanceAsync$0($BuilderImpl* b, $OpeningHandshake$Result* r) {
 	$init(WebSocketImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($URI, var$0, $nc(b)->getUri());
 	$var($String, var$1, $nc(r)->subprotocol);
 	$var($WebSocket, ws, newInstance(var$0, var$1, $(b->getListener()), r->transport));

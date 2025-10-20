@@ -301,6 +301,7 @@ int32_t PlainHttpConnection$ConnectEvent::interestOps() {
 }
 
 void PlainHttpConnection$ConnectEvent::handle() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		if (!PlainHttpConnection$ConnectEvent::$assertionsDisabled && ! !this->this$0->connected$) {
 			$throwNew($AssertionError, $of("Already connected"_s));
@@ -339,6 +340,7 @@ void PlainHttpConnection$ConnectEvent::handle() {
 }
 
 void PlainHttpConnection$ConnectEvent::abort($IOException* ioe) {
+	$useLocalCurrentObjectStackCache();
 	$nc($($nc($(this->this$0->client()))->theExecutor()))->execute(static_cast<$Runnable*>($$new(PlainHttpConnection$ConnectEvent$$Lambda$lambda$abort$3$3, this, ioe)));
 	this->this$0->close();
 }

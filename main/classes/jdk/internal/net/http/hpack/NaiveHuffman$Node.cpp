@@ -79,6 +79,7 @@ void NaiveHuffman$Node::init$() {
 }
 
 NaiveHuffman$Node* NaiveHuffman$Node::getChild(int32_t selector) {
+	$useLocalCurrentObjectStackCache();
 	if (isLeaf()) {
 		$throwNew($IllegalStateException, "This is a leaf node"_s);
 	}
@@ -127,6 +128,7 @@ NaiveHuffman$Node* NaiveHuffman$Node::addChildIfAbsent(int32_t i) {
 }
 
 $String* NaiveHuffman$Node::toString() {
+	$useLocalCurrentObjectStackCache();
 	if (isLeaf()) {
 		if (this->isEOSPath) {
 			return "EOS"_s;

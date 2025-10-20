@@ -68,6 +68,7 @@ void FilterFactory::addFilter($Class* type) {
 }
 
 $LinkedList* FilterFactory::getFilterChain() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$var($LinkedList, l, $new($LinkedList));
 	{

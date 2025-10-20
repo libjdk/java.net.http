@@ -89,6 +89,7 @@ void Response::init$($HttpRequestImpl* req, $Exchange* exchange, $HttpHeaders* h
 }
 
 void Response::init$($HttpRequestImpl* req, $Exchange* exchange, $HttpHeaders* headers, $HttpConnection* connection, int32_t statusCode, $HttpClient$Version* version, bool isConnectResponse) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, headers$, headers);
 	$set(this, request$, req);
 	$set(this, version$, version);
@@ -138,6 +139,7 @@ $SSLSession* Response::getSSLSession() {
 }
 
 $String* Response::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	$var($String, method, $nc($(request()))->method());
 	$var($URI, uri, $nc($(request()))->uri());

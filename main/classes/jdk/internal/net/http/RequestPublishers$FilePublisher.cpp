@@ -327,6 +327,7 @@ $String* RequestPublishers$FilePublisher::pathForSecurityCheck($Path* path) {
 
 RequestPublishers$FilePublisher* RequestPublishers$FilePublisher::create($Path* path) {
 	$init(RequestPublishers$FilePublisher);
+	$useLocalCurrentObjectStackCache();
 	$var($SecurityManager, sm, $System::getSecurityManager());
 	$var($FilePermission, filePermission, nullptr);
 	bool defaultFS = true;
@@ -377,6 +378,7 @@ RequestPublishers$FilePublisher* RequestPublishers$FilePublisher::create($Path* 
 
 $InputStream* RequestPublishers$FilePublisher::createInputStream($Path* path, $AccessControlContext* acc, $Permission* perm, bool defaultFS) {
 	$init(RequestPublishers$FilePublisher);
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	try {
 		if (acc != nullptr) {
@@ -417,6 +419,7 @@ void RequestPublishers$FilePublisher::init$($Path* name, int64_t length, $Functi
 }
 
 void RequestPublishers$FilePublisher::subscribe($Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$var($InputStream, is, nullptr);
 	$var($Throwable, t, nullptr);
 	try {

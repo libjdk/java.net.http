@@ -121,6 +121,7 @@ Frame$HeaderWriter* Frame$HeaderWriter::opcode($Frame$Opcode* value) {
 }
 
 Frame$HeaderWriter* Frame$HeaderWriter::payloadLen(int64_t value) {
+	$useLocalCurrentObjectStackCache();
 	if (value < 0) {
 		$throwNew($IllegalArgumentException, $$str({"Negative: "_s, $$str(value)}));
 	}

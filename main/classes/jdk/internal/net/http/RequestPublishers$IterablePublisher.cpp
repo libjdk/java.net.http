@@ -139,6 +139,7 @@ $Iterator* RequestPublishers$IterablePublisher::iterator() {
 }
 
 void RequestPublishers$IterablePublisher::subscribe($Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$var($Iterable, iterable, static_cast<$Iterable*>($new(RequestPublishers$IterablePublisher$$Lambda$iterator, this)));
 	$var($PullPublisher, delegate, $new($PullPublisher, iterable));
 	delegate->subscribe(subscriber);

@@ -90,6 +90,7 @@ void UTF8AccumulatingDecoder::init$() {
 }
 
 $CharBuffer* UTF8AccumulatingDecoder::decode($ByteBuffer* in, bool endOfInput) {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, b, nullptr);
 	int32_t rem = $nc(this->leftovers)->remaining();
 	if (rem != 0) {

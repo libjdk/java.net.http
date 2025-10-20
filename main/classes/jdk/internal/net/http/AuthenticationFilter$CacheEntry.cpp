@@ -80,6 +80,7 @@ $PasswordAuthentication* AuthenticationFilter$CacheEntry::value() {
 }
 
 bool AuthenticationFilter$CacheEntry::equalsKey($URI* uri, bool proxy) {
+	$useLocalCurrentObjectStackCache();
 	if (this->proxy != proxy) {
 		return false;
 	}

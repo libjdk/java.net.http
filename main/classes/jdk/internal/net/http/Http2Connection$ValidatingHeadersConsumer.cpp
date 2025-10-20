@@ -87,6 +87,7 @@ void Http2Connection$ValidatingHeadersConsumer::reset() {
 }
 
 void Http2Connection$ValidatingHeadersConsumer::onDecoded($CharSequence* name, $CharSequence* value) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, n, $nc(name)->toString());
 	if ($nc(n)->startsWith(":"_s)) {
 		if (this->pseudoHeadersEnded) {
@@ -107,6 +108,7 @@ void Http2Connection$ValidatingHeadersConsumer::onDecoded($CharSequence* name, $
 }
 
 $UncheckedIOException* Http2Connection$ValidatingHeadersConsumer::newException($String* message, $String* header) {
+	$useLocalCurrentObjectStackCache();
 	return $new($UncheckedIOException, $$new($IOException, $($String::format(message, $$new($ObjectArray, {$of(header)})))));
 }
 

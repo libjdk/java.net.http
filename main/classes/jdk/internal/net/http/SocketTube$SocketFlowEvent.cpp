@@ -179,6 +179,7 @@ void SocketTube$SocketFlowEvent::handle() {
 }
 
 void SocketTube$SocketFlowEvent::abort($IOException* error) {
+	$useLocalCurrentObjectStackCache();
 	$nc($(debug()))->log(static_cast<$Supplier*>($$new(SocketTube$SocketFlowEvent$$Lambda$lambda$abort$0, this, error)));
 	pause();
 	signalError(error);

@@ -83,6 +83,7 @@ $ints* SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$HandshakeStat
 $ints* SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$Status = nullptr;
 
 void clinit$SSLFlowDelegate$1($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$HandshakeStatus, $new($ints, $($SSLEngineResult$HandshakeStatus::values())->length));
 	{
 		try {

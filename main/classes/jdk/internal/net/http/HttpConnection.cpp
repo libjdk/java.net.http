@@ -355,11 +355,13 @@ $HttpClientImpl* HttpConnection::client() {
 }
 
 bool HttpConnection::isOpen() {
+	$useLocalCurrentObjectStackCache();
 	bool var$0 = $nc($(channel()))->isOpen();
 	return var$0 && (connected() ? !$nc($(getConnectionFlow()))->isFinished() : true);
 }
 
 bool HttpConnection::checkOpen() {
+	$useLocalCurrentObjectStackCache();
 	if (isOpen()) {
 		try {
 			int32_t read = $nc($(channel()))->read($($ByteBuffer::allocate(1)));
@@ -378,6 +380,7 @@ bool HttpConnection::checkOpen() {
 
 bool HttpConnection::hasRequiredHTTP2TLSVersion($HttpClient* client) {
 	$init(HttpConnection);
+	$useLocalCurrentObjectStackCache();
 	$var($StringArray, protos, $nc($($nc(client)->sslParameters()))->getProtocols());
 	if (protos != nullptr) {
 		return $nc($($nc($($nc($($Arrays::stream(protos)))->filter(HttpConnection::testRequiredHTTP2TLSVersion)))->findAny()))->isPresent();
@@ -388,6 +391,7 @@ bool HttpConnection::hasRequiredHTTP2TLSVersion($HttpClient* client) {
 
 HttpConnection* HttpConnection::getConnection($InetSocketAddress* addr, $HttpClientImpl* client, $HttpRequestImpl* request, $HttpClient$Version* version) {
 	$init(HttpConnection);
+	$useLocalCurrentObjectStackCache();
 	$var($InetSocketAddress, proxy, $Utils::resolveAddress($($nc(request)->proxy())));
 	$var(HttpConnection, c, nullptr);
 	bool secure = $nc(request)->secure();
@@ -472,6 +476,7 @@ $BiPredicate* HttpConnection::contextRestricted($HttpRequestImpl* request, $Http
 
 $Utils$ProxyHeaders* HttpConnection::proxyTunnelHeaders($HttpRequestImpl* request) {
 	$init(HttpConnection);
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$var($HttpHeaders, userHeaders, $HttpHeaders::of($($nc($($nc(request)->headers()))->map()), $Utils::PROXY_TUNNEL_FILTER));
 	$var($HttpHeaders, systemHeaders, $HttpHeaders::of($($nc($($nc(request)->getSystemHeadersBuilder()))->map()), $Utils::PROXY_TUNNEL_FILTER));
@@ -491,6 +496,7 @@ HttpConnection* HttpConnection::getPlainConnection($InetSocketAddress* addr, $In
 }
 
 void HttpConnection::closeOrReturnToCache($HttpHeaders* hdrs) {
+	$useLocalCurrentObjectStackCache();
 	if (hdrs == nullptr) {
 		$Log::logTrace("Cannot return connection to pool: closing {0}"_s, $$new($ObjectArray, {$of(this)}));
 		close();
@@ -526,6 +532,7 @@ $InetSocketAddress* HttpConnection::address() {
 }
 
 $String* HttpConnection::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	$var($FlowTube, flow, getConnectionFlow());
 	$var($String, tag, this->dbgTag);
 	if (tag == nullptr && flow != nullptr) {
@@ -537,6 +544,7 @@ $String* HttpConnection::dbgString() {
 }
 
 $String* HttpConnection::toString() {
+	$useLocalCurrentObjectStackCache();
 	return $str({"HttpConnection: "_s, $($nc($of($(channel())))->toString())});
 }
 

@@ -103,6 +103,7 @@ $ByteBuffer* RequestPublishers$IterablePublisher$ByteBufferIterator::getBuffer()
 }
 
 void RequestPublishers$IterablePublisher$ByteBufferIterator::copy() {
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, bytes, $cast($bytes, $nc(this->iterator)->next()));
 	int32_t length = $nc(bytes)->length;
 	if (length == 0 && $nc(this->iterator)->hasNext()) {

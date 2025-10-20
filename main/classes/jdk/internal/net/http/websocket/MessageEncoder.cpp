@@ -188,6 +188,7 @@ $Object* allocate$MessageEncoder($Class* clazz) {
 $Logger* MessageEncoder::debug = nullptr;
 
 void MessageEncoder::init$() {
+	$useLocalCurrentObjectStackCache();
 	$set(this, maskingKeySource, $new($SecureRandom));
 	$set(this, headerWriter, $new($Frame$HeaderWriter));
 	$set(this, payloadMasker, $new($Frame$Masker));
@@ -214,6 +215,7 @@ void MessageEncoder::reset() {
 }
 
 bool MessageEncoder::encodeText($CharBuffer* src, bool last, $ByteBuffer* dst) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageEncoder::debug)->on()) {
 		$nc(MessageEncoder::debug)->log("encode text src=[pos=%s lim=%s cap=%s] last=%s dst=%s"_s, $$new($ObjectArray, {
 			$($of($Integer::valueOf($nc(src)->position()))),
@@ -306,6 +308,7 @@ bool MessageEncoder::putAvailable($ByteBuffer* src, $ByteBuffer* dst) {
 }
 
 bool MessageEncoder::encodeBinary($ByteBuffer* src, bool last, $ByteBuffer* dst) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageEncoder::debug)->on()) {
 		$nc(MessageEncoder::debug)->log("encode binary src=%s last=%s dst=%s"_s, $$new($ObjectArray, {
 			$of(src),
@@ -347,6 +350,7 @@ int32_t MessageEncoder::maskAvailable($ByteBuffer* src, $ByteBuffer* dst) {
 }
 
 bool MessageEncoder::encodePing($ByteBuffer* src, $ByteBuffer* dst) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageEncoder::debug)->on()) {
 		$nc(MessageEncoder::debug)->log("encode ping src=%s dst=%s"_s, $$new($ObjectArray, {
 			$of(src),
@@ -377,6 +381,7 @@ bool MessageEncoder::encodePing($ByteBuffer* src, $ByteBuffer* dst) {
 }
 
 bool MessageEncoder::encodePong($ByteBuffer* src, $ByteBuffer* dst) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageEncoder::debug)->on()) {
 		$nc(MessageEncoder::debug)->log("encode pong src=%s dst=%s"_s, $$new($ObjectArray, {
 			$of(src),
@@ -407,6 +412,7 @@ bool MessageEncoder::encodePong($ByteBuffer* src, $ByteBuffer* dst) {
 }
 
 bool MessageEncoder::encodeClose(int32_t statusCode, $CharBuffer* reason, $ByteBuffer* dst) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageEncoder::debug)->on()) {
 		$nc(MessageEncoder::debug)->log("encode close statusCode=%s reason=[pos=%s lim=%s cap=%s] dst=%s"_s, $$new($ObjectArray, {
 			$($of($Integer::valueOf(statusCode))),
@@ -467,6 +473,7 @@ bool MessageEncoder::encodeClose(int32_t statusCode, $CharBuffer* reason, $ByteB
 }
 
 void MessageEncoder::setupHeader($Frame$Opcode* opcode, bool fin, int64_t payloadLen) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageEncoder::debug)->on()) {
 		$nc(MessageEncoder::debug)->log("frame opcode=%s fin=%s len=%s"_s, $$new($ObjectArray, {
 			$of(opcode),

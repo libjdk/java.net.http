@@ -237,6 +237,7 @@ bool SSLTube::handshaking() {
 }
 
 $String* SSLTube::handshakeFailed() {
+	$useLocalCurrentObjectStackCache();
 	bool var$0 = handshaking();
 	if (var$0 && (this->sslDelegate == nullptr || !$nc(this->sslDelegate)->closeNotifyReceived())) {
 		return "Remote host terminated the handshake"_s;
@@ -248,6 +249,7 @@ $String* SSLTube::handshakeFailed() {
 }
 
 $Throwable* SSLTube::checkForHandshake($Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if ($instanceOf($SSLException, t)) {
 		return t;
 	}
@@ -288,6 +290,7 @@ void SSLTube::onSubscribe($Flow$Subscription* subscription) {
 }
 
 void SSLTube::onNext($List* item) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(item);
 	bool decremented = $nc(this->writeDemand)->tryDecrement();
 	if (!SSLTube::$assertionsDisabled && !decremented) {

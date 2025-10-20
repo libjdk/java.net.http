@@ -133,6 +133,7 @@ void ConnectionPool$ExpiryList::add($HttpConnection* conn) {
 }
 
 void ConnectionPool$ExpiryList::add($HttpConnection* conn, $Instant* now, int64_t keepAlive) {
+	$useLocalCurrentObjectStackCache();
 	$init($ChronoUnit);
 	$var($Instant, then, $nc($($nc(now)->truncatedTo($ChronoUnit::SECONDS)))->plus(keepAlive, static_cast<$TemporalUnit*>($ChronoUnit::SECONDS)));
 	$var($ListIterator, li, $nc(this->list)->listIterator());
@@ -150,6 +151,7 @@ void ConnectionPool$ExpiryList::add($HttpConnection* conn, $Instant* now, int64_
 }
 
 void ConnectionPool$ExpiryList::remove($HttpConnection* c) {
+	$useLocalCurrentObjectStackCache();
 	if (c == nullptr || $nc(this->list)->isEmpty()) {
 		return;
 	}
@@ -165,6 +167,7 @@ void ConnectionPool$ExpiryList::remove($HttpConnection* c) {
 }
 
 $List* ConnectionPool$ExpiryList::purgeUntil($Instant* now) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->list)->isEmpty()) {
 		return $Collections::emptyList();
 	}

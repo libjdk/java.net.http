@@ -266,6 +266,7 @@ void Http2Connection$Http2TubeSubscriber::init$($Http2Connection* this$0, $HttpC
 }
 
 void Http2Connection$Http2TubeSubscriber::processQueue() {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {
@@ -377,6 +378,7 @@ $String* Http2Connection$Http2TubeSubscriber::lambda$onError$1($Throwable* throw
 
 $String* Http2Connection$Http2TubeSubscriber::lambda$onNext$0($List* item) {
 	$init(Http2Connection$Http2TubeSubscriber);
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$1, $$str({"onNext: got "_s, $$str($Utils::remaining(item)), " bytes in "_s}));
 	$var($String, var$0, $$concat(var$1, $$str($nc(item)->size())));
 	return $concat(var$0, " buffers");

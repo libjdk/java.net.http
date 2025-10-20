@@ -148,6 +148,7 @@ void Http2Connection$FramesController::init$($Http2Connection* this$0) {
 }
 
 bool Http2Connection$FramesController::processReceivedData($FramesDecoder* decoder, $ByteBuffer* buf) {
+	$useLocalCurrentObjectStackCache();
 	if (!this->prefaceSent) {
 		if ($nc(this->this$0->debug)->on()) {
 			$nc(this->this$0->debug)->log("Preface not sent: buffering %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(buf)->remaining())))}));

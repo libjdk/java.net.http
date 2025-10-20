@@ -154,6 +154,7 @@ void HttpClientImpl$DelegatingExecutor::execute($Runnable* command) {
 }
 
 void HttpClientImpl$DelegatingExecutor::shutdown() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	{
 		$var($ExecutorService, service, nullptr);

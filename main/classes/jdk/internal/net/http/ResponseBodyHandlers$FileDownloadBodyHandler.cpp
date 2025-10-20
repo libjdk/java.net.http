@@ -200,6 +200,7 @@ $List* ResponseBodyHandlers$FileDownloadBodyHandler::PROHIBITED = nullptr;
 
 ResponseBodyHandlers$FileDownloadBodyHandler* ResponseBodyHandlers$FileDownloadBodyHandler::create($Path* directory, $List* openOptions) {
 	$init(ResponseBodyHandlers$FileDownloadBodyHandler);
+	$useLocalCurrentObjectStackCache();
 	$var($String, fn, nullptr);
 	try {
 		$assign(fn, $ResponseBodyHandlers::pathForSecurityCheck(directory));
@@ -256,6 +257,7 @@ void ResponseBodyHandlers$FileDownloadBodyHandler::init$($Path* directory, $List
 
 $UncheckedIOException* ResponseBodyHandlers$FileDownloadBodyHandler::unchecked($HttpResponse$ResponseInfo* rinfo, $String* msg) {
 	$init(ResponseBodyHandlers$FileDownloadBodyHandler);
+	$useLocalCurrentObjectStackCache();
 	$var($String, s, $String::format("%s in response [%d, %s]"_s, $$new($ObjectArray, {
 		$of(msg),
 		$($of($Integer::valueOf($nc(rinfo)->statusCode()))),
@@ -265,6 +267,7 @@ $UncheckedIOException* ResponseBodyHandlers$FileDownloadBodyHandler::unchecked($
 }
 
 $HttpResponse$BodySubscriber* ResponseBodyHandlers$FileDownloadBodyHandler::apply($HttpResponse$ResponseInfo* responseInfo) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, dispoHeader, $cast($String, $nc($($nc($($nc(responseInfo)->headers()))->firstValue("Content-Disposition"_s)))->orElseThrow(static_cast<$Supplier*>($$new(ResponseBodyHandlers$FileDownloadBodyHandler$$Lambda$lambda$apply$0, responseInfo)))));
 	if (!$nc(dispoHeader)->regionMatches(true, 0, ResponseBodyHandlers$FileDownloadBodyHandler::DISPOSITION_TYPE, 0, $nc(ResponseBodyHandlers$FileDownloadBodyHandler::DISPOSITION_TYPE)->length())) {
 		$throw($(unchecked(responseInfo, "Unknown Content-Disposition type"_s)));

@@ -301,6 +301,7 @@ $HttpClient* ExchangeImpl::client() {
 
 $CompletableFuture* ExchangeImpl::get($Exchange* exchange, $HttpConnection* connection) {
 	$init(ExchangeImpl);
+	$useLocalCurrentObjectStackCache();
 	$init($HttpClient$Version);
 	if ($nc(exchange)->version() == $HttpClient$Version::HTTP_1_1) {
 		if ($nc(ExchangeImpl::debug)->on()) {
@@ -321,6 +322,7 @@ $CompletableFuture* ExchangeImpl::get($Exchange* exchange, $HttpConnection* conn
 
 $CompletableFuture* ExchangeImpl::createExchangeImpl($Http2Connection* c, $Throwable* t$renamed, $Exchange* exchange, $HttpConnection* connection) {
 	$init(ExchangeImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if ($nc(ExchangeImpl::debug)->on()) {
 		$nc(ExchangeImpl::debug)->log("handling HTTP/2 connection creation result"_s);
@@ -370,6 +372,7 @@ $CompletableFuture* ExchangeImpl::createExchangeImpl($Http2Connection* c, $Throw
 
 $CompletableFuture* ExchangeImpl::createHttp1Exchange($Exchange* ex, $HttpConnection* as) {
 	$init(ExchangeImpl);
+	$useLocalCurrentObjectStackCache();
 	try {
 		return $MinimalFuture::completedFuture($$new($Http1Exchange, ex, as));
 	} catch ($Throwable&) {

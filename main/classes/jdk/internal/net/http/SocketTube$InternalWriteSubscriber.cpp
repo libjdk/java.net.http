@@ -303,6 +303,7 @@ $Object* allocate$SocketTube$InternalWriteSubscriber($Class* clazz) {
 bool SocketTube$InternalWriteSubscriber::$assertionsDisabled = false;
 
 void SocketTube$InternalWriteSubscriber::init$($SocketTube* this$0) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, this$0, this$0);
 	$var($Consumer, var$0, static_cast<$Consumer*>($new(SocketTube$InternalWriteSubscriber$$Lambda$signalError, this)));
 	$set(this, startSubscription$, $new($AsyncTriggerEvent, var$0, static_cast<$Runnable*>($$new(SocketTube$InternalWriteSubscriber$$Lambda$startSubscription$1, this))));
@@ -311,6 +312,7 @@ void SocketTube$InternalWriteSubscriber::init$($SocketTube* this$0) {
 }
 
 void SocketTube$InternalWriteSubscriber::onSubscribe($Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	$var($SocketTube$InternalWriteSubscriber$WriteSubscription, previous, this->subscription);
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("subscribed for writing"_s);
@@ -336,6 +338,7 @@ void SocketTube$InternalWriteSubscriber::onSubscribe($Flow$Subscription* subscri
 }
 
 void SocketTube$InternalWriteSubscriber::onNext($List* bufs) {
+	$useLocalCurrentObjectStackCache();
 	if (!SocketTube$InternalWriteSubscriber::$assertionsDisabled && !(this->current == nullptr)) {
 		$throwNew($AssertionError, $of($$str({$(this->this$0->dbgString()), "w.onNext current: "_s, this->current})));
 	}
@@ -348,6 +351,7 @@ void SocketTube$InternalWriteSubscriber::onNext($List* bufs) {
 }
 
 void SocketTube$InternalWriteSubscriber::tryFlushCurrent(bool inSelectorThread) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, bufs, this->current);
 	if (bufs == nullptr) {
 		return;
@@ -396,6 +400,7 @@ void SocketTube$InternalWriteSubscriber::tryFlushCurrent(bool inSelectorThread) 
 }
 
 void SocketTube$InternalWriteSubscriber::startSubscription() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		if ($nc(this->this$0->debug)->on()) {
 			$nc(this->this$0->debug)->log("write: starting subscription"_s);
@@ -427,6 +432,7 @@ void SocketTube$InternalWriteSubscriber::onError($Throwable* throwable) {
 }
 
 void SocketTube$InternalWriteSubscriber::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	this->completed = true;
 	$var($List, bufs, this->current);
 	int64_t remaining = bufs == nullptr ? (int64_t)0 : $Utils::remaining(bufs);
@@ -451,6 +457,7 @@ void SocketTube$InternalWriteSubscriber::signalWritable() {
 }
 
 void SocketTube$InternalWriteSubscriber::signalError($Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->this$0->debug)->log(static_cast<$Supplier*>($$new(SocketTube$InternalWriteSubscriber$$Lambda$lambda$signalError$0$3, error)));
 	if ($Log::channel()) {
 		$Log::logChannel("Failed to write to channel ({0}: {1})"_s, $$new($ObjectArray, {

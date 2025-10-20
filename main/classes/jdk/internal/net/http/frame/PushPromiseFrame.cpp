@@ -81,6 +81,7 @@ int32_t PushPromiseFrame::length() {
 }
 
 $String* PushPromiseFrame::toString() {
+	$useLocalCurrentObjectStackCache();
 	return $str({$($HeaderFrame::toString()), " promisedStreamid: "_s, $$str(this->promisedStream), " headerLength: "_s, $$str(this->headerLength)});
 }
 

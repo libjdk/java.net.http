@@ -81,6 +81,7 @@ BulkSizeUpdateWriter* BulkSizeUpdateWriter::maxHeaderTableSizes($Iterable* sizes
 }
 
 bool BulkSizeUpdateWriter::write($HeaderTable* table, $ByteBuffer* destination) {
+	$useLocalCurrentObjectStackCache();
 	if (!this->configured) {
 		$throwNew($IllegalStateException, "Configure first"_s);
 	}

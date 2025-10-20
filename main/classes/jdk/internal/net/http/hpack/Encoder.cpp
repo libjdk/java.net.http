@@ -787,6 +787,7 @@ $Object* allocate$Encoder($Class* clazz) {
 $AtomicLong* Encoder::ENCODERS_IDS = nullptr;
 
 void Encoder::init$(int32_t maxCapacity) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, huffmanWriter, $new($QuickHuffman$Writer));
 	$set(this, indexedWriter, $new($IndexedWriter));
 	$set(this, literalWriter, $new($LiteralWriter));
@@ -817,6 +818,7 @@ void Encoder::header($CharSequence* name, $CharSequence* value) {
 }
 
 void Encoder::header($CharSequence* name, $CharSequence* value, bool sensitive) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::NORMAL)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::NORMAL, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$header$2$2, name, value, sensitive)));
@@ -860,6 +862,7 @@ void Encoder::setMaxCapacity(int32_t capacity) {
 }
 
 void Encoder::setMaxCapacity0(int32_t capacity) {
+	$useLocalCurrentObjectStackCache();
 	checkEncoding();
 	if (capacity < 0) {
 		$throwNew($IllegalArgumentException, $$str({"capacity >= 0: "_s, $$str(capacity)}));
@@ -905,6 +908,7 @@ bool Encoder::encode($ByteBuffer* headerBlock) {
 }
 
 bool Encoder::prependWithCapacityUpdate($ByteBuffer* headerBlock) {
+	$useLocalCurrentObjectStackCache();
 	if (this->capacityUpdate) {
 		if (!this->configuredCapacityUpdate) {
 			$var($List, sizes, $new($LinkedList));
@@ -943,6 +947,7 @@ void Encoder::indexed(int32_t index) {
 }
 
 void Encoder::literal(int32_t index, $CharSequence* value, bool useHuffman) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$literal$7$7, index, value, useHuffman)));
@@ -953,6 +958,7 @@ void Encoder::literal(int32_t index, $CharSequence* value, bool useHuffman) {
 }
 
 void Encoder::literal($CharSequence* name, bool nameHuffman, $CharSequence* value, bool valueHuffman) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$literal$8$8, name, nameHuffman, value, valueHuffman)));
@@ -963,6 +969,7 @@ void Encoder::literal($CharSequence* name, bool nameHuffman, $CharSequence* valu
 }
 
 void Encoder::literalNeverIndexed(int32_t index, $CharSequence* value, bool valueHuffman) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$literalNeverIndexed$9$9, index, value, valueHuffman)));
@@ -973,6 +980,7 @@ void Encoder::literalNeverIndexed(int32_t index, $CharSequence* value, bool valu
 }
 
 void Encoder::literalNeverIndexed($CharSequence* name, bool nameHuffman, $CharSequence* value, bool valueHuffman) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$literalNeverIndexed$10$10, name, nameHuffman, value, valueHuffman)));
@@ -983,6 +991,7 @@ void Encoder::literalNeverIndexed($CharSequence* name, bool nameHuffman, $CharSe
 }
 
 void Encoder::literalWithIndexing(int32_t index, $CharSequence* value, bool valueHuffman) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$literalWithIndexing$11$11, index, value, valueHuffman)));
@@ -993,6 +1002,7 @@ void Encoder::literalWithIndexing(int32_t index, $CharSequence* value, bool valu
 }
 
 void Encoder::literalWithIndexing($CharSequence* name, bool nameHuffman, $CharSequence* value, bool valueHuffman) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$literalWithIndexing$12$12, name, nameHuffman, value, valueHuffman)));
@@ -1003,6 +1013,7 @@ void Encoder::literalWithIndexing($CharSequence* name, bool nameHuffman, $CharSe
 }
 
 void Encoder::sizeUpdate(int32_t capacity) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::EXTRA)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::EXTRA, static_cast<$Supplier*>($$new(Encoder$$Lambda$lambda$sizeUpdate$13$13, capacity)));
@@ -1033,11 +1044,13 @@ void Encoder::checkEncoding() {
 
 $String* Encoder::lambda$sizeUpdate$13(int32_t capacity) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("dynamic table size update %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(capacity)))}));
 }
 
 $String* Encoder::lambda$literalWithIndexing$12($CharSequence* name, bool nameHuffman, $CharSequence* value, bool valueHuffman) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal with incremental indexing (\'%s\', huffman=%b, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$of(name),
 		$($of($Boolean::valueOf(nameHuffman))),
@@ -1048,6 +1061,7 @@ $String* Encoder::lambda$literalWithIndexing$12($CharSequence* name, bool nameHu
 
 $String* Encoder::lambda$literalWithIndexing$11(int32_t index, $CharSequence* value, bool valueHuffman) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal with incremental indexing (%s, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf(index))),
 		$of(value),
@@ -1057,6 +1071,7 @@ $String* Encoder::lambda$literalWithIndexing$11(int32_t index, $CharSequence* va
 
 $String* Encoder::lambda$literalNeverIndexed$10($CharSequence* name, bool nameHuffman, $CharSequence* value, bool valueHuffman) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal never indexed (\'%s\', huffman=%b, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$of(name),
 		$($of($Boolean::valueOf(nameHuffman))),
@@ -1067,6 +1082,7 @@ $String* Encoder::lambda$literalNeverIndexed$10($CharSequence* name, bool nameHu
 
 $String* Encoder::lambda$literalNeverIndexed$9(int32_t index, $CharSequence* value, bool valueHuffman) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal never indexed (%s, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf(index))),
 		$of(value),
@@ -1076,6 +1092,7 @@ $String* Encoder::lambda$literalNeverIndexed$9(int32_t index, $CharSequence* val
 
 $String* Encoder::lambda$literal$8($CharSequence* name, bool nameHuffman, $CharSequence* value, bool valueHuffman) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal without indexing (\'%s\', huffman=%b, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$of(name),
 		$($of($Boolean::valueOf(nameHuffman))),
@@ -1086,6 +1103,7 @@ $String* Encoder::lambda$literal$8($CharSequence* name, bool nameHuffman, $CharS
 
 $String* Encoder::lambda$literal$7(int32_t index, $CharSequence* value, bool useHuffman) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("literal without indexing (%s, \'%s\', huffman=%b)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf(index))),
 		$of(value),
@@ -1095,6 +1113,7 @@ $String* Encoder::lambda$literal$7(int32_t index, $CharSequence* value, bool use
 
 $String* Encoder::lambda$indexed$6(int32_t index) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("indexed %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(index)))}));
 }
 
@@ -1105,16 +1124,19 @@ $String* Encoder::lambda$encode$5($ByteBuffer* headerBlock) {
 
 $String* Encoder::lambda$setMaxCapacity0$4(int32_t calculated) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("actual maximum table size will be %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(calculated)))}));
 }
 
 $String* Encoder::lambda$setMaxCapacity$3(int32_t capacity) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("setting maximum table size to %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(capacity)))}));
 }
 
 $String* Encoder::lambda$header$2($CharSequence* name, $CharSequence* value, bool sensitive) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("encoding (\'%s\', \'%s\'), sensitive: %s"_s, $$new($ObjectArray, {
 		$of(name),
 		$of(value),
@@ -1123,6 +1145,7 @@ $String* Encoder::lambda$header$2($CharSequence* name, $CharSequence* value, boo
 }
 
 $String* Encoder::lambda$new$1() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, hashCode, $Integer::toHexString($System::identityHashCode(this)));
 	return $String::format("toString=\'%s\', hashCode=%s, identityHashCode=%s"_s, $$new($ObjectArray, {
 		$($of(toString())),
@@ -1133,6 +1156,7 @@ $String* Encoder::lambda$new$1() {
 
 $String* Encoder::lambda$new$0(int32_t maxCapacity) {
 	$init(Encoder);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("new encoder with maximum table size %s"_s, $$new($ObjectArray, {$($of($Integer::valueOf(maxCapacity)))}));
 }
 

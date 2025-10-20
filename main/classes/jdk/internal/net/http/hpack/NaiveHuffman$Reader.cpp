@@ -97,6 +97,7 @@ void NaiveHuffman$Reader::read($ByteBuffer* source, $Appendable* destination, bo
 }
 
 void NaiveHuffman$Reader::read($ByteBuffer* source, $Appendable* destination, bool reportEOS, bool isLast) {
+	$useLocalCurrentObjectStackCache();
 	$var($NaiveHuffman$Node, c, this->curr);
 	int32_t l = this->len;
 	int32_t pos = $nc(source)->position();

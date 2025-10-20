@@ -84,6 +84,7 @@ void HeaderParser::init$($String* raw) {
 }
 
 void HeaderParser::parse() {
+	$useLocalCurrentObjectStackCache();
 	if (this->raw != nullptr) {
 		$set(this, raw, $nc(this->raw)->trim());
 		$var($chars, ca, $nc(this->raw)->toCharArray());
@@ -207,6 +208,7 @@ $Iterator* HeaderParser::keys() {
 }
 
 $String* HeaderParser::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($Iterator, k, keys());
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append("{size="_s)->append(this->asize)->append(" nkeys="_s)->append(this->nkeys)->append(u' ');

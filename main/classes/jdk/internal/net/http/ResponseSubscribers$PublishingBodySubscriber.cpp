@@ -393,6 +393,7 @@ $Object* allocate$ResponseSubscribers$PublishingBodySubscriber($Class* clazz) {
 bool ResponseSubscribers$PublishingBodySubscriber::$assertionsDisabled = false;
 
 void ResponseSubscribers$PublishingBodySubscriber::init$() {
+	$useLocalCurrentObjectStackCache();
 	$set(this, subscriptionCF, $new($MinimalFuture));
 	$set(this, subscribedCF, $new($MinimalFuture));
 	$set(this, subscriberRef, $new($AtomicReference));
@@ -403,6 +404,7 @@ void ResponseSubscribers$PublishingBodySubscriber::init$() {
 }
 
 void ResponseSubscribers$PublishingBodySubscriber::complete($ResponseSubscribers$PublishingBodySubscriber$SubscriberRef* ref, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if (!ResponseSubscribers$PublishingBodySubscriber::$assertionsDisabled && !(ref != nullptr)) {
 		$throwNew($AssertionError);
 	}
@@ -435,6 +437,7 @@ void ResponseSubscribers$PublishingBodySubscriber::signalComplete() {
 }
 
 void ResponseSubscribers$PublishingBodySubscriber::subscribe($Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull($of(subscriber), "subscriber must not be null"_s);
 	$var($ResponseSubscribers$PublishingBodySubscriber$SubscriberRef, ref, $new($ResponseSubscribers$PublishingBodySubscriber$SubscriberRef, subscriber));
 	if ($nc(this->subscriberRef)->compareAndSet(nullptr, ref)) {
@@ -455,6 +458,7 @@ void ResponseSubscribers$PublishingBodySubscriber::onSubscribe($Flow$Subscriptio
 }
 
 void ResponseSubscribers$PublishingBodySubscriber::onNext($List* item) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(item);
 	try {
 		if (!ResponseSubscribers$PublishingBodySubscriber::$assertionsDisabled && !$nc(this->subscriptionCF)->isDone()) {
@@ -496,6 +500,7 @@ $CompletionStage* ResponseSubscribers$PublishingBodySubscriber::getBody() {
 }
 
 bool ResponseSubscribers$PublishingBodySubscriber::suppress(bool condition, $String* assertion, $Throwable* carrier) {
+	$useLocalCurrentObjectStackCache();
 	if (!condition) {
 		if (carrier != nullptr) {
 			carrier->addSuppressed($$new($AssertionError, $of(assertion)));
@@ -516,6 +521,7 @@ void ResponseSubscribers$PublishingBodySubscriber::lambda$onNext$4($Flow$Subscri
 }
 
 void ResponseSubscribers$PublishingBodySubscriber::lambda$subscribe$3($ResponseSubscribers$PublishingBodySubscriber$SubscriberRef* ref, $Flow$Subscription* s) {
+	$useLocalCurrentObjectStackCache();
 	$var($ResponseSubscribers$PublishingBodySubscriber$SubscriptionRef, subscription, $new($ResponseSubscribers$PublishingBodySubscriber$SubscriptionRef, s, ref));
 	try {
 		subscription->subscribe();

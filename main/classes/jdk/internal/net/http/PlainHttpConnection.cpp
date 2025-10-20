@@ -317,6 +317,7 @@ $Object* allocate$PlainHttpConnection($Class* clazz) {
 bool PlainHttpConnection::$assertionsDisabled = false;
 
 $PlainHttpConnection$ConnectTimerEvent* PlainHttpConnection::newConnectTimer($Exchange* exchange, $CompletableFuture* cf) {
+	$useLocalCurrentObjectStackCache();
 	$var($Duration, duration, $cast($Duration, $nc($($nc(exchange)->remainingConnectTimeout()))->orElse(nullptr)));
 	if (duration != nullptr) {
 		$var($PlainHttpConnection$ConnectTimerEvent, cte, $new($PlainHttpConnection$ConnectTimerEvent, this, duration, exchange, cf));
@@ -326,6 +327,7 @@ $PlainHttpConnection$ConnectTimerEvent* PlainHttpConnection::newConnectTimer($Ex
 }
 
 $CompletableFuture* PlainHttpConnection::connectAsync($Exchange* exchange) {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$var($CompletableFuture, cf, $new($MinimalFuture));
 	try {
@@ -381,6 +383,7 @@ $CompletableFuture* PlainHttpConnection::connectAsync($Exchange* exchange) {
 }
 
 $CompletableFuture* PlainHttpConnection::checkRetryConnect($PlainHttpConnection$ConnectState* connect, $Throwable* failed, $Exchange* exchange) {
+	$useLocalCurrentObjectStackCache();
 	if (failed != nullptr) {
 		return $MinimalFuture::failedFuture(failed);
 	}
@@ -402,6 +405,7 @@ $CompletableFuture* PlainHttpConnection::checkRetryConnect($PlainHttpConnection$
 }
 
 bool PlainHttpConnection::canRetryConnect($Throwable* e) {
+	$useLocalCurrentObjectStackCache();
 	$init($MultiExchange);
 	if (!$MultiExchange::RETRY_CONNECT) {
 		return false;
@@ -442,6 +446,7 @@ $FlowTube* PlainHttpConnection::getConnectionFlow() {
 }
 
 void PlainHttpConnection::init$($InetSocketAddress* addr, $HttpClientImpl* client) {
+	$useLocalCurrentObjectStackCache();
 	$HttpConnection::init$(addr, client);
 	$set(this, reading, $new($Object));
 	$set(this, writePublisher, $new($HttpConnection$PlainHttpPublisher, this, this->reading));
@@ -478,6 +483,7 @@ void PlainHttpConnection::init$($InetSocketAddress* addr, $HttpClientImpl* clien
 }
 
 int32_t PlainHttpConnection::getSoReceiveBufferSize() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$init($StandardSocketOptions);
 		return $nc(($cast($Integer, $($nc(this->chan)->getOption($StandardSocketOptions::SO_RCVBUF)))))->intValue();
@@ -491,6 +497,7 @@ int32_t PlainHttpConnection::getSoReceiveBufferSize() {
 }
 
 int32_t PlainHttpConnection::getSoSendBufferSize() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$init($StandardSocketOptions);
 		return $nc(($cast($Integer, $($nc(this->chan)->getOption($StandardSocketOptions::SO_SNDBUF)))))->intValue();
@@ -504,6 +511,7 @@ int32_t PlainHttpConnection::getSoSendBufferSize() {
 }
 
 bool PlainHttpConnection::trySetReceiveBufferSize(int32_t bufsize) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		if (bufsize > 0) {
 			$init($StandardSocketOptions);
@@ -523,6 +531,7 @@ bool PlainHttpConnection::trySetReceiveBufferSize(int32_t bufsize) {
 }
 
 bool PlainHttpConnection::trySetSendBufferSize(int32_t bufsize) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		if (bufsize > 0) {
 			$init($StandardSocketOptions);
@@ -550,6 +559,7 @@ $String* PlainHttpConnection::toString() {
 }
 
 void PlainHttpConnection::close() {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this) {
 		if (this->closed) {
 			return;

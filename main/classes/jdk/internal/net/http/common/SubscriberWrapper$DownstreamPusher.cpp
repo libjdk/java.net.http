@@ -99,6 +99,7 @@ void SubscriberWrapper$DownstreamPusher::init$($SubscriberWrapper* this$0) {
 }
 
 void SubscriberWrapper$DownstreamPusher::run() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		run1();
 	} catch ($Throwable&) {
@@ -111,6 +112,7 @@ void SubscriberWrapper$DownstreamPusher::run() {
 }
 
 void SubscriberWrapper$DownstreamPusher::run1() {
+	$useLocalCurrentObjectStackCache();
 	if (this->this$0->downstreamCompleted) {
 		if ($nc(this->this$0->debug)->on()) {
 			$nc(this->this$0->debug)->log("DownstreamPusher: downstream is already completed"_s);

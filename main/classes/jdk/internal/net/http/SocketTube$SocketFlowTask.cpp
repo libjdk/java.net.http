@@ -81,6 +81,7 @@ void SocketTube$SocketFlowTask::init$($Runnable* task) {
 }
 
 void SocketTube$SocketFlowTask::run($SequentialScheduler$DeferredCompleter* taskCompleter) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {

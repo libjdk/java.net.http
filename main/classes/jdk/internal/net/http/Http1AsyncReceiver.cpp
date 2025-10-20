@@ -455,6 +455,7 @@ $Object* allocate$Http1AsyncReceiver($Class* clazz) {
 bool Http1AsyncReceiver::$assertionsDisabled = false;
 
 void Http1AsyncReceiver::init$($Executor* executor, $Http1Exchange* owner) {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(Http1AsyncReceiver$$Lambda$dbgString, this)), $Utils::DEBUG));
 	$set(this, queue, $new($ConcurrentLinkedDeque));
@@ -470,6 +471,7 @@ void Http1AsyncReceiver::init$($Executor* executor, $Http1Exchange* owner) {
 }
 
 void Http1AsyncReceiver::flush() {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, buf, nullptr);
 	{
 		$var($Throwable, var$0, nullptr);
@@ -547,6 +549,7 @@ void Http1AsyncReceiver::flush() {
 }
 
 $String* Http1AsyncReceiver::describe() {
+	$useLocalCurrentObjectStackCache();
 	$var($Http1Exchange, exchange, this->owner);
 	if (exchange != nullptr) {
 		return $String::valueOf($($of(exchange->request())));
@@ -555,6 +558,7 @@ $String* Http1AsyncReceiver::describe() {
 }
 
 void Http1AsyncReceiver::checkForErrors() {
+	$useLocalCurrentObjectStackCache();
 	$var($Http1AsyncReceiver$Http1AsyncDelegate, delegate, $cast($Http1AsyncReceiver$Http1AsyncDelegate, $nc(this->pendingDelegateRef)->get()));
 	if (delegate == nullptr) {
 		$assign(delegate, this->delegate);
@@ -582,6 +586,7 @@ void Http1AsyncReceiver::checkForErrors() {
 }
 
 void Http1AsyncReceiver::checkRequestMore() {
+	$useLocalCurrentObjectStackCache();
 	$var($Http1AsyncReceiver$Http1AsyncDelegate, delegate, this->delegate);
 	bool more = $nc(this->canRequestMore)->get();
 	bool hasDemand = this->hasDemand(delegate);
@@ -594,6 +599,7 @@ void Http1AsyncReceiver::checkRequestMore() {
 }
 
 bool Http1AsyncReceiver::hasDemand($Http1AsyncReceiver$Http1AsyncDelegate* delegate) {
+	$useLocalCurrentObjectStackCache();
 	if (delegate == nullptr) {
 		return false;
 	}
@@ -606,6 +612,7 @@ bool Http1AsyncReceiver::hasDemand($Http1AsyncReceiver$Http1AsyncDelegate* deleg
 }
 
 bool Http1AsyncReceiver::handlePendingDelegate() {
+	$useLocalCurrentObjectStackCache();
 	$var($Http1AsyncReceiver$Http1AsyncDelegate, pending, $cast($Http1AsyncReceiver$Http1AsyncDelegate, $nc(this->pendingDelegateRef)->get()));
 	if (pending != nullptr && $nc(this->pendingDelegateRef)->compareAndSet(pending, nullptr)) {
 		$var($Http1AsyncReceiver$Http1AsyncDelegate, delegate, this->delegate);
@@ -658,6 +665,7 @@ void Http1AsyncReceiver::clear() {
 }
 
 void Http1AsyncReceiver::subscribe($Http1AsyncReceiver$Http1AsyncDelegate* delegate) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this) {
 		$nc(this->pendingDelegateRef)->set(delegate);
 	}
@@ -692,6 +700,7 @@ void Http1AsyncReceiver::unsubscribe($Http1AsyncReceiver$Http1AsyncDelegate* del
 }
 
 void Http1AsyncReceiver::asyncReceive($ByteBuffer* buf) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Putting %s bytes into the queue"_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(buf)->remaining())))}));
 	}
@@ -701,6 +710,7 @@ void Http1AsyncReceiver::asyncReceive($ByteBuffer* buf) {
 }
 
 void Http1AsyncReceiver::onReadError($Throwable* ex$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, ex, ex$renamed);
 	$var($Http1AsyncReceiver$Http1AsyncDelegate, delegate, nullptr);
 	$var($Throwable, recorded, nullptr);
@@ -744,6 +754,7 @@ void Http1AsyncReceiver::onReadError($Throwable* ex$renamed) {
 }
 
 void Http1AsyncReceiver::stop() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("stopping"_s);
 	}
@@ -766,6 +777,7 @@ $FlowTube$TubeSubscriber* Http1AsyncReceiver::subscriber() {
 }
 
 $ByteBuffer* Http1AsyncReceiver::drain($ByteBuffer* initial$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, initial, initial$renamed);
 	$init($Utils);
 	$var($ByteBuffer, b, $assign(initial, initial == nullptr ? $Utils::EMPTY_BYTEBUFFER : initial));
@@ -859,6 +871,7 @@ $ByteBuffer* Http1AsyncReceiver::drain($ByteBuffer* initial$renamed) {
 }
 
 $String* Http1AsyncReceiver::debugQBB($ByteBufferArray* qbb) {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, msg, $new($StringBuilder));
 	$var($List, lbb, $Arrays::asList(qbb));
 	$var($Set, sbb, $new($HashSet, $(static_cast<$Collection*>($Arrays::asList(qbb)))));
@@ -881,6 +894,7 @@ $String* Http1AsyncReceiver::debugQBB($ByteBufferArray* qbb) {
 }
 
 $String* Http1AsyncReceiver::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, tag, this->dbgTag);
 	if (tag == nullptr) {
 		$var($String, flowTag, nullptr);
@@ -897,6 +911,7 @@ $String* Http1AsyncReceiver::dbgString() {
 }
 
 void Http1AsyncReceiver::lambda$handlePendingDelegate$3($Http1AsyncReceiver$Http1AsyncDelegate* pending) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Downstream subscription cancelled by %s"_s, $$new($ObjectArray, {$of(pending)}));
 	}
@@ -929,11 +944,13 @@ void Http1AsyncReceiver::lambda$handlePendingDelegate$2($Throwable* x) {
 }
 
 $String* Http1AsyncReceiver::lambda$checkForErrors$1($Throwable* x, Object$* captured) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({"flushing "_s, x, "\n\t delegate: "_s, captured, "\t\t queue.isEmpty: "_s}));
 	return $concat(var$0, $$str($nc(this->queue)->isEmpty()));
 }
 
 $String* Http1AsyncReceiver::lambda$flush$0(int64_t remaining) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, remstr, $nc(this->scheduler)->isStopped() ? ""_s : $str({" remaining in ref: "_s, $$str(remaining)}));
 	$plusAssign(remstr, $$str({remstr, " total remaining: "_s, $$str(this->remaining())}));
 	return $str({"Delegate done: "_s, $$str(remaining)});

@@ -84,6 +84,7 @@ void SimpleHeaderTable$CircularBuffer::init$(int32_t capacity) {
 }
 
 void SimpleHeaderTable$CircularBuffer::add(Object$* elem) {
+	$useLocalCurrentObjectStackCache();
 	if (this->size == this->capacity) {
 		$throwNew($IllegalStateException, $($String::format("No room for \'%s\': capacity=%s"_s, $$new($ObjectArray, {
 			elem,
@@ -107,6 +108,7 @@ $Object* SimpleHeaderTable$CircularBuffer::remove() {
 }
 
 $Object* SimpleHeaderTable$CircularBuffer::get(int32_t index) {
+	$useLocalCurrentObjectStackCache();
 	if (index < 0 || index >= this->size) {
 		$throwNew($IndexOutOfBoundsException, $($String::format("0 <= index <= capacity: index=%s, capacity=%s"_s, $$new($ObjectArray, {
 			$($of($Integer::valueOf(index))),
@@ -118,6 +120,7 @@ $Object* SimpleHeaderTable$CircularBuffer::get(int32_t index) {
 }
 
 void SimpleHeaderTable$CircularBuffer::resize(int32_t newCapacity) {
+	$useLocalCurrentObjectStackCache();
 	if (newCapacity < this->size) {
 		$throwNew($IllegalStateException, $($String::format("newCapacity >= size: newCapacity=%s, size=%s"_s, $$new($ObjectArray, {
 			$($of($Integer::valueOf(newCapacity))),

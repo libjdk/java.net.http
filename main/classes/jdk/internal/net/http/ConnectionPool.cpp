@@ -286,6 +286,7 @@ int64_t ConnectionPool::KEEP_ALIVE = 0;
 int64_t ConnectionPool::MAX_POOL_SIZE = 0;
 
 void ConnectionPool::init$(int64_t clientId) {
+	$useLocalCurrentObjectStackCache();
 	ConnectionPool::init$($$str({"ConnectionPool("_s, $$str(clientId), ")"_s}));
 }
 
@@ -317,6 +318,7 @@ $ConnectionPool$CacheKey* ConnectionPool::cacheKey($InetSocketAddress* destinati
 
 $HttpConnection* ConnectionPool::getConnection(bool secure, $InetSocketAddress* addr$renamed, $InetSocketAddress* proxy) {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$var($InetSocketAddress, addr, addr$renamed);
 		if (this->stopped) {
 			return nullptr;
@@ -336,6 +338,7 @@ void ConnectionPool::returnToPool($HttpConnection* conn) {
 }
 
 void ConnectionPool::returnToPool($HttpConnection* conn, $Instant* now, int64_t keepAlive) {
+	$useLocalCurrentObjectStackCache();
 	if (!ConnectionPool::$assertionsDisabled && !(($instanceOf($PlainHttpConnection, conn)) || $nc(conn)->isSecure())) {
 		$throwNew($AssertionError, $of($$str({"Attempting to return unsecure connection to SSL pool: "_s, $of(conn)->getClass()})));
 	}
@@ -373,6 +376,7 @@ void ConnectionPool::returnToPool($HttpConnection* conn, $Instant* now, int64_t 
 }
 
 $ConnectionPool$CleanupTrigger* ConnectionPool::registerCleanupTrigger($HttpConnection* conn) {
+	$useLocalCurrentObjectStackCache();
 	$var($ConnectionPool$CleanupTrigger, cleanup, $new($ConnectionPool$CleanupTrigger, this, conn));
 	$var($FlowTube, flow, $nc(conn)->getConnectionFlow());
 	if ($nc(this->debug)->on()) {
@@ -383,6 +387,7 @@ $ConnectionPool$CleanupTrigger* ConnectionPool::registerCleanupTrigger($HttpConn
 }
 
 $HttpConnection* ConnectionPool::findConnection($ConnectionPool$CacheKey* key, $HashMap* pool) {
+	$useLocalCurrentObjectStackCache();
 	$var($LinkedList, l, $cast($LinkedList, $nc(pool)->get(key)));
 	if (l == nullptr || $nc(l)->isEmpty()) {
 		return nullptr;
@@ -394,6 +399,7 @@ $HttpConnection* ConnectionPool::findConnection($ConnectionPool$CacheKey* key, $
 }
 
 bool ConnectionPool::removeFromPool($HttpConnection* c, $HashMap* pool) {
+	$useLocalCurrentObjectStackCache();
 	if (!ConnectionPool::$assertionsDisabled && !$Thread::holdsLock(this)) {
 		$throwNew($AssertionError);
 	}
@@ -407,6 +413,7 @@ bool ConnectionPool::removeFromPool($HttpConnection* c, $HashMap* pool) {
 }
 
 void ConnectionPool::putConnection($HttpConnection* c, $HashMap* pool) {
+	$useLocalCurrentObjectStackCache();
 	$var($ConnectionPool$CacheKey, key, $nc(c)->cacheKey());
 	$var($LinkedList, l, $cast($LinkedList, $nc(pool)->get(key)));
 	if (l == nullptr) {
@@ -424,6 +431,7 @@ int64_t ConnectionPool::purgeExpiredConnectionsAndReturnNextDeadline() {
 }
 
 int64_t ConnectionPool::purgeExpiredConnectionsAndReturnNextDeadline($Instant* now) {
+	$useLocalCurrentObjectStackCache();
 	int64_t nextPurge = 0;
 	if (!$nc(this->expiryList)->purgeMaybeRequired()) {
 		return nextPurge;
@@ -466,6 +474,7 @@ void ConnectionPool::close($HttpConnection* c) {
 }
 
 void ConnectionPool::stop() {
+	$useLocalCurrentObjectStackCache();
 	$var($List, closelist, $Collections::emptyList());
 	{
 		$var($Throwable, var$0, nullptr);
@@ -504,6 +513,7 @@ void ConnectionPool::removeFromPool($HttpConnection* c) {
 
 bool ConnectionPool::contains($HttpConnection* c) {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$var($ConnectionPool$CacheKey, key, $nc(c)->cacheKey());
 		$var($List, list, nullptr);
 		if (($assign(list, $cast($List, $nc(this->plainPool)->get(key)))) != nullptr) {
@@ -521,6 +531,7 @@ bool ConnectionPool::contains($HttpConnection* c) {
 }
 
 void ConnectionPool::cleanup($HttpConnection* c, $Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("%s : ConnectionPool.cleanup(%s)"_s, $$new($ObjectArray, {
 			$($of($String::valueOf($($of($nc(c)->getConnectionFlow()))))),

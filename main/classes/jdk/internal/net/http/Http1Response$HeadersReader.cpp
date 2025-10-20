@@ -206,12 +206,14 @@ bool Http1Response$HeadersReader::tryAsyncReceive($ByteBuffer* ref) {
 }
 
 void Http1Response$HeadersReader::onReadError($Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	$assign(t, $Utils::wrapWithExtraDetail(t, static_cast<$Supplier*>($$new(Http1Response$HeadersReader$$Lambda$currentStateMessage, static_cast<$Http1HeaderParser*>($nc(this->parser))))));
 	this->this$0->onReadError(t);
 }
 
 void Http1Response$HeadersReader::handle($ByteBuffer* b, $Http1HeaderParser* parser, $CompletableFuture* cf) {
+	$useLocalCurrentObjectStackCache();
 	if (!Http1Response$HeadersReader::$assertionsDisabled && !(cf != nullptr)) {
 		$throwNew($AssertionError, $of("parsing not started"_s));
 	}
@@ -244,6 +246,7 @@ void Http1Response$HeadersReader::handle($ByteBuffer* b, $Http1HeaderParser* par
 }
 
 void Http1Response$HeadersReader::close($Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	if (error != nullptr) {
 		$var($CompletableFuture, cf, this->cf);
 		if (cf != nullptr) {

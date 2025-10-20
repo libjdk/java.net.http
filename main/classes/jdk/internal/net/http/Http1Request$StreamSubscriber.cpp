@@ -110,6 +110,7 @@ void Http1Request$StreamSubscriber::onSubscribe($Flow$Subscription* subscription
 }
 
 void Http1Request$StreamSubscriber::onNext($ByteBuffer* item) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(item);
 	if (this->complete) {
 		$var($Throwable, t, $new($IllegalStateException, "subscription already completed"_s));
@@ -137,6 +138,7 @@ void Http1Request$StreamSubscriber::onError($Throwable* throwable) {
 }
 
 void Http1Request$StreamSubscriber::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	if (this->complete) {
 		$var($Throwable, t, $new($IllegalStateException, "subscription already completed"_s));
 		$nc(this->this$0->http1Exchange)->appendToOutgoing(t);

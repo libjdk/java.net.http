@@ -277,6 +277,7 @@ void WebSocketImpl$ReceiveTask::init$($WebSocketImpl* this$0) {
 }
 
 void WebSocketImpl$ReceiveTask::run() {
+	$useLocalCurrentObjectStackCache();
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {
 		$nc($WebSocketImpl::debug)->log("enter receive task"_s);
@@ -371,6 +372,7 @@ void WebSocketImpl$ReceiveTask::run() {
 }
 
 void WebSocketImpl$ReceiveTask::processError() {
+	$useLocalCurrentObjectStackCache();
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {
 		$nc($WebSocketImpl::debug)->log("processError"_s);
@@ -416,6 +418,7 @@ void WebSocketImpl$ReceiveTask::processError() {
 }
 
 void WebSocketImpl$ReceiveTask::processClose() {
+	$useLocalCurrentObjectStackCache();
 	$init($WebSocketImpl);
 	$nc($WebSocketImpl::debug)->log("processClose"_s);
 	$nc(this->this$0->transport$)->closeInput();
@@ -463,6 +466,7 @@ void WebSocketImpl$ReceiveTask::processClose() {
 }
 
 void WebSocketImpl$ReceiveTask::processPong() {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {
@@ -494,6 +498,7 @@ void WebSocketImpl$ReceiveTask::processPong() {
 }
 
 void WebSocketImpl$ReceiveTask::processPing() {
+	$useLocalCurrentObjectStackCache();
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {
 		$nc($WebSocketImpl::debug)->log("processPing"_s);
@@ -536,6 +541,7 @@ void WebSocketImpl$ReceiveTask::processPing() {
 }
 
 void WebSocketImpl$ReceiveTask::processBinary() {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {
@@ -568,6 +574,7 @@ void WebSocketImpl$ReceiveTask::processBinary() {
 }
 
 void WebSocketImpl$ReceiveTask::processText() {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {
@@ -600,6 +607,7 @@ void WebSocketImpl$ReceiveTask::processText() {
 }
 
 void WebSocketImpl$ReceiveTask::processOpen() {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	$init($WebSocketImpl);
 	if ($nc($WebSocketImpl::debug)->on()) {

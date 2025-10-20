@@ -143,6 +143,7 @@ $ByteBuffer* SocketTube$SliceBufferSource::getBuffer() {
 }
 
 $List* SocketTube$SliceBufferSource::append($List* list, $ByteBuffer* buf, int32_t start) {
+	$useLocalCurrentObjectStackCache();
 	int32_t limit = $nc(buf)->limit();
 	buf->limit(buf->position());
 	buf->position(start);

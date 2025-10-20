@@ -218,6 +218,7 @@ bool RawChannelTube::$assertionsDisabled = false;
 $Cleaner* RawChannelTube::cleaner = nullptr;
 
 void RawChannelTube::init$($HttpConnection* connection, $Supplier* initial) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, inited, $new($AtomicBoolean));
 	$set(this, outputClosed, $new($AtomicBoolean));
 	$set(this, inputClosed, $new($AtomicBoolean));
@@ -245,6 +246,7 @@ void RawChannelTube::connectFlows() {
 }
 
 void RawChannelTube::registerEvent($RawChannel$RawEvent* event$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($RawChannel$RawEvent, event, event$renamed);
 	int32_t interestOps = $nc(event)->interestOps();
 	if (((int32_t)(interestOps & (uint32_t)$SelectionKey::OP_WRITE)) != 0) {
@@ -307,6 +309,7 @@ $ByteBuffer* RawChannelTube::initialByteBuffer() {
 }
 
 $ByteBuffer* RawChannelTube::read() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("read"_s);
 	}
@@ -364,6 +367,7 @@ $ByteBuffer* RawChannelTube::read() {
 }
 
 int64_t RawChannelTube::write($ByteBufferArray* srcs, int32_t offset, int32_t length) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->outputClosed)->get()) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("write: CLOSED"_s);
@@ -428,6 +432,7 @@ void RawChannelTube::close() {
 
 $List* RawChannelTube::copy($ByteBufferArray* src, int32_t offset, int32_t len) {
 	$init(RawChannelTube);
+	$useLocalCurrentObjectStackCache();
 	int32_t count = $Math::min(len, $nc(src)->length - offset);
 	if (count <= 0) {
 		$init($Utils);

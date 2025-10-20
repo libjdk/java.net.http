@@ -73,6 +73,7 @@ int32_t Stream$StreamWindowUpdateSender::getStreamId() {
 }
 
 $String* Stream$StreamWindowUpdateSender::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, dbg, this->$WindowUpdateSender::dbgString$);
 	if (dbg != nullptr) {
 		return dbg;

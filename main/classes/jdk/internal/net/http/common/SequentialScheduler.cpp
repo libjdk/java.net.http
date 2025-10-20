@@ -122,6 +122,7 @@ void SequentialScheduler::runOrSchedule($Executor* executor) {
 }
 
 void SequentialScheduler::runOrSchedule($SequentialScheduler$SchedulableTask* task, $Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		int32_t s = $nc(this->state)->get();
 		if (s == SequentialScheduler::END) {

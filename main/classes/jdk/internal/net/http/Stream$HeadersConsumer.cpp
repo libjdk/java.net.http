@@ -85,6 +85,7 @@ void Stream$HeadersConsumer::reset() {
 }
 
 void Stream$HeadersConsumer::onDecoded($CharSequence* name, $CharSequence* value) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, n, $nc(name)->toString());
 	$var($String, v, $nc(value)->toString());
 	$Http2Connection$ValidatingHeadersConsumer::onDecoded(n, v);

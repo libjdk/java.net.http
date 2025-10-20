@@ -80,6 +80,7 @@ void Http1Response$ClientRefCountTracker::init$($Http1Response* this$0) {
 
 void Http1Response$ClientRefCountTracker::acquire() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		if (this->state == 0) {
 			if ($nc(this->this$0->debug)->on()) {
 				$nc(this->this$0->debug)->log("Operation started: incrementing ref count for %s"_s, $$new($ObjectArray, {$of(this->client)}));
@@ -102,6 +103,7 @@ void Http1Response$ClientRefCountTracker::acquire() {
 
 void Http1Response$ClientRefCountTracker::tryRelease() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		if (this->state == 1) {
 			if ($nc(this->this$0->debug)->on()) {
 				$nc(this->this$0->debug)->log("Operation finished: decrementing ref count for %s"_s, $$new($ObjectArray, {$of(this->client)}));

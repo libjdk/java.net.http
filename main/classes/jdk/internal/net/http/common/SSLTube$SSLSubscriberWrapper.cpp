@@ -109,6 +109,7 @@ void SSLTube$SSLSubscriberWrapper::init$($SSLTube* this$0) {
 }
 
 $String* SSLTube$SSLSubscriberWrapper::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($SSLTube$DelegateWrapper, sub, this->subscribed);
 	$var($SSLTube$DelegateWrapper, pend, $cast($SSLTube$DelegateWrapper, $nc(this->pendingDelegate)->get()));
 	$var($SSLFlowDelegate, sslFD, this->this$0->sslDelegate);
@@ -122,6 +123,7 @@ $String* SSLTube$SSLSubscriberWrapper::toString() {
 }
 
 void SSLTube$SSLSubscriberWrapper::setDelegate($Flow$Subscriber* delegate) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("SSLSubscriberWrapper (reader) got delegate: %s"_s, $$new($ObjectArray, {$of(delegate)}));
 	}
@@ -152,6 +154,7 @@ void SSLTube$SSLSubscriberWrapper::setDelegate($Flow$Subscriber* delegate) {
 }
 
 void SSLTube$SSLSubscriberWrapper::processPendingSubscriber() {
+	$useLocalCurrentObjectStackCache();
 	$var($Flow$Subscription, subscription, nullptr);
 	$var($SSLTube$DelegateWrapper, delegateWrapper, nullptr);
 	$var($SSLTube$DelegateWrapper, previous, nullptr);
@@ -194,6 +197,7 @@ void SSLTube$SSLSubscriberWrapper::onSubscribe($Flow$Subscription* subscription)
 }
 
 void SSLTube$SSLSubscriberWrapper::onSubscribeImpl($Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	if (!SSLTube$SSLSubscriberWrapper::$assertionsDisabled && !(subscription != nullptr)) {
 		$throwNew($AssertionError);
 	}
@@ -224,6 +228,7 @@ void SSLTube$SSLSubscriberWrapper::onSubscribeImpl($Flow$Subscription* subscript
 }
 
 void SSLTube$SSLSubscriberWrapper::complete($SSLTube$DelegateWrapper* subscriberImpl, $Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	{
 		$var($Throwable, var$0, nullptr);
@@ -248,6 +253,7 @@ void SSLTube$SSLSubscriberWrapper::complete($SSLTube$DelegateWrapper* subscriber
 }
 
 void SSLTube$SSLSubscriberWrapper::onNewSubscription($SSLTube$DelegateWrapper* subscriberImpl, $Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	if (!SSLTube$SSLSubscriberWrapper::$assertionsDisabled && !(subscriberImpl != nullptr)) {
 		$throwNew($AssertionError);
 	}
@@ -285,6 +291,7 @@ void SSLTube$SSLSubscriberWrapper::onNext($List* item) {
 }
 
 void SSLTube$SSLSubscriberWrapper::onErrorImpl($Throwable* throwable$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, throwable, throwable$renamed);
 	$assign(throwable, this->this$0->checkForHandshake(throwable));
 	$nc(this->errorRef)->compareAndSet(nullptr, throwable);
@@ -319,6 +326,7 @@ void SSLTube$SSLSubscriberWrapper::onError($Throwable* throwable) {
 }
 
 void SSLTube$SSLSubscriberWrapper::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	if (!SSLTube$SSLSubscriberWrapper::$assertionsDisabled && !(!this->this$0->finished && !this->onCompleteReceived)) {
 		$throwNew($AssertionError);
 	}

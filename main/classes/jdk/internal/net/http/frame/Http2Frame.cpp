@@ -182,6 +182,7 @@ $String* Http2Frame::asString(int32_t type) {
 }
 
 $String* Http2Frame::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($(typeAsString()))->append(": length="_s)->append($($Integer::toString(length())))->append(", streamid="_s)->append(this->streamid$)->append(", flags="_s);
 	int32_t f = this->flags;

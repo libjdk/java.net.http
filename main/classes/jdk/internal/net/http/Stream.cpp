@@ -874,6 +874,7 @@ $HttpConnection* Stream::connection() {
 }
 
 void Stream::schedule() {
+	$useLocalCurrentObjectStackCache();
 	bool onCompleteCalled = false;
 	$var($HttpResponse$BodySubscriber, subscriber, this->responseSubscriber);
 	{
@@ -1014,6 +1015,7 @@ void Stream::drainInputQueue() {
 }
 
 void Stream::nullBody($HttpResponse* resp, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("nullBody: streamid=%d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
 	}
@@ -1039,6 +1041,7 @@ bool Stream::deRegister() {
 }
 
 $CompletableFuture* Stream::readBodyAsync($HttpResponse$BodyHandler* handler, bool returnConnectionToPool, $Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$Log::logTrace("Reading body on stream {0}"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
 		$nc(this->debug)->log($$str({"Getting BodySubscriber for: "_s, this->response}));
@@ -1091,6 +1094,7 @@ void Stream::sendDataFrame($DataFrame* frame) {
 }
 
 $CompletableFuture* Stream::receiveData($HttpResponse$BodySubscriber* bodySubscriber, $Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	$var($Executor, var$0, executor);
 	$var($HttpResponse$BodySubscriber, var$1, bodySubscriber);
 	$var($CompletableFuture, var$2, static_cast<$CompletableFuture*>($new($MinimalFuture)));
@@ -1106,10 +1110,12 @@ $CompletableFuture* Stream::receiveData($HttpResponse$BodySubscriber* bodySubscr
 }
 
 $CompletableFuture* Stream::sendBodyAsync() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($(sendBodyImpl()))->thenApply(static_cast<$Function*>($$new(Stream$$Lambda$lambda$sendBodyAsync$1$6, this))));
 }
 
 void Stream::init$($Http2Connection* connection, $Exchange* e, $WindowController* windowController) {
+	$useLocalCurrentObjectStackCache();
 	$ExchangeImpl::init$(e);
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(Stream$$Lambda$dbgString, this)), $Utils::DEBUG));
@@ -1145,6 +1151,7 @@ bool Stream::checkRequestCancelled() {
 }
 
 void Stream::incoming($Http2Frame* frame) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("incoming: %s"_s, $$new($ObjectArray, {$of(frame)}));
 	}
@@ -1173,6 +1180,7 @@ void Stream::incoming($Http2Frame* frame) {
 }
 
 void Stream::otherFrame($Http2Frame* frame) {
+	$useLocalCurrentObjectStackCache();
 	switch ($nc(frame)->type()) {
 	case $WindowUpdateFrame::TYPE:
 		{
@@ -1201,6 +1209,7 @@ $DecodingCallback* Stream::rspHeadersConsumer() {
 }
 
 void Stream::handleResponse() {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpHeaders, responseHeaders, $nc(this->responseHeadersBuilder)->build());
 	this->responseCode = (int32_t)$nc($($nc(responseHeaders)->firstValueAsLong(":status"_s)))->orElseThrow(static_cast<$Supplier*>($$new(Stream$$Lambda$lambda$handleResponse$2$7)));
 	$init($HttpClient$Version);
@@ -1216,6 +1225,7 @@ void Stream::handleResponse() {
 }
 
 void Stream::incoming_reset($ResetFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logTrace("Received RST_STREAM on stream {0}"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
 	if (endStreamReceived()) {
 		$Log::logTrace("Ignoring RST_STREAM frame received on remotely closed stream {0}"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
@@ -1233,6 +1243,7 @@ void Stream::incoming_reset($ResetFrame* frame) {
 }
 
 void Stream::handleReset($ResetFrame* frame, $Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logTrace("Handling RST_STREAM on stream {0}"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
 	if (!this->closed) {
 		$synchronized(this) {
@@ -1281,6 +1292,7 @@ void Stream::incoming_priority($PriorityFrame* frame) {
 }
 
 void Stream::incoming_windowUpdate($WindowUpdateFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	int32_t amount = $nc(frame)->getUpdate();
 	if (amount <= 0) {
 		$Log::logTrace("Resetting stream: {0}, Window Update amount: {1}"_s, $$new($ObjectArray, {
@@ -1300,6 +1312,7 @@ void Stream::incoming_windowUpdate($WindowUpdateFrame* frame) {
 }
 
 void Stream::incoming_pushPromise($HttpRequestImpl* pushRequest, $Stream$PushedStream* pushStream) {
+	$useLocalCurrentObjectStackCache();
 	if ($Log::requests()) {
 		$Log::logRequest($$str({"PUSH_PROMISE: "_s, $($nc(pushRequest)->toString())}), $$new($ObjectArray, 0));
 	}
@@ -1347,6 +1360,7 @@ void Stream::incoming_pushPromise($HttpRequestImpl* pushRequest, $Stream$PushedS
 }
 
 $OutgoingHeaders* Stream::headerFrame(int64_t contentLength) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpHeadersBuilder, h, $nc(this->request)->getSystemHeadersBuilder());
 	if (contentLength > 0) {
 		$nc(h)->setHeader("content-length"_s, $($Long::toString(contentLength)));
@@ -1381,6 +1395,7 @@ bool Stream::needsFiltering($HttpHeaders* headers, $BiPredicate* filter) {
 }
 
 $HttpHeaders* Stream::filterHeaders($HttpHeaders* headers) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpConnection, conn, connection());
 	$var($BiPredicate, filter, $nc(conn)->headerFilter(this->request));
 	if (needsFiltering(headers, filter)) {
@@ -1391,6 +1406,7 @@ $HttpHeaders* Stream::filterHeaders($HttpHeaders* headers) {
 
 $HttpHeaders* Stream::createPseudoHeaders($HttpRequest* request) {
 	$init(Stream);
+	$useLocalCurrentObjectStackCache();
 	$var($HttpHeadersBuilder, hdrs, $new($HttpHeadersBuilder));
 	$var($String, method, $nc(request)->method());
 	hdrs->setHeader(":method"_s, method);
@@ -1418,6 +1434,7 @@ $HttpHeaders* Stream::getRequestPseudoHeaders() {
 }
 
 void Stream::setEndStreamReceived() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("setEndStreamReceived: streamid=%d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
 	}
@@ -1433,6 +1450,7 @@ bool Stream::endStreamReceived() {
 }
 
 $CompletableFuture* Stream::sendHeadersAsync() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("sendHeadersOnly()"_s);
 	}
@@ -1459,6 +1477,7 @@ $CompletableFuture* Stream::sendHeadersAsync() {
 }
 
 void Stream::released() {
+	$useLocalCurrentObjectStackCache();
 	if (this->streamid > 0) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Released stream %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(this->streamid)))}));
@@ -1474,6 +1493,7 @@ void Stream::completed() {
 }
 
 bool Stream::registerStream(int32_t id, bool registerIfCancelled) {
+	$useLocalCurrentObjectStackCache();
 	bool cancelled = this->closed || $nc($nc(this->exchange)->multi)->requestCancelled();
 	if (!cancelled || registerIfCancelled) {
 		this->streamid = id;
@@ -1501,6 +1521,7 @@ void Stream::signalWindowUpdate() {
 }
 
 $CompletableFuture* Stream::ignoreBody() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$nc(this->connection$)->resetStream(this->streamid, $ResetFrame::STREAM_CLOSED);
 		return $MinimalFuture::completedFuture(nullptr);
@@ -1513,6 +1534,7 @@ $CompletableFuture* Stream::ignoreBody() {
 }
 
 $DataFrame* Stream::getDataFrame($ByteBuffer* buffer) {
+	$useLocalCurrentObjectStackCache();
 	int32_t var$0 = $nc(this->connection$)->getMaxSendFrameSize();
 	int32_t requestAmount = $Math::min(var$0, $nc(buffer)->remaining());
 	int32_t actualAmount = $nc(this->windowController)->tryAcquire(requestAmount, this->streamid, this);
@@ -1529,6 +1551,7 @@ $DataFrame* Stream::getEmptyEndStreamDataFrame() {
 }
 
 $CompletableFuture* Stream::getResponseAsync($Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, nullptr);
 	$synchronized(this->response_cfs) {
 		if (!$nc(this->response_cfs)->isEmpty()) {
@@ -1556,6 +1579,7 @@ $CompletableFuture* Stream::getResponseAsync($Executor* executor) {
 }
 
 void Stream::completeResponse($Response* resp) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->response_cfs) {
 		$var($CompletableFuture, cf, nullptr);
 		int32_t cfs_len = $nc(this->response_cfs)->size();
@@ -1588,6 +1612,7 @@ void Stream::completeResponse($Response* resp) {
 
 void Stream::requestSent() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		this->requestSent$ = true;
 		if (this->responseReceived$) {
 			if ($nc(this->debug)->on()) {
@@ -1602,6 +1627,7 @@ void Stream::requestSent() {
 
 void Stream::responseReceived() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		this->responseReceived$ = true;
 		if (this->requestSent$) {
 			if ($nc(this->debug)->on()) {
@@ -1615,6 +1641,7 @@ void Stream::responseReceived() {
 }
 
 void Stream::completeResponseExceptionally($Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(this->response_cfs) {
 		for (int32_t i = 0; i < $nc(this->response_cfs)->size(); ++i) {
 			$var($CompletableFuture, cf, $cast($CompletableFuture, $nc(this->response_cfs)->get(i)));
@@ -1629,6 +1656,7 @@ void Stream::completeResponseExceptionally($Throwable* t) {
 }
 
 $CompletableFuture* Stream::sendBodyImpl() {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->requestBodyCF)->whenComplete(static_cast<$BiConsumer*>($$new(Stream$$Lambda$lambda$sendBodyImpl$7$12, this)));
 	try {
 		if (this->requestPublisher != nullptr) {
@@ -1646,6 +1674,7 @@ $CompletableFuture* Stream::sendBodyImpl() {
 }
 
 void Stream::cancel() {
+	$useLocalCurrentObjectStackCache();
 	if (this->streamid == 0) {
 		cancel($$new($IOException, "Stream cancelled before streamid assigned"_s));
 	} else {
@@ -1678,6 +1707,7 @@ void Stream::connectionClosing($Throwable* cause) {
 }
 
 void Stream::cancelImpl($Throwable* e$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, e, e$renamed);
 	$nc(this->errorRef)->compareAndSet(nullptr, e);
 	if ($nc(this->debug)->on()) {
@@ -1744,6 +1774,7 @@ void Stream::sendCancelStreamFrame() {
 }
 
 void Stream::close() {
+	$useLocalCurrentObjectStackCache();
 	if (this->closed) {
 		return;
 	}
@@ -1774,6 +1805,7 @@ $Throwable* Stream::getCancelCause() {
 }
 
 $String* Stream::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	return $str({$($nc(this->connection$)->dbgString()), "/Stream("_s, $$str(this->streamid), ")"_s});
 }
 
@@ -1798,6 +1830,7 @@ bool Stream::lambda$headerFrame$4($HttpHeaders* uh, $String* k, $String* v) {
 
 void Stream::lambda$incoming_pushPromise$3($Stream$PushedStream* pushStream, $PushGroup* pushGroup, $CompletableFuture* pushResponseCF, $HttpResponse* resp, $Throwable* t$renamed) {
 	$init(Stream);
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	$assign(t, $Utils::getCompletionCause(t));
 	if ($Log::trace()) {
@@ -1831,6 +1864,7 @@ void Stream::lambda$readBodyAsync$0($PushGroup* pg, Object$* t, $Throwable* e) {
 }
 
 void clinit$Stream($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	Stream::$assertionsDisabled = !Stream::class$->desiredAssertionStatus();
 	$assignStatic(Stream::COMPLETED, $ByteBuffer::allocate(0));

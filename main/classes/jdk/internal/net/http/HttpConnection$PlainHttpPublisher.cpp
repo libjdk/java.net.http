@@ -217,6 +217,7 @@ void HttpConnection$PlainHttpPublisher::subscribe($Flow$Subscriber* subscriber) 
 }
 
 void HttpConnection$PlainHttpPublisher::flushTask($SequentialScheduler$DeferredCompleter* completer) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {
@@ -240,12 +241,14 @@ void HttpConnection$PlainHttpPublisher::signal() {
 }
 
 void HttpConnection$PlainHttpPublisher::enqueue($List* buffers) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->queue)->add(buffers);
 	int32_t bytes = $nc($($nc($($nc(buffers)->stream()))->mapToInt(static_cast<$ToIntFunction*>($$new(HttpConnection$PlainHttpPublisher$$Lambda$remaining$1)))))->sum();
 	$nc(this->this$0->debug)->log("added %d bytes to the write queue"_s, $$new($ObjectArray, {$($of($Integer::valueOf(bytes)))}));
 }
 
 void HttpConnection$PlainHttpPublisher::enqueueUnordered($List* buffers) {
+	$useLocalCurrentObjectStackCache();
 	int32_t bytes = $nc($($nc($($nc(buffers)->stream()))->mapToInt(static_cast<$ToIntFunction*>($$new(HttpConnection$PlainHttpPublisher$$Lambda$remaining$1)))))->sum();
 	$nc(this->priority)->add(buffers);
 	$nc(this->this$0->debug)->log("added %d bytes in the priority write queue"_s, $$new($ObjectArray, {$($of($Integer::valueOf(bytes)))}));

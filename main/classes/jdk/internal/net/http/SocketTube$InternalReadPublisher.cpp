@@ -94,6 +94,7 @@ void SocketTube$InternalReadPublisher::init$($SocketTube* this$0) {
 }
 
 void SocketTube$InternalReadPublisher::subscribe($Flow$Subscriber* s) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(s);
 	$var($FlowTube$TubeSubscriber, sub, $FlowTube::asTubeSubscriber(s));
 	$var($SocketTube$InternalReadPublisher$ReadSubscription, target, $new($SocketTube$InternalReadPublisher$ReadSubscription, this, this->subscriptionImpl, sub));
@@ -118,6 +119,7 @@ void SocketTube$InternalReadPublisher::subscribe($Flow$Subscriber* s) {
 }
 
 void SocketTube$InternalReadPublisher::signalError($Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log($$str({"error signalled "_s, error}));
 	}

@@ -79,6 +79,7 @@ int32_t GoAwayFrame::length() {
 }
 
 $String* GoAwayFrame::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({$($ErrorFrame::toString()), " Debugdata: "_s}));
 	$init($StandardCharsets);
 	return $concat(var$0, $$new($String, this->debugData, $StandardCharsets::UTF_8));

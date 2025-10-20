@@ -361,6 +361,7 @@ int32_t NaiveHuffman::lengthOf($CharSequence* value) {
 }
 
 int32_t NaiveHuffman::lengthOf($CharSequence* value, int32_t start, int32_t end) {
+	$useLocalCurrentObjectStackCache();
 	int32_t len = 0;
 	for (int32_t i = start; i < end; ++i) {
 		char16_t c = $nc(value)->charAt(i);
@@ -399,6 +400,7 @@ void NaiveHuffman::addLeaf(int32_t c, int32_t code, int32_t bitLength, bool isEO
 }
 
 $NaiveHuffman$Code* NaiveHuffman::codeOf(char16_t c) {
+	$useLocalCurrentObjectStackCache();
 	if (c > 255) {
 		$throwNew($IllegalArgumentException, $$str({"char="_s, $$str(((int32_t)c))}));
 	}

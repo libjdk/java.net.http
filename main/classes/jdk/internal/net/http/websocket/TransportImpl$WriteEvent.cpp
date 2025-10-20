@@ -86,6 +86,7 @@ int32_t TransportImpl$WriteEvent::interestOps() {
 }
 
 void TransportImpl$WriteEvent::handle() {
+	$useLocalCurrentObjectStackCache();
 	$init($TransportImpl);
 	if ($nc($TransportImpl::debug)->on()) {
 		$nc($TransportImpl::debug)->log("write event"_s);

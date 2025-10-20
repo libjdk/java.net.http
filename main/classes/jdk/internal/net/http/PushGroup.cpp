@@ -165,6 +165,7 @@ void PushGroup::init$($HttpResponse$PushPromiseHandler* pushPromiseHandler, $Htt
 }
 
 $PushGroup$Acceptor* PushGroup::acceptPushRequest($HttpRequest* pushRequest) {
+	$useLocalCurrentObjectStackCache();
 	$var($PushGroup$AcceptorImpl, acceptor, $new($PushGroup$AcceptorImpl, this->executor));
 	try {
 		$nc(this->pushPromiseHandler)->applyPushPromise(this->initiatingRequest, pushRequest, static_cast<$Function*>($$new(PushGroup$$Lambda$accept, static_cast<$PushGroup$AcceptorImpl*>(acceptor))));
@@ -214,6 +215,7 @@ void PushGroup::pushCompleted() {
 
 void PushGroup::checkIfCompleted() {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		if ($Log::trace()) {
 			$Log::logTrace("PushGroup remainingPushes={0} error={1} noMorePushes={2}"_s, $$new($ObjectArray, {
 				$($of($Integer::valueOf(this->remainingPushes))),

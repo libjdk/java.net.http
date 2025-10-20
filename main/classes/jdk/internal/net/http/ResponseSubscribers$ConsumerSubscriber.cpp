@@ -114,6 +114,7 @@ void ResponseSubscribers$ConsumerSubscriber::onSubscribe($Flow$Subscription* sub
 }
 
 void ResponseSubscribers$ConsumerSubscriber::onNext($List* items) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(items);
 	{
 		$var($Iterator, i$, items->iterator());

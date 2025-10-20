@@ -84,6 +84,7 @@ void Http1Exchange$Http1Publisher$Http1WriteSubscription::init$($Http1Exchange$H
 }
 
 void Http1Exchange$Http1Publisher$Http1WriteSubscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (this->this$1->cancelled) {
 		return;
 	}

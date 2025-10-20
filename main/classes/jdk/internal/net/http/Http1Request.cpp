@@ -296,6 +296,7 @@ void Http1Request::init$($HttpRequestImpl* request, $Http1Exchange* http1Exchang
 }
 
 void Http1Request::logHeaders($String* completeHeaders) {
+	$useLocalCurrentObjectStackCache();
 	if ($Log::headers()) {
 		$var($String, s, $nc(completeHeaders)->replaceAll("\r\n"_s, "\n"_s));
 		if (s->endsWith("\n\n"_s)) {
@@ -306,6 +307,7 @@ void Http1Request::logHeaders($String* completeHeaders) {
 }
 
 void Http1Request::collectHeaders0($StringBuilder* sb) {
+	$useLocalCurrentObjectStackCache();
 	$var($BiPredicate, filter, $nc(this->connection)->headerFilter(this->request));
 	$var($BiPredicate, nocookies, $nc(Http1Request::NOCOOKIES)->and$(filter));
 	$var($HttpHeaders, systemHeaders, $nc(this->systemHeadersBuilder)->build());
@@ -322,6 +324,7 @@ void Http1Request::collectHeaders0($StringBuilder* sb) {
 }
 
 void Http1Request::collectCookies($StringBuilder* sb, $HttpHeaders* system, $HttpHeaders* user) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, systemList, $nc(system)->allValues(Http1Request::COOKIE_HEADER));
 	$var($List, userList, $nc(user)->allValues(Http1Request::COOKIE_HEADER));
 	bool found = false;
@@ -365,6 +368,7 @@ void Http1Request::collectCookies($StringBuilder* sb, $HttpHeaders* system, $Htt
 }
 
 void Http1Request::collectHeaders1($StringBuilder* sb, $HttpHeaders* headers, $BiPredicate* filter) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Iterator, i$, $nc($($nc($($nc(headers)->map()))->entrySet()))->iterator());
 		for (; $nc(i$)->hasNext();) {
@@ -390,6 +394,7 @@ void Http1Request::collectHeaders1($StringBuilder* sb, $HttpHeaders* headers, $B
 }
 
 $String* Http1Request::getPathAndQuery($URI* uri) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, path, $nc(uri)->getRawPath());
 	$var($String, query, uri->getRawQuery());
 	if (path == nullptr || $nc(path)->isEmpty()) {
@@ -406,11 +411,13 @@ $String* Http1Request::getPathAndQuery($URI* uri) {
 }
 
 $String* Http1Request::authorityString($InetSocketAddress* addr) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({$($nc(addr)->getHostString()), ":"_s}));
 	return $concat(var$0, $$str(addr->getPort()));
 }
 
 $String* Http1Request::hostString() {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, uri, $nc(this->request)->uri());
 	int32_t port = $nc(uri)->getPort();
 	$var($String, host, uri->getHost());
@@ -430,6 +437,7 @@ $String* Http1Request::hostString() {
 }
 
 $String* Http1Request::requestURI() {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, uri, $nc(this->request)->uri());
 	$var($String, method, $nc(this->request)->method());
 	bool var$1 = $nc(this->request)->proxy() == nullptr;
@@ -463,6 +471,7 @@ void Http1Request::setFinished() {
 }
 
 $List* Http1Request::headers() {
+	$useLocalCurrentObjectStackCache();
 	if ($Log::requests() && this->request != nullptr) {
 		$Log::logRequest($($nc(this->request)->toString()), $$new($ObjectArray, 0));
 	}
@@ -512,6 +521,7 @@ $Http1Exchange$Http1BodySubscriber* Http1Request::continueRequest() {
 
 $ByteBuffer* Http1Request::getHeader(int32_t size) {
 	$init(Http1Request);
+	$useLocalCurrentObjectStackCache();
 	$var($String, hexStr, $Integer::toHexString(size));
 	$init($StandardCharsets);
 	$var($bytes, hexBytes, $nc(hexStr)->getBytes($StandardCharsets::US_ASCII));

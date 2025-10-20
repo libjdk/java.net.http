@@ -925,6 +925,7 @@ $String* Http2Connection::CLIENT_PREFACE = nullptr;
 $bytes* Http2Connection::PREFACE_BYTES = nullptr;
 
 void Http2Connection::init$($HttpConnection* connection, $Http2ClientImpl* client2, int32_t nextstreamid, $String* key) {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(Http2Connection$$Lambda$dbgString, this)), $Utils::DEBUG));
 	$set(this, debugHpack, $Utils::getHpackLogger(static_cast<$Supplier*>($$new(Http2Connection$$Lambda$dbgString, this)), $Utils::DEBUG_HPACK));
@@ -958,6 +959,7 @@ void Http2Connection::init$($HttpConnection* connection, $Http2ClientImpl* clien
 }
 
 void Http2Connection::init$($HttpConnection* connection, $Http2ClientImpl* client2, $Exchange* exchange, $Supplier* initial) {
+	$useLocalCurrentObjectStackCache();
 	Http2Connection::init$(connection, client2, 3, $(keyFor(connection)));
 	reserveStream(true);
 	$Log::logTrace("Connection send window size {0} "_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(this->windowController)->connectionWindowSize())))}));
@@ -984,6 +986,7 @@ $CompletableFuture* Http2Connection::createAsync($HttpConnection* connection, $H
 
 $CompletableFuture* Http2Connection::createAsync($HttpRequestImpl* request, $Http2ClientImpl* h2client, $Exchange* exchange) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	if (!Http2Connection::$assertionsDisabled && !$nc(request)->secure()) {
 		$throwNew($AssertionError);
 	}
@@ -995,6 +998,7 @@ $CompletableFuture* Http2Connection::createAsync($HttpRequestImpl* request, $Htt
 }
 
 void Http2Connection::init$($HttpRequestImpl* request, $Http2ClientImpl* h2client, $HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, var$0, $nc(request)->uri());
 	Http2Connection::init$(connection, h2client, 1, $(keyFor(var$0, $(request->proxy()))));
 	$Log::logTrace("Connection send window size {0} "_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(this->windowController)->connectionWindowSize())))}));
@@ -1003,6 +1007,7 @@ void Http2Connection::init$($HttpRequestImpl* request, $Http2ClientImpl* h2clien
 }
 
 void Http2Connection::connectFlows($HttpConnection* connection) {
+	$useLocalCurrentObjectStackCache();
 	$var($FlowTube, tube, $nc(connection)->getConnectionFlow());
 	$nc(tube)->connectFlows($(connection->publisher()), this->subscriber);
 }
@@ -1052,6 +1057,7 @@ bool Http2Connection::reserveStream(bool clientInitiated) {
 
 $CompletableFuture* Http2Connection::checkSSLConfig($AbstractAsyncSSLConnection* aconn) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	if (!Http2Connection::$assertionsDisabled && !$nc(aconn)->isSecure()) {
 		$throwNew($AssertionError);
 	}
@@ -1073,6 +1079,7 @@ void Http2Connection::setFinalStream() {
 
 $String* Http2Connection::keyFor($HttpConnection* connection) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	bool isProxy = $nc(connection)->isProxied();
 	bool isSecure = connection->isSecure();
 	$var($InetSocketAddress, addr, connection->address());
@@ -1088,6 +1095,7 @@ $String* Http2Connection::keyFor($HttpConnection* connection) {
 
 $String* Http2Connection::keyFor($URI* uri, $InetSocketAddress* proxy) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	bool isSecure = $nc($($nc(uri)->getScheme()))->equalsIgnoreCase("https"_s);
 	$var($String, host, uri->getHost());
 	int32_t port = uri->getPort();
@@ -1096,6 +1104,7 @@ $String* Http2Connection::keyFor($URI* uri, $InetSocketAddress* proxy) {
 
 $String* Http2Connection::keyString(bool secure, $InetSocketAddress* proxy, $String* host, int32_t port) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	if (secure && port == -1) {
 		port = 443;
 	} else if (!secure && port == -1) {
@@ -1127,6 +1136,7 @@ $HttpConnection$HttpPublisher* Http2Connection::publisher() {
 }
 
 void Http2Connection::decodeHeaders($HeaderFrame* frame, $DecodingCallback* decoder) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debugHpack)->on()) {
 		$nc(this->debugHpack)->log("decodeHeaders(%s)"_s, $$new($ObjectArray, {$of(decoder)}));
 	}
@@ -1152,6 +1162,7 @@ int32_t Http2Connection::maxConcurrentServerInitiatedStreams() {
 }
 
 void Http2Connection::close() {
+	$useLocalCurrentObjectStackCache();
 	$Log::logTrace("Closing HTTP/2 connection: to {0}"_s, $$new($ObjectArray, {$($of($nc(this->connection)->address()))}));
 	$init($StandardCharsets);
 	$var($GoAwayFrame, f, $new($GoAwayFrame, 0, $ErrorFrame::NO_ERROR, $("Requested by user"_s->getBytes($StandardCharsets::UTF_8))));
@@ -1159,6 +1170,7 @@ void Http2Connection::close() {
 }
 
 void Http2Connection::asyncReceive($ByteBuffer* buffer) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($Supplier, bs, this->initial);
 		if (bs != nullptr) {
@@ -1211,6 +1223,7 @@ $Throwable* Http2Connection::getRecordedCause() {
 }
 
 void Http2Connection::shutdown($Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log(static_cast<$Supplier*>($$new(Http2Connection$$Lambda$lambda$shutdown$7$10, this, t)));
 	}
@@ -1261,6 +1274,7 @@ bool Http2Connection::isServerInitiatedStream(int32_t streamid) {
 }
 
 void Http2Connection::processFrame($Http2Frame* frame) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logFrames(frame, "IN"_s);
 	int32_t streamid = $nc(frame)->streamid();
 	if ($instanceOf($MalformedFrame, frame)) {
@@ -1339,6 +1353,7 @@ void Http2Connection::processFrame($Http2Frame* frame) {
 }
 
 void Http2Connection::dropDataFrame($DataFrame* df) {
+	$useLocalCurrentObjectStackCache();
 	if (this->closed) {
 		return;
 	}
@@ -1352,6 +1367,7 @@ void Http2Connection::dropDataFrame($DataFrame* df) {
 }
 
 void Http2Connection::ensureWindowUpdated($DataFrame* df) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		if (this->closed) {
 			return;
@@ -1367,6 +1383,7 @@ void Http2Connection::ensureWindowUpdated($DataFrame* df) {
 }
 
 void Http2Connection::handlePushPromise($Stream* parent, $PushPromiseFrame* pp) {
+	$useLocalCurrentObjectStackCache();
 	$var($Http2Connection$HeaderDecoder, decoder, $new($Http2Connection$HeaderDecoder));
 	decodeHeaders(pp, decoder);
 	$var($HttpRequestImpl, parentReq, $nc(parent)->request);
@@ -1420,6 +1437,7 @@ void Http2Connection::handleConnectionFrame($Http2Frame* frame) {
 }
 
 void Http2Connection::resetStream(int32_t streamid, int32_t code) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {
@@ -1447,6 +1465,7 @@ void Http2Connection::resetStream(int32_t streamid, int32_t code) {
 }
 
 void Http2Connection::markStream(int32_t streamid, int32_t code) {
+	$useLocalCurrentObjectStackCache();
 	$var($Stream, s, $cast($Stream, $nc(this->streams)->get($($Integer::valueOf(streamid)))));
 	if (s != nullptr) {
 		s->markStream(code);
@@ -1455,6 +1474,7 @@ void Http2Connection::markStream(int32_t streamid, int32_t code) {
 
 void Http2Connection::decrementStreamsCount(int32_t streamid) {
 	$synchronized(this) {
+		$useLocalCurrentObjectStackCache();
 		$var($Stream, s, $cast($Stream, $nc(this->streams)->get($($Integer::valueOf(streamid)))));
 		if (s == nullptr || !$nc(s)->deRegister()) {
 			return;
@@ -1474,6 +1494,7 @@ void Http2Connection::decrementStreamsCount(int32_t streamid) {
 }
 
 void Http2Connection::closeStream(int32_t streamid) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Closed stream %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(streamid)))}));
 	}
@@ -1507,6 +1528,7 @@ void Http2Connection::protocolError(int32_t errorCode) {
 }
 
 void Http2Connection::protocolError(int32_t errorCode, $String* msg) {
+	$useLocalCurrentObjectStackCache();
 	$var($GoAwayFrame, frame, $new($GoAwayFrame, 0, errorCode));
 	sendFrame(frame);
 	shutdown($$new($IOException, $$str({"protocol error"_s, (msg == nullptr ? ""_s : ($$str({": "_s, msg})))})));
@@ -1536,6 +1558,7 @@ void Http2Connection::handlePing($PingFrame* frame) {
 }
 
 void Http2Connection::handleGoAway($GoAwayFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	shutdown($$new($IOException, $$str({$($String::valueOf($($of($nc($($nc(this->connection)->channel()))->getLocalAddress())))), ": GOAWAY received"_s})));
 }
 
@@ -1552,6 +1575,7 @@ int32_t Http2Connection::getMaxReceiveFrameSize() {
 }
 
 void Http2Connection::sendConnectionPreface() {
+	$useLocalCurrentObjectStackCache();
 	$Log::logTrace("{0}: start sending connection preface to {1}"_s, $$new($ObjectArray, {
 		$($of($nc($($nc(this->connection)->channel()))->getLocalAddress())),
 		$($of($nc(this->connection)->address()))
@@ -1598,11 +1622,13 @@ $Stream$PushedStream* Http2Connection::createPushStream($Stream* parent, $Exchan
 }
 
 void Http2Connection::putStream($Stream* stream, int32_t streamid) {
+	$useLocalCurrentObjectStackCache();
 	$nc($(client()))->streamReference();
 	$nc(this->streams)->put($($Integer::valueOf(streamid)), stream);
 }
 
 $List* Http2Connection::encodeHeaders($OutgoingHeaders* frame) {
+	$useLocalCurrentObjectStackCache();
 	int32_t bufferSize = $Math::min($Math::max(getMaxSendFrameSize(), 1024), Http2Connection::DEFAULT_FRAME_SIZE);
 	$var($List, buffers, encodeHeadersImpl(bufferSize, $$new($HttpHeadersArray, {
 		$($nc(($cast($Stream, $($nc(frame)->getAttachment()))))->getRequestPseudoHeaders()),
@@ -1631,6 +1657,7 @@ $ByteBuffer* Http2Connection::getHeaderBuffer(int32_t size) {
 }
 
 $List* Http2Connection::encodeHeadersImpl(int32_t bufferSize, $HttpHeadersArray* headers) {
+	$useLocalCurrentObjectStackCache();
 	$var($ByteBuffer, buffer, getHeaderBuffer(bufferSize));
 	$var($List, buffers, $new($ArrayList));
 	{
@@ -1674,6 +1701,7 @@ $List* Http2Connection::encodeHeadersImpl(int32_t bufferSize, $HttpHeadersArray*
 }
 
 $List* Http2Connection::encodeHeaders($OutgoingHeaders* oh, $Stream* stream) {
+	$useLocalCurrentObjectStackCache();
 	$nc(oh)->streamid($nc(stream)->streamid);
 	if ($Log::headers()) {
 		$var($StringBuilder, sb, $new($StringBuilder, "HEADERS FRAME (stream="_s));
@@ -1695,6 +1723,7 @@ $List* Http2Connection::encodeFrames($List* frames) {
 }
 
 $Stream* Http2Connection::registerNewStream($OutgoingHeaders* oh) {
+	$useLocalCurrentObjectStackCache();
 	$var($Stream, stream, $cast($Stream, $nc(oh)->getAttachment()));
 	if (!Http2Connection::$assertionsDisabled && !($nc(stream)->streamid == 0)) {
 		$throwNew($AssertionError);
@@ -1715,6 +1744,7 @@ $Stream* Http2Connection::registerNewStream($OutgoingHeaders* oh) {
 }
 
 void Http2Connection::sendFrame($Http2Frame* frame) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($HttpConnection$HttpPublisher, publisher, this->publisher());
 		$synchronized(this->sendlock) {
@@ -1744,6 +1774,7 @@ $List* Http2Connection::encodeFrame($Http2Frame* frame) {
 }
 
 void Http2Connection::sendDataFrame($DataFrame* frame) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($HttpConnection$HttpPublisher, publisher, this->publisher());
 		$nc(publisher)->enqueue($(encodeFrame(frame)));
@@ -1758,6 +1789,7 @@ void Http2Connection::sendDataFrame($DataFrame* frame) {
 }
 
 void Http2Connection::sendUnorderedFrame($Http2Frame* frame) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($HttpConnection$HttpPublisher, publisher, this->publisher());
 		$nc(publisher)->enqueueUnordered($(encodeFrame(frame)));
@@ -1801,6 +1833,7 @@ $String* Http2Connection::lambda$shutdown$7($Throwable* t) {
 
 $String* Http2Connection::lambda$asyncReceive$6(int64_t c, $ByteBuffer* b) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	return $str({"H2 Receiving Initial("_s, $$str(c), "): "_s, $$str($nc(b)->remaining())});
 }
 
@@ -1813,6 +1846,7 @@ void Http2Connection::lambda$checkSSLConfig$5($AbstractAsyncSSLConnection* aconn
 
 $CompletableFuture* Http2Connection::lambda$checkSSLConfig$4($AbstractAsyncSSLConnection* aconn, $String* alpn) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, $new($MinimalFuture));
 	$var($SSLEngine, engine, $nc(aconn)->getEngine());
 	$var($String, engineAlpn, $nc(engine)->getApplicationProtocol());
@@ -1876,6 +1910,7 @@ $CompletableFuture* Http2Connection::lambda$checkSSLConfig$4($AbstractAsyncSSLCo
 
 $CompletionStage* Http2Connection::lambda$createAsync$3($HttpRequestImpl* request, $Http2ClientImpl* h2client, $AbstractAsyncSSLConnection* connection, Object$* notused) {
 	$init(Http2Connection);
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, $new($MinimalFuture));
 	try {
 		$var(Http2Connection, hc, $new(Http2Connection, request, h2client, connection));

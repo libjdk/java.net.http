@@ -95,6 +95,7 @@ void ResponseSubscribers$PublishingBodySubscriber$SubscriptionRef::subscribe() {
 }
 
 $String* ResponseSubscribers$PublishingBodySubscriber$SubscriptionRef::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({"SubscriptionRef/"_s, $($nc($of(this->subscription))->getClass()->getName()), "@"_s}));
 	return $concat(var$0, $$str($System::identityHashCode(this->subscription)));
 }

@@ -86,6 +86,7 @@ $Object* allocate$AbstractAsyncSSLConnection($Class* clazz) {
 bool AbstractAsyncSSLConnection::disableHostnameVerification = false;
 
 void AbstractAsyncSSLConnection::init$($InetSocketAddress* addr, $HttpClientImpl* client, $Utils$ServerName* serverName, int32_t port, $StringArray* alpn) {
+	$useLocalCurrentObjectStackCache();
 	$HttpConnection::init$(addr, client);
 	$set(this, serverName, $nc(serverName)->getName());
 	$var($SSLContext, context, $nc(client)->theSSLContext());
@@ -104,6 +105,7 @@ $SSLEngine* AbstractAsyncSSLConnection::getEngine() {
 
 bool AbstractAsyncSSLConnection::contains($StringArray* rr, $String* target) {
 	$init(AbstractAsyncSSLConnection);
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($StringArray, arr$, rr);
 		int32_t len$ = $nc(arr$)->length;
@@ -120,6 +122,7 @@ bool AbstractAsyncSSLConnection::contains($StringArray* rr, $String* target) {
 
 $SSLParameters* AbstractAsyncSSLConnection::createSSLParameters($HttpClientImpl* client, $Utils$ServerName* serverName, $StringArray* alpn) {
 	$init(AbstractAsyncSSLConnection);
+	$useLocalCurrentObjectStackCache();
 	$var($SSLParameters, sslp, $nc(client)->sslParameters());
 	$var($SSLParameters, sslParameters, $Utils::copySSLParameters(sslp));
 	if (alpn != nullptr && alpn->length != 0 && !contains(alpn, "http/1.1"_s)) {

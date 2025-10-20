@@ -97,6 +97,7 @@ StringWriter* StringWriter::configure($CharSequence* input, bool huffman) {
 }
 
 StringWriter* StringWriter::configure($CharSequence* input, int32_t start, int32_t end, bool huffman) {
+	$useLocalCurrentObjectStackCache();
 	if (start < 0 || end < 0 || end > $nc(input)->length() || start > end) {
 		$throwNew($IndexOutOfBoundsException, $($String::format("input.length()=%s, start=%s, end=%s"_s, $$new($ObjectArray, {
 			$($of($Integer::valueOf($nc(input)->length()))),
@@ -117,6 +118,7 @@ StringWriter* StringWriter::configure($CharSequence* input, int32_t start, int32
 }
 
 bool StringWriter::write($ByteBuffer* output) {
+	$useLocalCurrentObjectStackCache();
 	if (this->state == StringWriter::DONE) {
 		return true;
 	}

@@ -107,6 +107,7 @@ void Http1AsyncReceiver$Http1TubeSubscriber::init$($Http1AsyncReceiver* this$0) 
 }
 
 void Http1AsyncReceiver$Http1TubeSubscriber::onSubscribe($Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("Received onSubscribed from upstream"_s);
 	}
@@ -146,6 +147,7 @@ void Http1AsyncReceiver$Http1TubeSubscriber::requestMore() {
 }
 
 void Http1AsyncReceiver$Http1TubeSubscriber::onNext($List* item) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->this$0->canRequestMore)->set($nc(item)->isEmpty());
 	{
 		$var($Iterator, i$, $nc(item)->iterator());

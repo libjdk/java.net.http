@@ -90,6 +90,7 @@ void NaiveHuffman$Writer::init$() {
 }
 
 NaiveHuffman$Writer* NaiveHuffman$Writer::from($CharSequence* input, int32_t start, int32_t end) {
+	$useLocalCurrentObjectStackCache();
 	if (start < 0 || end < 0 || end > $nc(input)->length() || start > end) {
 		$throwNew($IndexOutOfBoundsException, $($String::format("input.length()=%s, start=%s, end=%s"_s, $$new($ObjectArray, {
 			$($of($Integer::valueOf($nc(input)->length()))),
@@ -104,6 +105,7 @@ NaiveHuffman$Writer* NaiveHuffman$Writer::from($CharSequence* input, int32_t sta
 }
 
 bool NaiveHuffman$Writer::write($ByteBuffer* destination) {
+	$useLocalCurrentObjectStackCache();
 	for (; this->pos < this->end; ++this->pos) {
 		if (this->rem == 0) {
 			$init($NaiveHuffman);

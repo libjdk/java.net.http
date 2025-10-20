@@ -114,6 +114,7 @@ void Demand::init$() {
 }
 
 bool Demand::increase(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (n <= 0) {
 		$throwNew($IllegalArgumentException, $$str({"non-positive subscription request: "_s, $($String::valueOf(n))}));
 	}

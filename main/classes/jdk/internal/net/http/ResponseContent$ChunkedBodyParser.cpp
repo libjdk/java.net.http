@@ -254,6 +254,7 @@ $String* ResponseContent$ChunkedBodyParser::dbgString() {
 }
 
 void ResponseContent$ChunkedBodyParser::debugBuffer($ByteBuffer* b) {
+	$useLocalCurrentObjectStackCache();
 	if (!$nc(this->debug)->on()) {
 		return;
 	}
@@ -275,6 +276,7 @@ void ResponseContent$ChunkedBodyParser::debugBuffer($ByteBuffer* b) {
 }
 
 void ResponseContent$ChunkedBodyParser::onSubscribe($AbstractSubscription* sub) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"onSubscribe: "_s, $($nc($of(this->this$0->pusher))->getClass()->getName())}));
 	}
@@ -286,6 +288,7 @@ $String* ResponseContent$ChunkedBodyParser::currentStateMessage() {
 }
 
 void ResponseContent$ChunkedBodyParser::accept($ByteBuffer* b) {
+	$useLocalCurrentObjectStackCache();
 	if (this->closedExceptionally != nullptr) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log($$str({"already closed: "_s, this->closedExceptionally}));
@@ -354,6 +357,7 @@ void ResponseContent$ChunkedBodyParser::accept($ByteBuffer* b) {
 }
 
 int32_t ResponseContent$ChunkedBodyParser::tryReadChunkLen($ByteBuffer* chunkbuf) {
+	$useLocalCurrentObjectStackCache();
 	$init($ResponseContent$ChunkState);
 	if (!ResponseContent$ChunkedBodyParser::$assertionsDisabled && !(this->state == $ResponseContent$ChunkState::READING_LENGTH)) {
 		$throwNew($AssertionError);
@@ -428,6 +432,7 @@ int32_t ResponseContent$ChunkedBodyParser::tryConsumeBytes($ByteBuffer* chunkbuf
 }
 
 $ByteBuffer* ResponseContent$ChunkedBodyParser::tryReadOneHunk($ByteBuffer* chunk) {
+	$useLocalCurrentObjectStackCache();
 	int32_t unfulfilled = this->bytesremaining;
 	int32_t toconsume = this->bytesToConsume;
 	$ResponseContent$ChunkState* st = this->state;
@@ -532,6 +537,7 @@ $ByteBuffer* ResponseContent$ChunkedBodyParser::tryReadOneHunk($ByteBuffer* chun
 }
 
 bool ResponseContent$ChunkedBodyParser::tryPushOneHunk($ByteBuffer* b, $List* out) {
+	$useLocalCurrentObjectStackCache();
 	$init($ResponseContent$ChunkState);
 	if (!ResponseContent$ChunkedBodyParser::$assertionsDisabled && !(this->state != $ResponseContent$ChunkState::DONE)) {
 		$throwNew($AssertionError);

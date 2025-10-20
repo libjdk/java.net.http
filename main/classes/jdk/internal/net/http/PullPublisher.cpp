@@ -87,6 +87,7 @@ void PullPublisher::init$($Iterable* iterable) {
 }
 
 void PullPublisher::subscribe($Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$var($PullPublisher$Subscription, sub, nullptr);
 	if (this->throwable != nullptr) {
 		if (!PullPublisher::$assertionsDisabled && !(this->iterable == nullptr)) {

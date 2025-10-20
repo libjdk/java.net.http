@@ -82,6 +82,7 @@ $Object* allocate$ImmutableHttpRequest($Class* clazz) {
 }
 
 void ImmutableHttpRequest::init$($HttpRequestBuilderImpl* builder) {
+	$useLocalCurrentObjectStackCache();
 	$HttpRequest::init$();
 	$set(this, method$, $cast($String, $Objects::requireNonNull($($nc(builder)->method()))));
 	$set(this, uri$, $cast($URI, $Objects::requireNonNull($($nc(builder)->uri()))));

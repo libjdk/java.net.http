@@ -76,6 +76,7 @@ void CookieFilter::init$() {
 }
 
 void CookieFilter::request($HttpRequestImpl* r, $MultiExchange* e) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpClientImpl, client, $nc(e)->client());
 	$var($Optional, cookieHandlerOpt, $nc(client)->cookieHandler());
 	if ($nc(cookieHandlerOpt)->isPresent()) {
@@ -122,6 +123,7 @@ void CookieFilter::request($HttpRequestImpl* r, $MultiExchange* e) {
 }
 
 $HttpRequestImpl* CookieFilter::response($Response* r) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpHeaders, hdrs, $nc(r)->headers());
 	$var($HttpRequestImpl, request, r->request());
 	$var($Exchange, e, r->exchange);

@@ -92,6 +92,7 @@ IntegerReader* IntegerReader::configure(int32_t N) {
 }
 
 IntegerReader* IntegerReader::configure(int32_t N, int32_t maxValue) {
+	$useLocalCurrentObjectStackCache();
 	if (this->state != IntegerReader::NEW) {
 		$throwNew($IllegalStateException, "Already configured"_s);
 	}
@@ -106,6 +107,7 @@ IntegerReader* IntegerReader::configure(int32_t N, int32_t maxValue) {
 }
 
 bool IntegerReader::read($ByteBuffer* input) {
+	$useLocalCurrentObjectStackCache();
 	if (this->state == IntegerReader::NEW) {
 		$throwNew($IllegalStateException, "Configure first"_s);
 	}
@@ -166,6 +168,7 @@ int32_t IntegerReader::get() {
 }
 
 void IntegerReader::checkPrefix(int32_t N) {
+	$useLocalCurrentObjectStackCache();
 	if (N < 1 || N > 8) {
 		$throwNew($IllegalArgumentException, $$str({"1 <= N <= 8: N= "_s, $$str(N)}));
 	}

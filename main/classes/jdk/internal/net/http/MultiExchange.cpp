@@ -794,6 +794,7 @@ bool MultiExchange::RETRY_ALWAYS = false;
 bool MultiExchange::RETRY_CONNECT = false;
 
 void MultiExchange::init$($HttpRequest* userRequest, $HttpRequestImpl* requestImpl, $HttpClientImpl* client, $HttpResponse$BodyHandler* responseHandler, $HttpResponse$PushPromiseHandler* pushPromiseHandler, $AccessControlContext* acc) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, attempts, $new($AtomicInteger));
 	$set(this, response, nullptr);
 	$set(this, interrupted, $new($AtomicReference));
@@ -829,6 +830,7 @@ $HttpClientImpl* MultiExchange::client() {
 }
 
 $HttpClient$Version* MultiExchange::version() {
+	$useLocalCurrentObjectStackCache();
 	$HttpClient$Version* vers = $cast($HttpClient$Version, $nc($($nc(this->request)->version()))->orElse($($nc(this->client$)->version())));
 	$init($HttpClient$Version);
 	bool var$0 = vers == $HttpClient$Version::HTTP_2 && !$nc(this->request)->secure();
@@ -851,6 +853,7 @@ void MultiExchange::setExchange($Exchange* exchange) {
 }
 
 $Optional* MultiExchange::remainingConnectTimeout() {
+	$useLocalCurrentObjectStackCache();
 	return $nc($($Optional::ofNullable(this->connectTimeout)))->map(static_cast<$Function*>($$new(MultiExchange$$Lambda$getRemaining$2)));
 }
 
@@ -861,6 +864,7 @@ void MultiExchange::cancelTimer() {
 }
 
 void MultiExchange::requestFilters($HttpRequestImpl* r) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logTrace("Applying request filters"_s, $$new($ObjectArray, 0));
 	{
 		$var($Iterator, i$, $nc(this->filters)->iterator());
@@ -876,6 +880,7 @@ void MultiExchange::requestFilters($HttpRequestImpl* r) {
 }
 
 $HttpRequestImpl* MultiExchange::responseFilters($Response* response) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logTrace("Applying response filters"_s, $$new($ObjectArray, 0));
 	$var($Iterator, reverseItr, $nc(this->filters)->descendingIterator());
 	while ($nc(reverseItr)->hasNext()) {
@@ -897,6 +902,7 @@ void MultiExchange::cancel($IOException* cause) {
 }
 
 bool MultiExchange::cancel(bool mayInterruptIfRunning) {
+	$useLocalCurrentObjectStackCache();
 	bool cancelled = this->cancelled;
 	if (!cancelled && mayInterruptIfRunning) {
 		if ($nc(this->interrupted)->get() == nullptr) {
@@ -913,6 +919,7 @@ bool MultiExchange::cancel(bool mayInterruptIfRunning) {
 }
 
 $CompletableFuture* MultiExchange::responseAsync($Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, start, $new($MinimalFuture, $$new($MultiExchange$CancelableRef, this)));
 	$var($CompletableFuture, cf, responseAsync0(start));
 	start->completeAsync(static_cast<$Supplier*>($$new(MultiExchange$$Lambda$lambda$responseAsync$0$3)), executor);
@@ -925,6 +932,7 @@ bool MultiExchange::bodyNotPermitted($Response* r) {
 }
 
 bool MultiExchange::bodyIsPresent($Response* r) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpHeaders, headers, $nc(r)->headers());
 	if ($nc($($nc(headers)->firstValueAsLong("Content-length"_s)))->orElse(0) != (int64_t)0) {
 		return true;
@@ -936,6 +944,7 @@ bool MultiExchange::bodyIsPresent($Response* r) {
 }
 
 $CompletableFuture* MultiExchange::handleNoBody($Response* r, $Exchange* exch) {
+	$useLocalCurrentObjectStackCache();
 	int32_t var$0 = $nc(r)->statusCode();
 	$var($HttpHeaders, var$1, r->headers());
 	$var($HttpResponse$BodySubscriber, bs, $nc(this->responseHandler)->apply($$new($ResponseInfoImpl, var$0, var$1, $(r->version()))));
@@ -948,10 +957,12 @@ $CompletableFuture* MultiExchange::handleNoBody($Response* r, $Exchange* exch) {
 }
 
 $CompletableFuture* MultiExchange::responseAsync0($CompletableFuture* start) {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc($($cast($CompletableFuture, $nc(start)->thenCompose(static_cast<$Function*>($$new(MultiExchange$$Lambda$lambda$responseAsync0$2$6, this))))))->thenCompose(static_cast<$Function*>($$new(MultiExchange$$Lambda$lambda$responseAsync0$4$7, this))))))->exceptionallyCompose(static_cast<$Function*>($$new(MultiExchange$$Lambda$whenCancelled$8, this))));
 }
 
 $CompletableFuture* MultiExchange::whenCancelled($Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	$var($CancellationException, x, $cast($CancellationException, $nc(this->interrupted)->get()));
 	if (x != nullptr) {
@@ -964,6 +975,7 @@ $CompletableFuture* MultiExchange::whenCancelled($Throwable* t$renamed) {
 }
 
 $CompletableFuture* MultiExchange::responseAsyncImpl() {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, nullptr);
 	if ($nc(this->attempts)->incrementAndGet() > MultiExchange::max_attempts) {
 		$assign(cf, $MinimalFuture::failedFuture($$new($IOException, "Too many retries"_s, this->retryCause$)));
@@ -1006,6 +1018,7 @@ bool MultiExchange::disableRetryConnect() {
 
 bool MultiExchange::isIdempotentRequest($HttpRequest* request) {
 	$init(MultiExchange);
+	$useLocalCurrentObjectStackCache();
 	$var($String, method, $nc(request)->method());
 	$var($String, s20098$, method);
 	int32_t tmp20098$ = -1;
@@ -1072,6 +1085,7 @@ $Throwable* MultiExchange::retryCause($Throwable* t) {
 }
 
 $CompletableFuture* MultiExchange::getExceptionalCF($Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if (($instanceOf($CompletionException, t)) || ($instanceOf($ExecutionException, t))) {
 		if ($nc(t)->getCause() != nullptr) {
@@ -1111,6 +1125,7 @@ $CompletableFuture* MultiExchange::getExceptionalCF($Throwable* t$renamed) {
 }
 
 $HttpTimeoutException* MultiExchange::toTimeoutException($IOException* ioe) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpTimeoutException, t, nullptr);
 	$var($Exchange, exchange, getExchange());
 	if (exchange != nullptr) {
@@ -1146,6 +1161,7 @@ $CompletableFuture* MultiExchange::lambda$responseAsyncImpl$7($Response* respons
 }
 
 $CompletionStage* MultiExchange::lambda$responseAsyncImpl$6($Exchange* exch, $Response* response) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpRequestImpl, newrequest, nullptr);
 	try {
 		$assign(newrequest, responseFilters(response));
@@ -1177,6 +1193,7 @@ $CompletableFuture* MultiExchange::lambda$responseAsyncImpl$5($HttpRequestImpl* 
 }
 
 $CompletionStage* MultiExchange::lambda$responseAsync0$4($Response* r) {
+	$useLocalCurrentObjectStackCache();
 	$var($Exchange, exch, getExchange());
 	if (bodyNotPermitted(r)) {
 		if (bodyIsPresent(r)) {

@@ -200,6 +200,7 @@ void WindowController::init$() {
 }
 
 void WindowController::registerStream(int32_t streamid, int32_t initialStreamWindowSize) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->controllerLock)->lock();
 	{
 		$var($Throwable, var$0, nullptr);
@@ -221,6 +222,7 @@ void WindowController::registerStream(int32_t streamid, int32_t initialStreamWin
 }
 
 void WindowController::removeStream(int32_t streamid) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->controllerLock)->lock();
 	{
 		$var($Throwable, var$0, nullptr);
@@ -244,6 +246,7 @@ void WindowController::removeStream(int32_t streamid) {
 }
 
 int32_t WindowController::tryAcquire(int32_t requestAmount, int32_t streamid, $Stream* stream) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->controllerLock)->lock();
 	{
 		$var($Throwable, var$0, nullptr);
@@ -303,6 +306,7 @@ int32_t WindowController::tryAcquire(int32_t requestAmount, int32_t streamid, $S
 }
 
 bool WindowController::increaseConnectionWindow(int32_t amount) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, candidates, nullptr);
 	$nc(this->controllerLock)->lock();
 	{
@@ -363,6 +367,7 @@ bool WindowController::increaseConnectionWindow(int32_t amount) {
 }
 
 bool WindowController::increaseStreamWindow(int32_t amount, int32_t streamid) {
+	$useLocalCurrentObjectStackCache();
 	$var($Stream, s, nullptr);
 	$nc(this->controllerLock)->lock();
 	{
@@ -419,6 +424,7 @@ bool WindowController::increaseStreamWindow(int32_t amount, int32_t streamid) {
 }
 
 void WindowController::adjustActiveStreams(int32_t adjustAmount) {
+	$useLocalCurrentObjectStackCache();
 	if (!WindowController::$assertionsDisabled && !(adjustAmount != 0)) {
 		$throwNew($AssertionError);
 	}
@@ -484,6 +490,7 @@ int32_t WindowController::connectionWindowSize() {
 }
 
 int32_t WindowController::streamWindowSize(int32_t streamid) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->controllerLock)->lock();
 	{
 		$var($Throwable, var$0, nullptr);

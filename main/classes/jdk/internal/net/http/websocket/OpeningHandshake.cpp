@@ -375,6 +375,7 @@ $Set* OpeningHandshake::ILLEGAL_HEADERS = nullptr;
 $SecureRandom* OpeningHandshake::random = nullptr;
 
 void OpeningHandshake::init$($BuilderImpl* b) {
+	$useLocalCurrentObjectStackCache();
 	{
 		try {
 			$set(this, sha1, $MessageDigest::getInstance("SHA-1"_s));
@@ -424,6 +425,7 @@ void OpeningHandshake::init$($BuilderImpl* b) {
 
 $Collection* OpeningHandshake::createRequestSubprotocols($Collection* subprotocols) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($LinkedHashSet, sp, $new($LinkedHashSet, $nc(subprotocols)->size(), (float)1));
 	{
 		$var($Iterator, i$, $nc(subprotocols)->iterator());
@@ -445,6 +447,7 @@ $Collection* OpeningHandshake::createRequestSubprotocols($Collection* subprotoco
 
 $URI* OpeningHandshake::createRequestURI($URI* uri) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($String, s, $nc(uri)->getScheme());
 	bool var$0 = !OpeningHandshake::$assertionsDisabled;
 	if (var$0) {
@@ -476,6 +479,7 @@ $CompletableFuture* OpeningHandshake::send() {
 }
 
 $CompletableFuture* OpeningHandshake::resultFrom($HttpResponse* response) {
+	$useLocalCurrentObjectStackCache();
 	$var($OpeningHandshake$Result, result, nullptr);
 	$var($Throwable, exception, nullptr);
 	try {
@@ -503,6 +507,7 @@ $CompletableFuture* OpeningHandshake::resultFrom($HttpResponse* response) {
 }
 
 $OpeningHandshake$Result* OpeningHandshake::handleResponse($HttpResponse* response) {
+	$useLocalCurrentObjectStackCache();
 	int32_t c = $nc(response)->statusCode();
 	if (c != 101) {
 		$throw($(checkFailed($$str({"Unexpected HTTP response status code "_s, $$str(c)}))));
@@ -536,6 +541,7 @@ $OpeningHandshake$Result* OpeningHandshake::handleResponse($HttpResponse* respon
 }
 
 $String* OpeningHandshake::checkAndReturnSubprotocol($HttpHeaders* responseHeaders) {
+	$useLocalCurrentObjectStackCache();
 	$var($Optional, opt, $nc(responseHeaders)->firstValue(OpeningHandshake::HEADER_PROTOCOL));
 	if (!$nc(opt)->isPresent()) {
 		return ""_s;
@@ -550,6 +556,7 @@ $String* OpeningHandshake::checkAndReturnSubprotocol($HttpHeaders* responseHeade
 
 void OpeningHandshake::requireAbsent($HttpHeaders* responseHeaders, $String* headerName) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($List, values, $nc(responseHeaders)->allValues(headerName));
 	if (!$nc(values)->isEmpty()) {
 		$throw($(checkFailed($($String::format("Response field \'%s\' present: %s"_s, $$new($ObjectArray, {
@@ -561,6 +568,7 @@ void OpeningHandshake::requireAbsent($HttpHeaders* responseHeaders, $String* hea
 
 $Optional* OpeningHandshake::requireAtMostOne($HttpHeaders* responseHeaders, $String* headerName) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($List, values, $nc(responseHeaders)->allValues(headerName));
 	if ($nc(values)->size() > 1) {
 		$throw($(checkFailed($($String::format("Response field \'%s\' multivalued: %s"_s, $$new($ObjectArray, {
@@ -573,6 +581,7 @@ $Optional* OpeningHandshake::requireAtMostOne($HttpHeaders* responseHeaders, $St
 
 $String* OpeningHandshake::requireSingle($HttpHeaders* responseHeaders, $String* headerName) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($List, values, $nc(responseHeaders)->allValues(headerName));
 	if ($nc(values)->isEmpty()) {
 		$throw($(checkFailed($$str({"Response field missing: "_s, headerName}))));
@@ -587,6 +596,7 @@ $String* OpeningHandshake::requireSingle($HttpHeaders* responseHeaders, $String*
 
 $String* OpeningHandshake::createNonce() {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($bytes, bytes, $new($bytes, 16));
 	$nc(OpeningHandshake::random)->nextBytes(bytes);
 	return $nc($($Base64::getEncoder()))->encodeToString(bytes);
@@ -600,6 +610,7 @@ $CheckFailedException* OpeningHandshake::checkFailed($String* message) {
 
 $URI* OpeningHandshake::checkURI($URI* uri) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($String, scheme, $nc(uri)->getScheme());
 	bool var$0 = "ws"_s->equalsIgnoreCase(scheme);
 	if (!(var$0 || "wss"_s->equalsIgnoreCase(scheme))) {
@@ -621,6 +632,7 @@ $IllegalArgumentException* OpeningHandshake::illegal($String* message) {
 
 $Proxy* OpeningHandshake::proxyFor($Optional* selector, $URI* uri) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	if (!$nc(selector)->isPresent()) {
 		return nullptr;
 	}
@@ -639,6 +651,7 @@ $Proxy* OpeningHandshake::proxyFor($Optional* selector, $URI* uri) {
 
 void OpeningHandshake::checkPermissions($BuilderImpl* b, $Proxy* proxy) {
 	$init(OpeningHandshake);
+	$useLocalCurrentObjectStackCache();
 	$var($SecurityManager, sm, $System::getSecurityManager());
 	if (sm == nullptr) {
 		return;
@@ -661,6 +674,7 @@ $String* OpeningHandshake::lambda$checkPermissions$1($Pair* p) {
 }
 
 $CompletableFuture* OpeningHandshake::lambda$send$0() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($CompletableFuture, $nc($($nc(this->client)->sendAsync(this->request, $($HttpResponse$BodyHandlers::ofString()))))->thenCompose(static_cast<$Function*>($$new(OpeningHandshake$$Lambda$resultFrom$2, this))));
 }
 

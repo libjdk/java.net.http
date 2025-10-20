@@ -107,6 +107,7 @@ void Http1Exchange$Http1BodySubscriber::init$($Logger* debug) {
 }
 
 void Http1Exchange$Http1BodySubscriber::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("Http1BodySubscriber requesting %d, from %s"_s, $$new($ObjectArray, {
 			$($of($Long::valueOf(n))),
@@ -126,6 +127,7 @@ void Http1Exchange$Http1BodySubscriber::setSubscription($Flow$Subscription* subs
 }
 
 void Http1Exchange$Http1BodySubscriber::cancelSubscription() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$nc(this->subscription)->cancel();
 	} catch ($Throwable&) {

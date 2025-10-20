@@ -206,6 +206,7 @@ void AuthenticationFilter::init$() {
 }
 
 $PasswordAuthentication* AuthenticationFilter::getCredentials($String* header, bool proxy, $HttpRequestImpl* req) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpClientImpl, client, $nc(this->exchange)->client());
 	$var($Authenticator, auth, $cast($Authenticator, $nc($($nc(client)->authenticator()))->orElseThrow(static_cast<$Supplier*>($$new(AuthenticationFilter$$Lambda$lambda$getCredentials$0)))));
 	$var($URI, uri, $nc(req)->uri());
@@ -241,6 +242,7 @@ $URL* AuthenticationFilter::toURL($URI* uri, $String* method, bool proxy) {
 }
 
 $URI* AuthenticationFilter::getProxyURI($HttpRequestImpl* r) {
+	$useLocalCurrentObjectStackCache();
 	$var($InetSocketAddress, proxy, $nc(r)->proxy());
 	if (proxy == nullptr) {
 		return nullptr;
@@ -258,6 +260,7 @@ $URI* AuthenticationFilter::getProxyURI($HttpRequestImpl* r) {
 }
 
 void AuthenticationFilter::request($HttpRequestImpl* r, $MultiExchange* e) {
+	$useLocalCurrentObjectStackCache();
 	$var($AuthenticationFilter$Cache, cache, getCache(e));
 	$set(this, exchange, e);
 	if ($nc(this->exchange)->proxyauth == nullptr) {
@@ -281,6 +284,7 @@ void AuthenticationFilter::request($HttpRequestImpl* r, $MultiExchange* e) {
 
 void AuthenticationFilter::addBasicCredentials($HttpRequestImpl* r, bool proxy, $PasswordAuthentication* pw, bool isUTF8) {
 	$init(AuthenticationFilter);
+	$useLocalCurrentObjectStackCache();
 	$var($String, hdrname, proxy ? "Proxy-Authorization"_s : "Authorization"_s);
 	$var($StringBuilder, sb, $new($StringBuilder, 128));
 	sb->append($($nc(pw)->getUserName()))->append(u':')->append($($nc(pw)->getPassword()));
@@ -307,6 +311,7 @@ void AuthenticationFilter::addBasicCredentials($HttpRequestImpl* r, bool proxy, 
 }
 
 $HttpRequestImpl* AuthenticationFilter::response($Response* r) {
+	$useLocalCurrentObjectStackCache();
 	$var($AuthenticationFilter$Cache, cache, getCache(this->exchange));
 	int32_t status = $nc(r)->statusCode();
 	$var($HttpHeaders, hdrs, r->headers());
@@ -419,6 +424,7 @@ $AuthenticationFilter$Cache* AuthenticationFilter::getCache($MultiExchange* exch
 	$load(AuthenticationFilter);
 	$synchronized(class$) {
 		$init(AuthenticationFilter);
+		$useLocalCurrentObjectStackCache();
 		$var($HttpClientImpl, client, $nc(exchange)->client());
 		$var($AuthenticationFilter$Cache, c, $cast($AuthenticationFilter$Cache, $nc(AuthenticationFilter::caches)->get(client)));
 		if (c == nullptr) {
@@ -431,6 +437,7 @@ $AuthenticationFilter$Cache* AuthenticationFilter::getCache($MultiExchange* exch
 
 $URI* AuthenticationFilter::normalize($URI* uri, bool isPrimaryKey) {
 	$init(AuthenticationFilter);
+	$useLocalCurrentObjectStackCache();
 	$var($String, path, $nc(uri)->getPath());
 	if (path == nullptr || $nc(path)->isEmpty()) {
 		try {
@@ -453,6 +460,7 @@ $IOException* AuthenticationFilter::lambda$getCredentials$0() {
 }
 
 void clinit$AuthenticationFilter($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(AuthenticationFilter::encoder, $Base64::getEncoder());
 	AuthenticationFilter::retry_limit = $Utils::getIntegerNetProperty("jdk.httpclient.auth.retrylimit"_s, AuthenticationFilter::DEFAULT_RETRY_LIMIT);
 	$init($StandardCharsets);

@@ -441,11 +441,13 @@ $SimpleHeaderTable$HeaderField* SimpleHeaderTable::get(int32_t index) {
 }
 
 void SimpleHeaderTable::put($CharSequence* name, $CharSequence* value) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $nc(name)->toString());
 	put($$new($SimpleHeaderTable$HeaderField, var$0, $($nc(value)->toString())));
 }
 
 void SimpleHeaderTable::put($SimpleHeaderTable$HeaderField* h) {
+	$useLocalCurrentObjectStackCache();
 	$init($HPACK$Logger$Level);
 	if ($nc(this->logger)->isLoggable($HPACK$Logger$Level::NORMAL)) {
 		$nc(this->logger)->log($HPACK$Logger$Level::NORMAL, static_cast<$Supplier*>($$new(SimpleHeaderTable$$Lambda$lambda$put$0, h)));
@@ -475,6 +477,7 @@ void SimpleHeaderTable::put($SimpleHeaderTable$HeaderField* h) {
 }
 
 void SimpleHeaderTable::setMaxSize(int32_t maxSize) {
+	$useLocalCurrentObjectStackCache();
 	if (maxSize < 0) {
 		$throwNew($IllegalArgumentException, $$str({"maxSize >= 0: maxSize="_s, $$str(maxSize)}));
 	}
@@ -487,6 +490,7 @@ void SimpleHeaderTable::setMaxSize(int32_t maxSize) {
 }
 
 $SimpleHeaderTable$HeaderField* SimpleHeaderTable::evictEntry() {
+	$useLocalCurrentObjectStackCache();
 	$var($SimpleHeaderTable$HeaderField, f, remove());
 	int32_t s = sizeOf(f);
 	this->size$ -= s;
@@ -499,6 +503,7 @@ $SimpleHeaderTable$HeaderField* SimpleHeaderTable::evictEntry() {
 }
 
 $String* SimpleHeaderTable::toString() {
+	$useLocalCurrentObjectStackCache();
 	double used = this->maxSize$ == 0 ? (double)0 : 100 * (((double)this->size$) / this->maxSize$);
 	return $String::format("dynamic length: %d, full length: %s, used space: %s/%s (%.1f%%)"_s, $$new($ObjectArray, {
 		$($of($Integer::valueOf($nc(this->buffer)->size))),
@@ -510,6 +515,7 @@ $String* SimpleHeaderTable::toString() {
 }
 
 int32_t SimpleHeaderTable::checkIndex(int32_t index) {
+	$useLocalCurrentObjectStackCache();
 	int32_t len = length();
 	if (index < 1 || index > len) {
 		$throwNew($IndexOutOfBoundsException, $($String::format("1 <= index <= length(): index=%s, length()=%s"_s, $$new($ObjectArray, {
@@ -526,6 +532,7 @@ int32_t SimpleHeaderTable::sizeOf($SimpleHeaderTable$HeaderField* f) {
 }
 
 $String* SimpleHeaderTable::getStateString() {
+	$useLocalCurrentObjectStackCache();
 	if (this->size$ == 0) {
 		return "empty."_s;
 	}
@@ -557,6 +564,7 @@ $SimpleHeaderTable$HeaderField* SimpleHeaderTable::remove() {
 
 $String* SimpleHeaderTable::lambda$evictEntry$5($SimpleHeaderTable$HeaderField* f, int32_t s) {
 	$init(SimpleHeaderTable);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("evicted entry (\'%s\', \'%s\') of size %s"_s, $$new($ObjectArray, {
 		$of($nc(f)->name),
 		$of(f->value),
@@ -581,11 +589,13 @@ $String* SimpleHeaderTable::lambda$put$3($SimpleHeaderTable$HeaderField* h) {
 }
 
 $String* SimpleHeaderTable::lambda$put$2() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("insufficient space %s, must evict entry"_s, $$new($ObjectArray, {$($of($Integer::valueOf((this->maxSize$ - this->size$))))}));
 }
 
 $String* SimpleHeaderTable::lambda$put$1($SimpleHeaderTable$HeaderField* h, int32_t entrySize) {
 	$init(SimpleHeaderTable);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("size of (\'%s\', \'%s\') is %s"_s, $$new($ObjectArray, {
 		$of($nc(h)->name),
 		$of(h->value),
@@ -602,6 +612,7 @@ $String* SimpleHeaderTable::lambda$put$0($SimpleHeaderTable$HeaderField* h) {
 }
 
 void clinit$SimpleHeaderTable($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(SimpleHeaderTable::staticTable, $List::of($$new($SimpleHeaderTable$HeaderFieldArray, {
 		$$new($SimpleHeaderTable$HeaderField, ""_s),
 		$$new($SimpleHeaderTable$HeaderField, ":authority"_s),

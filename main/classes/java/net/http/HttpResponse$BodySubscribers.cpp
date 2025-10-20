@@ -242,6 +242,7 @@ $HttpResponse$BodySubscriber* HttpResponse$BodySubscribers::ofByteArray() {
 }
 
 $HttpResponse$BodySubscriber* HttpResponse$BodySubscribers::ofFile($Path* file, $OpenOptionArray* openOptions) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(file);
 	$var($List, opts, $List::of(openOptions));
 	$init($StandardOpenOption);

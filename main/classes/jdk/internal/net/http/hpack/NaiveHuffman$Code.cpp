@@ -78,6 +78,7 @@ int32_t NaiveHuffman$Code::getLength() {
 }
 
 $String* NaiveHuffman$Code::toString() {
+	$useLocalCurrentObjectStackCache();
 	int64_t p = $sl(1, this->length);
 	return $str({$($nc($($Long::toBinaryString(this->code + p)))->substring(1)), ", length="_s, $$str(this->length)});
 }

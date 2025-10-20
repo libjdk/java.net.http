@@ -593,6 +593,7 @@ void SSLFlowDelegate::init$($SSLEngine* engine, $Executor* exec, $Flow$Subscribe
 }
 
 void SSLFlowDelegate::init$($SSLEngine* engine, $Executor* exec, $Consumer* recycler, $Flow$Subscriber* downReader, $Flow$Subscriber* downWriter) {
+	$useLocalCurrentObjectStackCache();
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(SSLFlowDelegate$$Lambda$dbgString, this)), $Utils::DEBUG));
 	$set(this, monitor$, SSLFlowDelegate::isMonitored ? static_cast<$SSLFlowDelegate$Monitorable*>($new(SSLFlowDelegate$$Lambda$monitor$1, this)) : ($SSLFlowDelegate$Monitorable*)nullptr);
@@ -634,6 +635,7 @@ $CompletableFuture* SSLFlowDelegate::alpn() {
 }
 
 void SSLFlowDelegate::setALPN() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->alpnCF)->isDone()) {
 		return;
 	}
@@ -645,6 +647,7 @@ void SSLFlowDelegate::setALPN() {
 }
 
 $String* SSLFlowDelegate::monitor() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append("SSL: id "_s)->append(this->id);
 	sb->append(" "_s)->append($(dbgString()));
@@ -717,6 +720,7 @@ $Void* SSLFlowDelegate::stopOnError($Throwable* error) {
 }
 
 void SSLFlowDelegate::cleanList($List* l) {
+	$useLocalCurrentObjectStackCache();
 	$synchronized(l) {
 		$var($Iterator, iter, $nc(l)->iterator());
 		while ($nc(iter)->hasNext()) {
@@ -764,6 +768,7 @@ void SSLFlowDelegate::resumeActivity() {
 }
 
 bool SSLFlowDelegate::doHandshake($SSLFlowDelegate$EngineResult* r, int32_t caller) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->handshakeState)->getAndAccumulate(0, static_cast<$IntBinaryOperator*>($$new(SSLFlowDelegate$$Lambda$lambda$doHandshake$2$6)));
 	if (this->stateList != nullptr && $nc(this->debug)->on()) {
 		$nc(this->stateList)->add($($nc($($nc(r)->handshakeStatus()))->toString()));
@@ -815,6 +820,7 @@ bool SSLFlowDelegate::doHandshake($SSLFlowDelegate$EngineResult* r, int32_t call
 }
 
 $List* SSLFlowDelegate::obtainTasks() {
+	$useLocalCurrentObjectStackCache();
 	$var($List, l, $new($ArrayList));
 	$var($Runnable, r, nullptr);
 	while (($assign(r, $nc(this->engine)->getDelegatedTask())) != nullptr) {
@@ -828,6 +834,7 @@ void SSLFlowDelegate::executeTasks($List* tasks) {
 }
 
 bool SSLFlowDelegate::trySetALPN() {
+	$useLocalCurrentObjectStackCache();
 	if (((int32_t)($nc(this->handshakeState)->getAndSet(SSLFlowDelegate::NOT_HANDSHAKING) & (uint32_t)~SSLFlowDelegate::DOING_TASKS)) == SSLFlowDelegate::HANDSHAKING) {
 		this->applicationBufferSize = $nc($($nc(this->engine)->getSession()))->getApplicationBufferSize();
 		this->packetBufferSize = $nc($($nc(this->engine)->getSession()))->getPacketBufferSize();
@@ -838,6 +845,7 @@ bool SSLFlowDelegate::trySetALPN() {
 }
 
 $SSLFlowDelegate$EngineResult* SSLFlowDelegate::doClosure($SSLFlowDelegate$EngineResult* r) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log("doClosure(%s): %s [isOutboundDone: %s, isInboundDone: %s]"_s, $$new($ObjectArray, {
 			$of($nc(r)->result),
@@ -909,6 +917,7 @@ $String* SSLFlowDelegate::dbgString() {
 }
 
 void SSLFlowDelegate::lambda$executeTasks$3($List* tasks) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($List, nextTasks, tasks);
 		if ($nc(this->debug)->on()) {

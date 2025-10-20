@@ -108,6 +108,7 @@ void RequestPublishers$ByteArrayPublisher::init$($bytes* content, int32_t offset
 }
 
 $List* RequestPublishers$ByteArrayPublisher::copy($bytes* content, int32_t offset, int32_t length) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, bufs, $new($ArrayList));
 	while (length > 0) {
 		$var($ByteBuffer, b, $ByteBuffer::allocate($Math::min(this->bufSize, length)));
@@ -123,6 +124,7 @@ $List* RequestPublishers$ByteArrayPublisher::copy($bytes* content, int32_t offse
 }
 
 void RequestPublishers$ByteArrayPublisher::subscribe($Flow$Subscriber* subscriber) {
+	$useLocalCurrentObjectStackCache();
 	$var($List, copy, this->copy(this->content, this->offset, this->length));
 	$var($PullPublisher, delegate, $new($PullPublisher, copy));
 	delegate->subscribe(subscriber);

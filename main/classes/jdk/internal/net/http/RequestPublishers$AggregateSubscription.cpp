@@ -230,6 +230,7 @@ bool RequestPublishers$AggregateSubscription::cancelSubscription() {
 }
 
 void RequestPublishers$AggregateSubscription::run() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		while (true) {
 			bool var$0 = $nc(this->error)->get() == nullptr;

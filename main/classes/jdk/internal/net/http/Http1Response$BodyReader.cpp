@@ -192,6 +192,7 @@ bool Http1Response$BodyReader::tryAsyncReceive($ByteBuffer* b) {
 }
 
 void Http1Response$BodyReader::onReadError($Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if ($instanceOf($EOFException, t) && this->this$0->bodyParser != nullptr && $instanceOf($ResponseContent$UnknownLengthBodyParser, this->this$0->bodyParser)) {
 		$nc(($cast($ResponseContent$UnknownLengthBodyParser, this->this$0->bodyParser)))->complete();
@@ -217,6 +218,7 @@ void Http1Response$BodyReader::onSubscribe($AbstractSubscription* s) {
 }
 
 void Http1Response$BodyReader::handle($ByteBuffer* b, $ResponseContent$BodyParser* parser, $CompletableFuture* cf) {
+	$useLocalCurrentObjectStackCache();
 	if (!Http1Response$BodyReader::$assertionsDisabled && !(cf != nullptr)) {
 		$throwNew($AssertionError, $of("parsing not started"_s));
 	}
@@ -255,6 +257,7 @@ void Http1Response$BodyReader::onComplete($Throwable* closedExceptionally) {
 }
 
 void Http1Response$BodyReader::close($Throwable* error) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, this->cf);
 	if (cf != nullptr && !cf->isDone()) {
 		if (error != nullptr) {
@@ -273,6 +276,7 @@ void Http1Response$BodyReader::close($Throwable* error) {
 }
 
 $String* Http1Response$BodyReader::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, var$0, $$str({$($Http1Response$Receiver::toString()), "/parser="_s}));
 	return $concat(var$0, $($String::valueOf($of(this->parser))));
 }

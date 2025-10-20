@@ -92,6 +92,7 @@ void HttpConnection$PlainHttpPublisher$HttpWriteSubscription::init$($HttpConnect
 }
 
 void HttpConnection$PlainHttpPublisher$HttpWriteSubscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (n <= 0) {
 		$throwNew($IllegalArgumentException, "non-positive request"_s);
 	}
@@ -103,6 +104,7 @@ void HttpConnection$PlainHttpPublisher$HttpWriteSubscription::request(int64_t n)
 }
 
 void HttpConnection$PlainHttpPublisher$HttpWriteSubscription::cancel() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc($nc(this->this$1->this$0)->debug)->on()) {
 		$nc($nc(this->this$1->this$0)->debug)->log($$str({"HttpPublisher: cancelled by "_s, $($nc(this->this$1->this$0)->getConnectionFlow())}));
 	}
@@ -119,6 +121,7 @@ $List* HttpConnection$PlainHttpPublisher$HttpWriteSubscription::poll() {
 }
 
 void HttpConnection$PlainHttpPublisher$HttpWriteSubscription::flush() {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		bool var$0 = !isEmpty();
 		if (!(var$0 && $nc(this->demand)->tryDecrement())) {

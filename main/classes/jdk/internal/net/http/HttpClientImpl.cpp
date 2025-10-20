@@ -651,6 +651,7 @@ $Executor* HttpClientImpl::ASYNC_POOL = nullptr;
 
 $HttpClientFacade* HttpClientImpl::create($HttpClientBuilderImpl* builder) {
 	$init(HttpClientImpl);
+	$useLocalCurrentObjectStackCache();
 	$var($HttpClientImpl$SingleFacadeFactory, facadeFactory, $new($HttpClientImpl$SingleFacadeFactory));
 	$var(HttpClientImpl, impl, $new(HttpClientImpl, builder, facadeFactory));
 	impl->start();
@@ -664,6 +665,7 @@ $HttpClientFacade* HttpClientImpl::create($HttpClientBuilderImpl* builder) {
 }
 
 void HttpClientImpl::init$($HttpClientBuilderImpl* builder, $HttpClientImpl$SingleFacadeFactory* facadeFactory) {
+	$useLocalCurrentObjectStackCache();
 	$HttpClient::init$();
 	$init($Utils);
 	$set(this, debug, $Utils::getDebugLogger(static_cast<$Supplier*>($$new(HttpClientImpl$$Lambda$dbgString, this)), $Utils::DEBUG));
@@ -883,6 +885,7 @@ $Http2ClientImpl* HttpClientImpl::client2() {
 }
 
 void HttpClientImpl::debugCompleted($String* tag, int64_t startNanos, $HttpRequest* req) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debugelapsed)->on()) {
 		$var($String, var$2, $$str({tag, " elapsed "_s, $$str($div(($System::nanoTime() - startNanos), (int64_t)1000000)), " millis for "_s}));
 		$var($String, var$1, $$concat(var$2, $($nc(req)->method())));
@@ -892,6 +895,7 @@ void HttpClientImpl::debugCompleted($String* tag, int64_t startNanos, $HttpReque
 }
 
 $HttpResponse* HttpClientImpl::send($HttpRequest* req, $HttpResponse$BodyHandler* responseHandler) {
+	$useLocalCurrentObjectStackCache();
 	$var($CompletableFuture, cf, nullptr);
 	if ($Thread::interrupted()) {
 		$throwNew($InterruptedException);
@@ -947,6 +951,7 @@ $CompletableFuture* HttpClientImpl::sendAsync($HttpRequest* userRequest, $HttpRe
 }
 
 $CompletableFuture* HttpClientImpl::sendAsync($HttpRequest* userRequest, $HttpResponse$BodyHandler* responseHandler, $HttpResponse$PushPromiseHandler* pushPromiseHandler, $Executor* exchangeExecutor) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(userRequest);
 	$Objects::requireNonNull(responseHandler);
 	$var($AccessControlContext, acc, nullptr);
@@ -983,6 +988,7 @@ $CompletableFuture* HttpClientImpl::sendAsync($HttpRequest* userRequest, $HttpRe
 }
 
 $String* HttpClientImpl::debugInterestOps($SelectableChannel* channel) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($SelectionKey, key, $nc(channel)->keyFor($nc(this->selmgr)->selector));
 		if (key == nullptr) {
@@ -1061,6 +1067,7 @@ $String* HttpClientImpl::dbgString() {
 }
 
 $String* HttpClientImpl::toString() {
+	$useLocalCurrentObjectStackCache();
 	return $str({$($HttpClient::toString()), ($$str({"("_s, $$str(this->id), ")"_s}))});
 }
 
@@ -1099,6 +1106,7 @@ void HttpClientImpl::cancelTimer($TimeoutEvent* event) {
 }
 
 int64_t HttpClientImpl::purgeTimeoutsAndReturnNextDeadline() {
+	$useLocalCurrentObjectStackCache();
 	int64_t diff = 0;
 	$var($List, toHandle, nullptr);
 	int32_t remaining = 0;

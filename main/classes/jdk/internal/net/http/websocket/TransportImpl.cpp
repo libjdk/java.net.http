@@ -226,6 +226,7 @@ bool TransportImpl::$assertionsDisabled = false;
 $Logger* TransportImpl::debug = nullptr;
 
 void TransportImpl::init$($MessageQueue* queue, $MessageStreamConsumer* consumer, $RawChannel* channel) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, counter, $new($AtomicLong));
 	$set(this, sendScheduler, $new($SequentialScheduler, $$new($TransportImpl$SendTask, this)));
 	$set(this, encoder, $new($MessageEncoder));
@@ -248,6 +249,7 @@ void TransportImpl::init$($MessageQueue* queue, $MessageStreamConsumer* consumer
 }
 
 $ByteBuffer* TransportImpl::createWriteBuffer() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, name, "jdk.httpclient.websocket.writeBufferSize"_s);
 	int32_t capacity = $Utils::getIntegerNetProperty(name, 16384);
 	if ($nc(TransportImpl::debug)->on()) {
@@ -257,6 +259,7 @@ $ByteBuffer* TransportImpl::createWriteBuffer() {
 }
 
 bool TransportImpl::write() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(TransportImpl::debug)->on()) {
 		$nc(TransportImpl::debug)->log("writing to the channel"_s);
 	}
@@ -281,6 +284,7 @@ bool TransportImpl::write() {
 }
 
 $CompletableFuture* TransportImpl::sendText($CharSequence* message, bool isLast, Object$* attachment, $BiConsumer* action) {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	if ($nc(TransportImpl::debug)->on()) {
 		id = $nc(this->counter)->incrementAndGet();
@@ -310,6 +314,7 @@ $CompletableFuture* TransportImpl::sendText($CharSequence* message, bool isLast,
 }
 
 $CompletableFuture* TransportImpl::sendBinary($ByteBuffer* message, bool isLast, Object$* attachment, $BiConsumer* action) {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	if ($nc(TransportImpl::debug)->on()) {
 		id = $nc(this->counter)->incrementAndGet();
@@ -338,6 +343,7 @@ $CompletableFuture* TransportImpl::sendBinary($ByteBuffer* message, bool isLast,
 }
 
 $CompletableFuture* TransportImpl::sendPing($ByteBuffer* message, Object$* attachment, $BiConsumer* action) {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	if ($nc(TransportImpl::debug)->on()) {
 		id = $nc(this->counter)->incrementAndGet();
@@ -365,6 +371,7 @@ $CompletableFuture* TransportImpl::sendPing($ByteBuffer* message, Object$* attac
 }
 
 $CompletableFuture* TransportImpl::sendPong($ByteBuffer* message, Object$* attachment, $BiConsumer* action) {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	if ($nc(TransportImpl::debug)->on()) {
 		id = $nc(this->counter)->incrementAndGet();
@@ -392,6 +399,7 @@ $CompletableFuture* TransportImpl::sendPong($ByteBuffer* message, Object$* attac
 }
 
 $CompletableFuture* TransportImpl::sendPong($Supplier* message, Object$* attachment, $BiConsumer* action) {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	if ($nc(TransportImpl::debug)->on()) {
 		id = $nc(this->counter)->incrementAndGet();
@@ -419,6 +427,7 @@ $CompletableFuture* TransportImpl::sendPong($Supplier* message, Object$* attachm
 }
 
 $CompletableFuture* TransportImpl::sendClose(int32_t statusCode, $String* reason, Object$* attachment, $BiConsumer* action) {
+	$useLocalCurrentObjectStackCache();
 	int64_t id = 0;
 	if ($nc(TransportImpl::debug)->on()) {
 		id = $nc(this->counter)->incrementAndGet();
@@ -447,6 +456,7 @@ $CompletableFuture* TransportImpl::sendClose(int32_t statusCode, $String* reason
 }
 
 void TransportImpl::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(TransportImpl::debug)->on()) {
 		$nc(TransportImpl::debug)->log("request %s"_s, $$new($ObjectArray, {$($of($Long::valueOf(n)))}));
 	}

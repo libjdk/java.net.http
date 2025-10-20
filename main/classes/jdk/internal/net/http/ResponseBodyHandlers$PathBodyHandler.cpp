@@ -98,6 +98,7 @@ bool ResponseBodyHandlers$PathBodyHandler::$assertionsDisabled = false;
 
 ResponseBodyHandlers$PathBodyHandler* ResponseBodyHandlers$PathBodyHandler::create($Path* file, $List* openOptions) {
 	$init(ResponseBodyHandlers$PathBodyHandler);
+	$useLocalCurrentObjectStackCache();
 	$var($FilePermission, filePermission, nullptr);
 	$var($SecurityManager, sm, $System::getSecurityManager());
 	if (sm != nullptr) {

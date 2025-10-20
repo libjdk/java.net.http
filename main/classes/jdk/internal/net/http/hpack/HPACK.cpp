@@ -410,6 +410,7 @@ $String* HPACK::lambda$static$2($HPACK$Logger$Level* l) {
 
 $String* HPACK::lambda$static$1($String* PROPERTY, $String* value) {
 	$init(HPACK);
+	$useLocalCurrentObjectStackCache();
 	return $String::format("%s value \'%s\' not recognized (use %s); logging disabled"_s, $$new($ObjectArray, {
 		$of(PROPERTY),
 		$of(value),
@@ -423,6 +424,7 @@ $String* HPACK::lambda$static$0($String* PROPERTY) {
 }
 
 void clinit$HPACK($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	HPACK::$assertionsDisabled = !HPACK::class$->desiredAssertionStatus();
 	$init($HPACK$Logger$Level);

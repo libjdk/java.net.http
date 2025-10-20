@@ -113,6 +113,7 @@ void SocketTube$InternalReadPublisher$ReadSubscription::cancel() {
 }
 
 void SocketTube$InternalReadPublisher$ReadSubscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (!this->cancelled) {
 		$nc(this->impl)->request(n);
 	} else if ($nc($nc(this->this$1->this$0)->debug)->on()) {
@@ -121,6 +122,7 @@ void SocketTube$InternalReadPublisher$ReadSubscription::request(int64_t n) {
 }
 
 void SocketTube$InternalReadPublisher$ReadSubscription::signalCompletion() {
+	$useLocalCurrentObjectStackCache();
 	if (!SocketTube$InternalReadPublisher$ReadSubscription::$assertionsDisabled && !(this->subscribed || this->cancelled)) {
 		$throwNew($AssertionError);
 	}

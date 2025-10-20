@@ -217,6 +217,7 @@ bool DebugLogger::isLoggable($System$Logger$Level* level) {
 }
 
 void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $String* format, $ObjectArray* params) {
+	$useLocalCurrentObjectStackCache();
 	$init($System$Logger$Level);
 	if (level == $System$Logger$Level::DEBUG && !this->debugOn) {
 		return;
@@ -239,6 +240,7 @@ void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $Str
 }
 
 void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $String* msg, $Throwable* thrown) {
+	$useLocalCurrentObjectStackCache();
 	$init($System$Logger$Level);
 	if (level == $System$Logger$Level::DEBUG && !this->debugOn) {
 		return;
@@ -270,6 +272,7 @@ void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $Str
 }
 
 void DebugLogger::print($PrintStream* out, $System$Logger$Level* level, $String* msg, $ObjectArray* params, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($($nc(level)->name()))->append(u':')->append(u' ');
 	$assign(sb, format(sb, msg, params));
@@ -283,6 +286,7 @@ void DebugLogger::print($PrintStream* out, $System$Logger$Level* level, $String*
 }
 
 $StringBuilder* DebugLogger::decorate($StringBuilder* sb, $String* msg) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, tag, this->dbgTag == nullptr ? ($String*)nullptr : $cast($String, $nc(this->dbgTag)->get()));
 	$var($String, res, msg == nullptr ? ""_s : msg);
 	int64_t elapsed = $System::nanoTime() - DebugLogger::START_NANOS;
@@ -308,6 +312,7 @@ $StringBuilder* DebugLogger::decorate($StringBuilder* sb, $String* msg) {
 }
 
 $StringBuilder* DebugLogger::getFormat($StringBuilder* sb, $String* format, $ObjectArray* params) {
+	$useLocalCurrentObjectStackCache();
 	if (format == nullptr || params == nullptr || $nc(params)->length == 0) {
 		return decorate(sb, format);
 	} else {
@@ -331,6 +336,7 @@ $StringBuilder* DebugLogger::getFormat($StringBuilder* sb, $String* format, $Obj
 }
 
 $StringBuilder* DebugLogger::format($StringBuilder* sb, $String* format, $ObjectArray* params) {
+	$useLocalCurrentObjectStackCache();
 	if (format == nullptr || params == nullptr || $nc(params)->length == 0) {
 		return decorate(sb, format);
 	} else {
@@ -384,6 +390,7 @@ DebugLogger* DebugLogger::createHpackLogger($Supplier* dbgTag, $System$Logger$Le
 }
 
 void clinit$DebugLogger($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	$assignStatic(DebugLogger::HTTP_NAME, "jdk.internal.httpclient.debug"_s);
 	$assignStatic(DebugLogger::WS_NAME, "jdk.internal.httpclient.websocket.debug"_s);
 	$assignStatic(DebugLogger::HPACK_NAME, "jdk.internal.httpclient.hpack.debug"_s);

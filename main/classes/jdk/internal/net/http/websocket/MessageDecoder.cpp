@@ -209,6 +209,7 @@ $MessageStreamConsumer* MessageDecoder::getOutput() {
 }
 
 void MessageDecoder::fin(bool value) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("fin %s"_s, $$new($ObjectArray, {$($of($Boolean::valueOf(value)))}));
 	}
@@ -216,6 +217,7 @@ void MessageDecoder::fin(bool value) {
 }
 
 void MessageDecoder::rsv1(bool value) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("rsv1 %s"_s, $$new($ObjectArray, {$($of($Boolean::valueOf(value)))}));
 	}
@@ -225,6 +227,7 @@ void MessageDecoder::rsv1(bool value) {
 }
 
 void MessageDecoder::rsv2(bool value) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("rsv2 %s"_s, $$new($ObjectArray, {$($of($Boolean::valueOf(value)))}));
 	}
@@ -234,6 +237,7 @@ void MessageDecoder::rsv2(bool value) {
 }
 
 void MessageDecoder::rsv3(bool value) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("rsv3 %s"_s, $$new($ObjectArray, {$($of($Boolean::valueOf(value)))}));
 	}
@@ -243,6 +247,7 @@ void MessageDecoder::rsv3(bool value) {
 }
 
 void MessageDecoder::opcode($Frame$Opcode* v) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("opcode %s"_s, $$new($ObjectArray, {$of(v)}));
 	}
@@ -281,6 +286,7 @@ void MessageDecoder::opcode($Frame$Opcode* v) {
 }
 
 void MessageDecoder::mask(bool value) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("mask %s"_s, $$new($ObjectArray, {$($of($Boolean::valueOf(value)))}));
 	}
@@ -290,6 +296,7 @@ void MessageDecoder::mask(bool value) {
 }
 
 void MessageDecoder::payloadLen(int64_t value) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("payloadLen %s"_s, $$new($ObjectArray, {$($of($Long::valueOf(value)))}));
 	}
@@ -317,6 +324,7 @@ void MessageDecoder::maskingKey(int32_t value) {
 }
 
 void MessageDecoder::payloadData($ByteBuffer* data) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("payload %s"_s, $$new($ObjectArray, {$of(data)}));
 	}
@@ -358,6 +366,7 @@ void MessageDecoder::payloadData($ByteBuffer* data) {
 }
 
 void MessageDecoder::endFrame() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(MessageDecoder::debug)->on()) {
 		$nc(MessageDecoder::debug)->log("end frame"_s);
 	}

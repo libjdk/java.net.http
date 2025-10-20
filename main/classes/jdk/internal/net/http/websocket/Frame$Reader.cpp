@@ -103,6 +103,7 @@ void Frame$Reader::init$() {
 }
 
 void Frame$Reader::readFrame($ByteBuffer* input, $Frame$Consumer* consumer) {
+	$useLocalCurrentObjectStackCache();
 	bool loop$continue = false;
 	bool loop$break = false;
 	while (true) {
@@ -245,11 +246,13 @@ void Frame$Reader::readFrame($ByteBuffer* input, $Frame$Consumer* consumer) {
 
 $FailWebSocketException* Frame$Reader::negativePayload(int64_t payloadLength) {
 	$init(Frame$Reader);
+	$useLocalCurrentObjectStackCache();
 	return $new($FailWebSocketException, $$str({"Negative payload length: "_s, $$str(payloadLength)}));
 }
 
 $FailWebSocketException* Frame$Reader::notMinimalEncoding(int64_t payloadLength) {
 	$init(Frame$Reader);
+	$useLocalCurrentObjectStackCache();
 	return $new($FailWebSocketException, $$str({"Not minimally-encoded payload length:"_s, $$str(payloadLength)}));
 }
 

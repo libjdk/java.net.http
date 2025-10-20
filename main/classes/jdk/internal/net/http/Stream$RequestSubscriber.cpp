@@ -242,6 +242,7 @@ void Stream$RequestSubscriber::onSubscribe($Flow$Subscription* subscription) {
 }
 
 void Stream$RequestSubscriber::onNext($ByteBuffer* item) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("RequestSubscriber: onNext(%d)"_s, $$new($ObjectArray, {$($of($Integer::valueOf($nc(item)->remaining())))}));
 	}
@@ -272,6 +273,7 @@ void Stream$RequestSubscriber::onError($Throwable* throwable) {
 }
 
 void Stream$RequestSubscriber::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("RequestSubscriber: onComplete"_s);
 	}
@@ -284,6 +286,7 @@ void Stream$RequestSubscriber::onComplete() {
 }
 
 void Stream$RequestSubscriber::trySend() {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$var($Throwable, t, $cast($Throwable, $nc(this->errorRef)->get()));
 		if (t != nullptr) {
@@ -390,6 +393,7 @@ void Stream$RequestSubscriber::trySend() {
 }
 
 void Stream$RequestSubscriber::complete() {
+	$useLocalCurrentObjectStackCache();
 	int64_t remaining = this->remainingContentLength;
 	int64_t written = this->contentLength - remaining;
 	if (remaining > 0) {

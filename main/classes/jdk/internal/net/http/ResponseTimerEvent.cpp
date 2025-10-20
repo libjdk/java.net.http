@@ -147,11 +147,13 @@ ResponseTimerEvent* ResponseTimerEvent::of($MultiExchange* exchange) {
 }
 
 void ResponseTimerEvent::init$($MultiExchange* multiExchange) {
+	$useLocalCurrentObjectStackCache();
 	$TimeoutEvent::init$($cast($Duration, $($nc($($nc($nc($nc(multiExchange)->exchange)->request$)->timeout()))->get())));
 	$set(this, multiExchange, multiExchange);
 }
 
 void ResponseTimerEvent::handle() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(ResponseTimerEvent::debug)->on()) {
 		$nc(ResponseTimerEvent::debug)->log("Cancelling MultiExchange due to timeout for request %s"_s, $$new($ObjectArray, {$of($nc($nc(this->multiExchange)->exchange)->request$)}));
 	}

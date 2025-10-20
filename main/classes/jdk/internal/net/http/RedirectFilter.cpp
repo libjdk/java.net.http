@@ -276,6 +276,7 @@ bool RedirectFilter::isRedirecting(int32_t statusCode) {
 }
 
 $HttpRequestImpl* RedirectFilter::handleResponse($Response* r) {
+	$useLocalCurrentObjectStackCache();
 	int32_t rcode = $nc(r)->statusCode();
 	$init($HttpClient$Redirect);
 	if (rcode == 200 || this->policy == $HttpClient$Redirect::NEVER) {
@@ -306,6 +307,7 @@ $HttpRequestImpl* RedirectFilter::handleResponse($Response* r) {
 }
 
 $URI* RedirectFilter::getRedirectedURI($HttpHeaders* headers) {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, redirectedURI, nullptr);
 	$assign(redirectedURI, $cast($URI, $nc($($nc($($nc(headers)->firstValue("Location"_s)))->map(static_cast<$Function*>($$new(RedirectFilter$$Lambda$create)))))->orElseThrow(static_cast<$Supplier*>($$new(RedirectFilter$$Lambda$lambda$getRedirectedURI$0$1)))));
 	$assign(redirectedURI, $nc(this->uri)->resolve(redirectedURI));
@@ -313,6 +315,7 @@ $URI* RedirectFilter::getRedirectedURI($HttpHeaders* headers) {
 }
 
 bool RedirectFilter::canRedirect($URI* redir) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, newScheme, $nc(redir)->getScheme());
 	$var($String, oldScheme, $nc(this->uri)->getScheme());
 	$init($RedirectFilter$1);

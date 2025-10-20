@@ -179,6 +179,7 @@ void HeaderTable::init$(int32_t maxSize, $HPACK$Logger* logger) {
 }
 
 int32_t HeaderTable::indexOf($CharSequence* name, $CharSequence* value) {
+	$useLocalCurrentObjectStackCache();
 	$var($String, n, $nc(name)->toString());
 	$var($String, v, $nc(value)->toString());
 	$var($Map, values, $cast($Map, $nc(HeaderTable::staticIndexes)->get(n)));
@@ -207,6 +208,7 @@ int32_t HeaderTable::indexOf($CharSequence* name, $CharSequence* value) {
 }
 
 void HeaderTable::add($SimpleHeaderTable$HeaderField* f) {
+	$useLocalCurrentObjectStackCache();
 	$SimpleHeaderTable::add(f);
 	$var($Map, values, $cast($Map, $nc(this->map)->computeIfAbsent($nc(f)->name, static_cast<$Function*>($$new(HeaderTable$$Lambda$lambda$static$0)))));
 	$var($Deque, indexes, $cast($Deque, $nc(values)->computeIfAbsent($nc(f)->value, static_cast<$Function*>($$new(HeaderTable$$Lambda$lambda$add$2$1)))));
@@ -218,6 +220,7 @@ void HeaderTable::add($SimpleHeaderTable$HeaderField* f) {
 }
 
 bool HeaderTable::indexesUniqueAndOrdered($Deque* indexes) {
+	$useLocalCurrentObjectStackCache();
 	int64_t maxIndexSoFar = -1;
 	{
 		$var($Iterator, i$, $nc(indexes)->iterator());
@@ -236,6 +239,7 @@ bool HeaderTable::indexesUniqueAndOrdered($Deque* indexes) {
 }
 
 int32_t HeaderTable::search($String* name, $String* value) {
+	$useLocalCurrentObjectStackCache();
 	$var($Map, values, $cast($Map, $nc(this->map)->get(name)));
 	if (values == nullptr) {
 		return 0;
@@ -253,6 +257,7 @@ int32_t HeaderTable::search($String* name, $String* value) {
 }
 
 $SimpleHeaderTable$HeaderField* HeaderTable::remove() {
+	$useLocalCurrentObjectStackCache();
 	$var($SimpleHeaderTable$HeaderField, f, $SimpleHeaderTable::remove());
 	$var($Map, values, $cast($Map, $nc(this->map)->get($nc(f)->name)));
 	$var($Deque, indexes, $cast($Deque, $nc(values)->get($nc(f)->value)));
@@ -280,6 +285,7 @@ $Map* HeaderTable::lambda$static$0($String* k) {
 }
 
 void clinit$HeaderTable($Class* class$) {
+	$useLocalCurrentObjectStackCache();
 	HeaderTable::$assertionsDisabled = !HeaderTable::class$->desiredAssertionStatus();
 	{
 		$init($SimpleHeaderTable);

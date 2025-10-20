@@ -104,6 +104,7 @@ void ResponseContent::init$($HttpConnection* connection, int64_t contentLength, 
 }
 
 bool ResponseContent::contentChunked() {
+	$useLocalCurrentObjectStackCache();
 	if (this->chunkedContentInitialized) {
 		return this->chunkedContent;
 	}

@@ -136,6 +136,7 @@ void HttpHeadersBuilder::init$() {
 }
 
 HttpHeadersBuilder* HttpHeadersBuilder::structuralCopy() {
+	$useLocalCurrentObjectStackCache();
 	$var(HttpHeadersBuilder, builder, $new(HttpHeadersBuilder));
 	{
 		$var($Iterator, i$, $nc($($nc(this->headersMap)->entrySet()))->iterator());
@@ -151,6 +152,7 @@ HttpHeadersBuilder* HttpHeadersBuilder::structuralCopy() {
 }
 
 void HttpHeadersBuilder::addHeader($String* name, $String* value) {
+	$useLocalCurrentObjectStackCache();
 	$nc(($cast($List, $($nc(this->headersMap)->computeIfAbsent(name, static_cast<$Function*>($$new(HttpHeadersBuilder$$Lambda$lambda$addHeader$0)))))))->add(value);
 }
 
@@ -174,6 +176,7 @@ $HttpHeaders* HttpHeadersBuilder::build() {
 }
 
 $String* HttpHeadersBuilder::toString() {
+	$useLocalCurrentObjectStackCache();
 	$var($StringBuilder, sb, $new($StringBuilder));
 	sb->append($($Object::toString()))->append(" { "_s);
 	sb->append($($of(map())));

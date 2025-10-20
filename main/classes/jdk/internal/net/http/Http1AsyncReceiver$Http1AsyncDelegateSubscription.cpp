@@ -82,6 +82,7 @@ void Http1AsyncReceiver$Http1AsyncDelegateSubscription::init$($SequentialSchedul
 }
 
 void Http1AsyncReceiver$Http1AsyncDelegateSubscription::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	if (this->cancelled) {
 		return;
 	}

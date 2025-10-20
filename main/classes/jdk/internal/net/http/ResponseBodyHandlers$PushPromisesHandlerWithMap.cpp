@@ -80,6 +80,7 @@ void ResponseBodyHandlers$PushPromisesHandlerWithMap::init$($Function* pushPromi
 }
 
 void ResponseBodyHandlers$PushPromisesHandlerWithMap::applyPushPromise($HttpRequest* initiatingRequest, $HttpRequest* pushRequest, $Function* acceptor) {
+	$useLocalCurrentObjectStackCache();
 	$var($URI, initiatingURI, $nc(initiatingRequest)->uri());
 	$var($URI, pushRequestURI, $nc(pushRequest)->uri());
 	if (!$nc($($nc(initiatingURI)->getHost()))->equalsIgnoreCase($($nc(pushRequestURI)->getHost()))) {

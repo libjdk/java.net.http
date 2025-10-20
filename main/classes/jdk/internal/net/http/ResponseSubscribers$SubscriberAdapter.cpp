@@ -131,6 +131,7 @@ void ResponseSubscribers$SubscriberAdapter::onError($Throwable* throwable) {
 }
 
 void ResponseSubscribers$SubscriberAdapter::onComplete() {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {

@@ -93,6 +93,7 @@ void StringReader::init$() {
 }
 
 bool StringReader::read($ByteBuffer* input, $Appendable* output) {
+	$useLocalCurrentObjectStackCache();
 	if (this->state == StringReader::DONE) {
 		return true;
 	}

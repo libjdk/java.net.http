@@ -295,6 +295,7 @@ $String* ResponseSubscribers$PathSubscriber::pathForSecurityCheck($Path* path) {
 
 ResponseSubscribers$PathSubscriber* ResponseSubscribers$PathSubscriber::create($Path* file, $List* options) {
 	$init(ResponseSubscribers$PathSubscriber);
+	$useLocalCurrentObjectStackCache();
 	$var($SecurityManager, sm, $System::getSecurityManager());
 	$var($FilePermission, filePermission, nullptr);
 	if (sm != nullptr) {
@@ -315,6 +316,7 @@ ResponseSubscribers$PathSubscriber* ResponseSubscribers$PathSubscriber::create($
 }
 
 void ResponseSubscribers$PathSubscriber::init$($Path* file, $List* options, $AccessControlContext* acc, $FilePermissionArray* filePermissions) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, result, $new($MinimalFuture));
 	$set(this, subscribed, $new($AtomicBoolean));
 	$set(this, file, file);
@@ -337,6 +339,7 @@ bool ResponseSubscribers$PathSubscriber::isDefaultFS($Path* file) {
 }
 
 void ResponseSubscribers$PathSubscriber::onSubscribe($Flow$Subscription* subscription) {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	$Objects::requireNonNull(subscription);
 	if (!$nc(this->subscribed)->compareAndSet(false, true)) {
@@ -374,6 +377,7 @@ void ResponseSubscribers$PathSubscriber::onSubscribe($Flow$Subscription* subscri
 }
 
 void ResponseSubscribers$PathSubscriber::onNext($List* items) {
+	$useLocalCurrentObjectStackCache();
 	try {
 		$init($Utils);
 		$nc(this->out)->write($fcast($ByteBufferArray, $($nc(items)->toArray($Utils::EMPTY_BB_ARRAY))));
@@ -401,6 +405,7 @@ $CompletionStage* ResponseSubscribers$PathSubscriber::getBody() {
 }
 
 void ResponseSubscribers$PathSubscriber::close() {
+	$useLocalCurrentObjectStackCache();
 	$beforeCallerSensitive();
 	if (this->acc == nullptr) {
 		$Utils::close($$new($CloseableArray, {static_cast<$Closeable*>(static_cast<$Channel*>(static_cast<$InterruptibleChannel*>(static_cast<$AbstractInterruptibleChannel*>(this->out))))}));

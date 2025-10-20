@@ -94,6 +94,7 @@ void HttpClientImpl$SSLDirectBufferSupplier::init$($HttpClientImpl* client) {
 }
 
 $Object* HttpClientImpl$SSLDirectBufferSupplier::get() {
+	$useLocalCurrentObjectStackCache();
 	if (!HttpClientImpl$SSLDirectBufferSupplier::$assertionsDisabled && !$nc(this->client)->isSelectorThread()) {
 		$throwNew($AssertionError);
 	}
@@ -142,6 +143,7 @@ $Object* HttpClientImpl$SSLDirectBufferSupplier::get() {
 }
 
 void HttpClientImpl$SSLDirectBufferSupplier::recycle($ByteBuffer* buffer) {
+	$useLocalCurrentObjectStackCache();
 	if (!HttpClientImpl$SSLDirectBufferSupplier::$assertionsDisabled && !$nc(this->client)->isSelectorThread()) {
 		$throwNew($AssertionError);
 	}

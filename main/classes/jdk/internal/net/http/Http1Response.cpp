@@ -706,6 +706,7 @@ $AtomicLong* Http1Response::responseCount = nullptr;
 $Flow$Subscription* Http1Response::NOP = nullptr;
 
 void Http1Response::init$($HttpConnection* conn, $Http1Exchange* exchange, $Http1AsyncReceiver* asyncReceiver) {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1Response$State);
 	$set(this, readProgress, $Http1Response$State::INITIAL);
 	$init($Utils);
@@ -726,6 +727,7 @@ void Http1Response::init$($HttpConnection* conn, $Http1Exchange* exchange, $Http
 }
 
 $String* Http1Response::dbgString() {
+	$useLocalCurrentObjectStackCache();
 	$var($String, dbg, this->dbgTag);
 	if (dbg == nullptr) {
 		$var($String, cdbg, $nc(this->connection)->dbgTag);
@@ -739,6 +741,7 @@ $String* Http1Response::dbgString() {
 }
 
 $CompletableFuture* Http1Response::readHeadersAsync($Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"Reading Headers: (remaining: "_s, $$str($nc(this->asyncReceiver)->remaining()), ") "_s, this->readProgress}));
 	}
@@ -785,6 +788,7 @@ bool Http1Response::finished() {
 }
 
 int64_t Http1Response::fixupContentLen(int64_t clen) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc($($nc(this->request)->method()))->equalsIgnoreCase("HEAD"_s) || this->responseCode$ == 304) {
 		return 0;
 	}
@@ -801,6 +805,7 @@ int64_t Http1Response::fixupContentLen(int64_t clen) {
 }
 
 $CompletableFuture* Http1Response::ignoreBody($Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	int32_t clen = (int32_t)$nc($($nc(this->headers)->firstValueAsLong("Content-Length"_s)))->orElse(-1);
 	if (clen == -1 || clen > Http1Response::MAX_IGNORE) {
 		$nc(this->connection)->close();
@@ -821,6 +826,7 @@ void Http1Response::nullBody($HttpResponse* resp, $Throwable* t) {
 }
 
 $CompletableFuture* Http1Response::readBody($HttpResponse$BodySubscriber* p, bool return2Cache, $Executor* executor) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"readBody: return2Cache: "_s, $$str(return2Cache)}));
 		if ($nc(this->request)->isWebSocket() && return2Cache && this->connection != nullptr) {
@@ -845,6 +851,7 @@ $CompletableFuture* Http1Response::readBody($HttpResponse$BodySubscriber* p, boo
 }
 
 void Http1Response::onFinished() {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->asyncReceiver)->clear();
 	if (this->return2Cache) {
 		$Log::logTrace("Attempting to return connection to the pool: {0}"_s, $$new($ObjectArray, {$of(this->connection)}));
@@ -864,6 +871,7 @@ int32_t Http1Response::responseCode() {
 }
 
 void Http1Response::onReadError($Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	$Log::logError(t);
 	$var($Http1Response$Receiver, receiver, this->receiver(this->readProgress));
 	if ($instanceOf($EOFException, t)) {
@@ -956,6 +964,7 @@ void Http1Response::lambda$readBody$4($CompletableFuture* cf, $Throwable* t) {
 }
 
 void Http1Response::lambda$readBody$3(int64_t clen, $Http1Response$Http1BodySubscriber* subscriber, $CompletableFuture* cf, $Http1Response$ClientRefCountTracker* refCountTracker) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		bool return$1 = false;
@@ -1012,6 +1021,7 @@ void Http1Response::lambda$readBody$3(int64_t clen, $Http1Response$Http1BodySubs
 }
 
 void Http1Response::lambda$readBody$2($Http1Response$Http1BodySubscriber* subscriber, $CompletableFuture* cf, $Http1Response$ClientRefCountTracker* refCountTracker, $Http1Response$State* s, $Throwable* t$renamed) {
+	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	$assign(t, $Utils::getCompletionCause(t));
 	{
@@ -1047,6 +1057,7 @@ void Http1Response::lambda$readBody$2($Http1Response$Http1BodySubscriber* subscr
 }
 
 void Http1Response::lambda$readBody$1($Http1Response$Http1BodySubscriber* subscriber, $CompletableFuture* cf, $Throwable* t) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		try {
@@ -1080,6 +1091,7 @@ void Http1Response::lambda$readBody$1($Http1Response$Http1BodySubscriber* subscr
 }
 
 $Response* Http1Response::lambda$readHeadersAsync$0($Http1Response$State* completed) {
+	$useLocalCurrentObjectStackCache();
 	$init($Http1Response$State);
 	if (!Http1Response::$assertionsDisabled && !(completed == $Http1Response$State::READING_HEADERS)) {
 		$throwNew($AssertionError);

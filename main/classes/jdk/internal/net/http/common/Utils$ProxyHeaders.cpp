@@ -99,14 +99,17 @@ $HttpHeaders* Utils$ProxyHeaders::systemHeaders() {
 }
 
 $String* Utils$ProxyHeaders::toString() {
+	$useLocalCurrentObjectStackCache();
 	return $cast($String, $cast($MethodHandle, $($ObjectMethods::bootstrap($($MethodHandles::lookup()), "toString"_s, $($MethodType::methodType(nullptr)), Utils$ProxyHeaders::class$, "userHeaders;systemHeaders"_s, $$new($MethodHandleArray, {nullptr, nullptr}))))->invoke($$new($ObjectArray, {$of(this)})));
 }
 
 int32_t Utils$ProxyHeaders::hashCode() {
+	$useLocalCurrentObjectStackCache();
 	return $intValue($cast($MethodHandle, $($ObjectMethods::bootstrap($($MethodHandles::lookup()), "hashCode"_s, $($MethodType::methodType(nullptr)), Utils$ProxyHeaders::class$, "userHeaders;systemHeaders"_s, $$new($MethodHandleArray, {nullptr, nullptr}))))->invoke($$new($ObjectArray, {$of(this)})));
 }
 
 bool Utils$ProxyHeaders::equals(Object$* o) {
+	$useLocalCurrentObjectStackCache();
 	return $booleanValue($cast($MethodHandle, $($ObjectMethods::bootstrap($($MethodHandles::lookup()), "equals"_s, $($MethodType::methodType(nullptr)), Utils$ProxyHeaders::class$, "userHeaders;systemHeaders"_s, $$new($MethodHandleArray, {nullptr, nullptr}))))->invoke($$new($ObjectArray, {$of(this), o})));
 }
 

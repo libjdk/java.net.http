@@ -116,6 +116,7 @@ void SocketTube$InternalWriteSubscriber$WriteSubscription::dropSubscription() {
 }
 
 void SocketTube$InternalWriteSubscriber$WriteSubscription::requestMore() {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($Throwable, var$0, nullptr);
 		bool return$1 = false;

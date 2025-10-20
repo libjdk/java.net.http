@@ -156,6 +156,7 @@ void PlainHttpConnection$ConnectTimerEvent::init$($PlainHttpConnection* this$0, 
 }
 
 void PlainHttpConnection$ConnectTimerEvent::handle() {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("HTTP connect timed out"_s);
 	}

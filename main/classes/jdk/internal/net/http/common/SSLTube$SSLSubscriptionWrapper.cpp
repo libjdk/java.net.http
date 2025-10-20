@@ -80,6 +80,7 @@ void SSLTube$SSLSubscriptionWrapper::init$($SSLTube* this$0) {
 }
 
 void SSLTube$SSLSubscriptionWrapper::setSubscription($Flow$Subscription* sub) {
+	$useLocalCurrentObjectStackCache();
 	int64_t demand = $nc(this->this$0->writeDemand)->get();
 	$set(this, delegate, sub);
 	if ($nc(this->this$0->debug)->on()) {
@@ -96,6 +97,7 @@ void SSLTube$SSLSubscriptionWrapper::setSubscription($Flow$Subscription* sub) {
 }
 
 void SSLTube$SSLSubscriptionWrapper::request(int64_t n) {
+	$useLocalCurrentObjectStackCache();
 	$nc(this->this$0->writeDemand)->increase(n);
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("request: n=%d"_s, $$new($ObjectArray, {$($of($Long::valueOf(n)))}));

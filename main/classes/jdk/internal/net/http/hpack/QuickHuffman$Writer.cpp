@@ -157,6 +157,7 @@ QuickHuffman$Writer* QuickHuffman$Writer::from($CharSequence* input, int32_t sta
 }
 
 bool QuickHuffman$Writer::write($ByteBuffer* destination) {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		while (true) {
 			if (this->pos >= this->end) {

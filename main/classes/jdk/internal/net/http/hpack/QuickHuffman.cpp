@@ -379,6 +379,7 @@ void QuickHuffman::addEOS($QuickHuffman$Node* root, int32_t symbol, int32_t code
 
 void QuickHuffman::addLeaf($QuickHuffman$Node* root, char16_t symbol, int32_t code, int32_t bitLength, bool isEOS) {
 	$init(QuickHuffman);
+	$useLocalCurrentObjectStackCache();
 	if (!QuickHuffman::$assertionsDisabled && !(0 < bitLength && bitLength <= 32)) {
 		$throwNew($AssertionError, bitLength);
 	}

@@ -80,6 +80,7 @@ void MultiExchange$ConnectTimeoutTracker::init$($Duration* connectTimeout) {
 }
 
 $Duration* MultiExchange$ConnectTimeoutTracker::getRemaining() {
+	$useLocalCurrentObjectStackCache();
 	int64_t now = $System::nanoTime();
 	int64_t previous = $nc(this->startTime)->compareAndExchange(0, now);
 	if (previous == 0 || $nc(this->max)->isZero()) {

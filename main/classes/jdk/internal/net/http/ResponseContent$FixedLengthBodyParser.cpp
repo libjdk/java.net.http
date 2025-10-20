@@ -177,6 +177,7 @@ $String* ResponseContent$FixedLengthBodyParser::dbgString() {
 }
 
 void ResponseContent$FixedLengthBodyParser::onSubscribe($AbstractSubscription* sub) {
+	$useLocalCurrentObjectStackCache();
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"length="_s, $$str(this->contentLength), ", onSubscribe: "_s, $($nc($of(this->this$0->pusher))->getClass()->getName())}));
 	}
@@ -207,6 +208,7 @@ void ResponseContent$FixedLengthBodyParser::onSubscribe($AbstractSubscription* s
 }
 
 $String* ResponseContent$FixedLengthBodyParser::currentStateMessage() {
+	$useLocalCurrentObjectStackCache();
 	return $String::format("fixed content-length: %d, bytes received: %d"_s, $$new($ObjectArray, {
 		$($of($Long::valueOf(this->contentLength))),
 		$($of($Long::valueOf(this->contentLength - this->remaining)))
@@ -214,6 +216,7 @@ $String* ResponseContent$FixedLengthBodyParser::currentStateMessage() {
 }
 
 void ResponseContent$FixedLengthBodyParser::accept($ByteBuffer* b) {
+	$useLocalCurrentObjectStackCache();
 	if (this->closedExceptionally != nullptr) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log($$str({"already closed: "_s, this->closedExceptionally}));

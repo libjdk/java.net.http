@@ -76,6 +76,7 @@ void SequentialScheduler$TryEndDeferredCompleter::init$($SequentialScheduler* th
 }
 
 void SequentialScheduler$TryEndDeferredCompleter::complete() {
+	$useLocalCurrentObjectStackCache();
 	while (true) {
 		int32_t s = 0;
 		while (((int32_t)((s = $nc(this->this$0->state)->get()) & (uint32_t)1)) != 0) {

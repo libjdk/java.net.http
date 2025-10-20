@@ -372,6 +372,7 @@ $HttpRequest$Builder* HttpRequest::newBuilder($URI* uri) {
 }
 
 $HttpRequest$Builder* HttpRequest::newBuilder(HttpRequest* request, $BiPredicate* filter) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(request);
 	$Objects::requireNonNull(filter);
 	$var($HttpRequest$Builder, builder, HttpRequest::newBuilder());
@@ -392,6 +393,7 @@ $HttpRequest$Builder* HttpRequest::newBuilder() {
 }
 
 bool HttpRequest::equals(Object$* obj) {
+	$useLocalCurrentObjectStackCache();
 	if (!($instanceOf(HttpRequest, obj))) {
 		return false;
 	}
@@ -409,12 +411,14 @@ bool HttpRequest::equals(Object$* obj) {
 }
 
 int32_t HttpRequest::hashCode() {
+	$useLocalCurrentObjectStackCache();
 	int32_t var$1 = $nc($(method()))->hashCode();
 	int32_t var$0 = var$1 + $nc($(uri()))->hashCode();
 	return var$0 + $nc($(headers()))->hashCode();
 }
 
 void HttpRequest::lambda$newBuilder$3($String* method, $HttpRequest$Builder* builder) {
+	$useLocalCurrentObjectStackCache();
 	{
 		$var($String, s15412$, method);
 		int32_t tmp15412$ = -1;

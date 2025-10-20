@@ -111,6 +111,7 @@ $Object* allocate$BuilderImpl($Class* clazz) {
 bool BuilderImpl::$assertionsDisabled = false;
 
 void BuilderImpl::init$($HttpClient* client, $ProxySelector* proxySelector) {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpClient, var$0, client);
 	$var($Optional, var$1, $Optional::ofNullable(proxySelector));
 	$var($Collection, var$2, static_cast<$Collection*>(static_cast<$AbstractCollection*>(static_cast<$AbstractList*>($new($ArrayList)))));
@@ -118,6 +119,7 @@ void BuilderImpl::init$($HttpClient* client, $ProxySelector* proxySelector) {
 }
 
 void BuilderImpl::init$($HttpClient* client, $URI* uri, $WebSocket$Listener* listener, $Optional* proxySelector, $Collection* headers, $Collection* subprotocols, $Duration* timeout) {
+	$useLocalCurrentObjectStackCache();
 	$set(this, client, client);
 	$set(this, uri, uri);
 	$set(this, listener, listener);
@@ -143,6 +145,7 @@ $WebSocket$Builder* BuilderImpl::header($String* name, $String* value) {
 }
 
 $WebSocket$Builder* BuilderImpl::subprotocols($String* mostPreferred, $StringArray* lesserPreferred) {
+	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull($of(mostPreferred), "mostPreferred"_s);
 	$Objects::requireNonNull($of(lesserPreferred), "lesserPreferred"_s);
 	$var($List, subprotocols, $new($ArrayList, $nc(lesserPreferred)->length + 1));
@@ -198,6 +201,7 @@ $Optional* BuilderImpl::getProxySelector() {
 }
 
 BuilderImpl* BuilderImpl::immutableCopy() {
+	$useLocalCurrentObjectStackCache();
 	$var($HttpClient, var$0, this->client);
 	$var($URI, var$1, this->uri);
 	$var($WebSocket$Listener, var$2, this->listener);

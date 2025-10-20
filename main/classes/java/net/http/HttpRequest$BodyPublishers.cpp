@@ -106,6 +106,7 @@ $HttpRequest$BodyPublisher* HttpRequest$BodyPublishers::fromPublisher($Flow$Publ
 }
 
 $HttpRequest$BodyPublisher* HttpRequest$BodyPublishers::fromPublisher($Flow$Publisher* publisher, int64_t contentLength) {
+	$useLocalCurrentObjectStackCache();
 	if (contentLength < 1) {
 		$throwNew($IllegalArgumentException, $$str({"non-positive contentLength: "_s, $$str(contentLength)}));
 	}
