@@ -1,22 +1,11 @@
 #include <java/net/http/HttpResponse$BodySubscribers.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/net/http/HttpResponse.h>
 #include <java/nio/charset/Charset.h>
@@ -254,7 +243,7 @@ $HttpResponse$BodySubscriber* HttpResponse$BodySubscribers::ofFile($Path* file, 
 }
 
 $HttpResponse$BodySubscriber* HttpResponse$BodySubscribers::ofFile($Path* file) {
-		$init($StandardOpenOption);
+	$init($StandardOpenOption);
 	return ofFile(file, $$new($OpenOptionArray, {
 		static_cast<$OpenOption*>($StandardOpenOption::CREATE),
 		static_cast<$OpenOption*>($StandardOpenOption::WRITE)

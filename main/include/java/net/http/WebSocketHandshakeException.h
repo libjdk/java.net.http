@@ -32,8 +32,10 @@ public:
 	static const int64_t serialVersionUID = (int64_t)1;
 	::java::net::http::HttpResponse* response = nullptr;
 	WebSocketHandshakeException(const WebSocketHandshakeException& e);
-	WebSocketHandshakeException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline WebSocketHandshakeException* operator ->() {
+		return (WebSocketHandshakeException*)throwing$;
+	}
 };
 
 		} // http

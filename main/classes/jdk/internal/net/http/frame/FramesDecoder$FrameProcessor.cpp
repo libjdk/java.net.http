@@ -1,13 +1,5 @@
 #include <jdk/internal/net/http/frame/FramesDecoder$FrameProcessor.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/CompoundAttribute.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/frame/FramesDecoder.h>
 #include <jdk/internal/net/http/frame/Http2Frame.h>
 #include <jcpp.h>
@@ -24,11 +16,11 @@ namespace jdk {
 		namespace net {
 			namespace http {
 				namespace frame {
+
 $CompoundAttribute _FramesDecoder$FrameProcessor_Annotations_[] = {
 	{"Ljava/lang/FunctionalInterface;", nullptr},
 	{}
 };
-
 
 $MethodInfo _FramesDecoder$FrameProcessor_MethodInfo_[] = {
 	{"processFrame", "(Ljdk/internal/net/http/frame/Http2Frame;)V", nullptr, $PUBLIC | $ABSTRACT, nullptr, "java.io.IOException"},

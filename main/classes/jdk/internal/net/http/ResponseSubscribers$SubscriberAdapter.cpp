@@ -1,14 +1,5 @@
 #include <jdk/internal/net/http/ResponseSubscribers$SubscriberAdapter.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/List.h>
 #include <java/util/Objects.h>
 #include <java/util/concurrent/CompletableFuture.h>
@@ -106,8 +97,7 @@ void ResponseSubscribers$SubscriberAdapter::onNext($List* item) {
 	$Objects::requireNonNull(item);
 	try {
 		$nc(this->subscriber)->onNext(item);
-	} catch ($Throwable&) {
-		$var($Throwable, throwable, $catch());
+	} catch ($Throwable& throwable) {
 		$nc(this->subscription)->cancel();
 		onError(throwable);
 	}
@@ -119,8 +109,8 @@ void ResponseSubscribers$SubscriberAdapter::onError($Throwable* throwable) {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->subscriber)->onError(throwable);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->cf)->completeExceptionally(throwable);
 		}
@@ -136,13 +126,12 @@ void ResponseSubscribers$SubscriberAdapter::onComplete() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->subscriber)->onComplete();
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			try {
 				$nc(this->cf)->complete($($nc(this->finisher)->apply(this->subscriber)));
-			} catch ($Throwable&) {
-				$var($Throwable, throwable, $catch());
+			} catch ($Throwable& throwable) {
 				$nc(this->cf)->completeExceptionally(throwable);
 			}
 		}

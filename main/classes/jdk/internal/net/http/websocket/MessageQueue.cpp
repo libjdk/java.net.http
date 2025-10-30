@@ -1,20 +1,8 @@
 #include <jdk/internal/net/http/websocket/MessageQueue.h>
 
 #include <java/io/IOException.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/nio/CharBuffer.h>
 #include <java/util/concurrent/CompletableFuture.h>
@@ -213,8 +201,7 @@ $Object* MessageQueue::peek($MessageQueue$QueueCallback* callback) {
 		{
 			try {
 				return $of($nc(callback)->onText(h->text, h->isLast, h->attachment, h->action, h->future));
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				$throw(t);
 			}
 		}
@@ -222,8 +209,7 @@ $Object* MessageQueue::peek($MessageQueue$QueueCallback* callback) {
 		{
 			try {
 				return $of($nc(callback)->onBinary(h->binary, h->isLast, h->attachment, h->action, h->future));
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				$throw(t);
 			}
 		}
@@ -231,8 +217,7 @@ $Object* MessageQueue::peek($MessageQueue$QueueCallback* callback) {
 		{
 			try {
 				return $of($nc(callback)->onPing(h->binary, h->attachment, h->action, h->future));
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				$throw(t);
 			}
 		}
@@ -244,8 +229,7 @@ $Object* MessageQueue::peek($MessageQueue$QueueCallback* callback) {
 				} else {
 					return $of($nc(callback)->onPong(h->binary, h->attachment, h->action, h->future));
 				}
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				$throw(t);
 			}
 		}
@@ -253,8 +237,7 @@ $Object* MessageQueue::peek($MessageQueue$QueueCallback* callback) {
 		{
 			try {
 				return $of($nc(callback)->onClose(h->statusCode, h->text, h->attachment, h->action, h->future));
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				$throw(t);
 			}
 		}

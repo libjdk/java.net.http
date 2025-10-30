@@ -1,13 +1,5 @@
 #include <java/net/http/HttpClient$Builder.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/Authenticator.h>
 #include <java/net/CookieHandler.h>
 #include <java/net/InetSocketAddress.h>
@@ -87,7 +79,6 @@ $ClassInfo _HttpClient$Builder_ClassInfo_ = {
 $Object* allocate$HttpClient$Builder($Class* clazz) {
 	return $of($alloc(HttpClient$Builder));
 }
-
 
 $ProxySelector* HttpClient$Builder::NO_PROXY = nullptr;
 

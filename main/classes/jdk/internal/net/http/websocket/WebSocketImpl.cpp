@@ -2,32 +2,15 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Boolean.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
 #include <java/lang/ref/Reference.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/URI.h>
 #include <java/net/http/WebSocket$Listener.h>
 #include <java/net/http/WebSocket.h>
@@ -479,8 +462,7 @@ $CompletableFuture* WebSocketImpl::newInstanceAsync($BuilderImpl* b) {
 	$var($OpeningHandshake, h, nullptr);
 	try {
 		$assign(h, $new($OpeningHandshake, b));
-	} catch ($Throwable&) {
-		$var($Throwable, e, $catch());
+	} catch ($Throwable& e) {
 		return $MinimalFuture::failedFuture(e);
 	}
 	return $cast($CompletableFuture, $nc($($nc(h)->send()))->thenApply(newWebSocket));
@@ -687,8 +669,7 @@ bool WebSocketImpl::isLegalReason($String* reason) {
 	$var($ByteBuffer, bytes, nullptr);
 	try {
 		$assign(bytes, $nc(encoder)->encode($($CharBuffer::wrap(static_cast<$CharSequence*>(reason)))));
-	} catch ($CharacterCodingException&) {
-		$var($CharacterCodingException, ignored, $catch());
+	} catch ($CharacterCodingException& ignored) {
 		return false;
 	}
 	return $nc(bytes)->remaining() <= 123;
@@ -707,8 +688,7 @@ void WebSocketImpl::processCloseError($Throwable* e) {
 	$nc(this->outputClosed)->set(true);
 	try {
 		$nc(this->transport$)->closeOutput();
-	} catch ($IOException&) {
-		$catch();
+	} catch ($IOException& ignored) {
 	}
 }
 
@@ -827,25 +807,23 @@ void WebSocketImpl::close() {
 		try {
 			try {
 				$nc(this->transport$)->closeInput();
-			} catch ($Throwable&) {
-				$var($Throwable, t1, $catch());
+			} catch ($Throwable& t1) {
 				$assign(first, t1);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$var($Throwable, second, nullptr);
 			{
-				$var($Throwable, var$1, nullptr);
+				$var($Throwable, var$2, nullptr);
 				try {
 					try {
 						$nc(this->transport$)->closeOutput();
-					} catch ($Throwable&) {
-						$var($Throwable, t2, $catch());
+					} catch ($Throwable& t2) {
 						$assign(second, t2);
 					}
-				} catch ($Throwable&) {
-					$assign(var$1, $catch());
+				} catch ($Throwable& var$3) {
+					$assign(var$2, var$3);
 				} /*finally*/ {
 					$var($Throwable, e, nullptr);
 					if (first != nullptr && second != nullptr) {
@@ -862,8 +840,8 @@ void WebSocketImpl::close() {
 						}
 					}
 				}
-				if (var$1 != nullptr) {
-					$throw(var$1);
+				if (var$2 != nullptr) {
+					$throw(var$2);
 				}
 			}
 		}
@@ -890,8 +868,7 @@ void WebSocketImpl::signalClose(int32_t statusCode, $String* reason) {
 	if (managed) {
 		try {
 			$nc(this->transport$)->closeInput();
-		} catch ($Throwable&) {
-			$var($Throwable, t, $catch());
+		} catch ($Throwable& t) {
 			if ($nc(WebSocketImpl::debug)->on()) {
 				$nc(WebSocketImpl::debug)->log("exception closing input"_s, $$new($ObjectArray, {$of(t)}));
 			}

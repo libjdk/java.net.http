@@ -18,8 +18,10 @@ public:
 	void init$($String* message);
 	static const int64_t serialVersionUID = (int64_t)1;
 	CheckFailedException(const CheckFailedException& e);
-	CheckFailedException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline CheckFailedException* operator ->() {
+		return (CheckFailedException*)throwing$;
+	}
 };
 
 				} // websocket

@@ -1,13 +1,6 @@
 #include <jdk/internal/net/http/hpack/DecodingCallback.h>
 
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/CompoundAttribute.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jcpp.h>
 
 using $CharSequence = ::java::lang::CharSequence;
@@ -20,11 +13,11 @@ namespace jdk {
 		namespace net {
 			namespace http {
 				namespace hpack {
+
 $CompoundAttribute _DecodingCallback_Annotations_[] = {
 	{"Ljava/lang/FunctionalInterface;", nullptr},
 	{}
 };
-
 
 $MethodInfo _DecodingCallback_MethodInfo_[] = {
 	{"onDecoded", "(Ljava/lang/CharSequence;Ljava/lang/CharSequence;)V", nullptr, $PUBLIC | $ABSTRACT},

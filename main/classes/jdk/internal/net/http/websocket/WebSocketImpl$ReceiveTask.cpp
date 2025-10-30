@@ -1,27 +1,13 @@
 #include <jdk/internal/net/http/websocket/WebSocketImpl$ReceiveTask.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Boolean.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/ProtocolException.h>
 #include <java/net/http/WebSocket$Listener.h>
 #include <java/net/http/WebSocket.h>
@@ -361,8 +347,7 @@ void WebSocketImpl$ReceiveTask::run() {
 
 			if (loop$break) {
 				break;
-			}		} catch ($Throwable&) {
-			$var($Throwable, t, $catch());
+			}		} catch ($Throwable& t) {
 			this->this$0->signalError(t);
 		}
 	}
@@ -404,8 +389,8 @@ void WebSocketImpl$ReceiveTask::processError() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->this$0->listener)->onError(this->this$0, err);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if ($nc($WebSocketImpl::debug)->on()) {
 				$nc($WebSocketImpl::debug)->log("exit onError %s"_s, $$new($ObjectArray, {$($of($Long::valueOf(id)))}));
@@ -437,8 +422,8 @@ void WebSocketImpl$ReceiveTask::processClose() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$assign(cs, $nc(this->this$0->listener)->onClose(this->this$0, this->this$0->statusCode, this->this$0->reason));
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc($WebSocketImpl::debug)->log("exit onClose %s returned %s"_s, $$new($ObjectArray, {
 				$($of($Long::valueOf(id))),
@@ -481,8 +466,8 @@ void WebSocketImpl$ReceiveTask::processPong() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$assign(cs, $nc(this->this$0->listener)->onPong(this->this$0, this->this$0->binaryData));
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if ($nc($WebSocketImpl::debug)->on()) {
 				$nc($WebSocketImpl::debug)->log("exit onPong %s returned %s"_s, $$new($ObjectArray, {
@@ -524,8 +509,8 @@ void WebSocketImpl$ReceiveTask::processPing() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$assign(cs, $nc(this->this$0->listener)->onPing(this->this$0, slice));
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if ($nc($WebSocketImpl::debug)->on()) {
 				$nc($WebSocketImpl::debug)->log("exit onPing %s returned %s"_s, $$new($ObjectArray, {
@@ -557,8 +542,8 @@ void WebSocketImpl$ReceiveTask::processBinary() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$assign(cs, $nc(this->this$0->listener)->onBinary(this->this$0, this->this$0->binaryData, this->this$0->last));
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if ($nc($WebSocketImpl::debug)->on()) {
 				$nc($WebSocketImpl::debug)->log("exit onBinary %s returned %s"_s, $$new($ObjectArray, {
@@ -590,8 +575,8 @@ void WebSocketImpl$ReceiveTask::processText() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$assign(cs, $nc(this->this$0->listener)->onText(this->this$0, this->this$0->text, this->this$0->last));
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if ($nc($WebSocketImpl::debug)->on()) {
 				$nc($WebSocketImpl::debug)->log("exit onText %s returned %s"_s, $$new($ObjectArray, {
@@ -618,8 +603,8 @@ void WebSocketImpl$ReceiveTask::processOpen() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->this$0->listener)->onOpen(this->this$0);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if ($nc($WebSocketImpl::debug)->on()) {
 				$nc($WebSocketImpl::debug)->log("exit onOpen %s"_s, $$new($ObjectArray, {$($of($Long::valueOf(id)))}));

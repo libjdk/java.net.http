@@ -1,16 +1,6 @@
 #include <jdk/internal/net/http/BufferingSubscriber$DownstreamSubscription$PushDemandedTask.h>
 
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/util/ArrayList.h>
 #include <java/util/List.h>
@@ -136,8 +126,7 @@ void BufferingSubscriber$DownstreamSubscription$PushDemandedTask::run() {
 			$nc($nc(this->this$1->this$0)->downstreamSubscriber)->onComplete();
 			return;
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		this->this$1->cancel();
 		$throw(t);
 	}

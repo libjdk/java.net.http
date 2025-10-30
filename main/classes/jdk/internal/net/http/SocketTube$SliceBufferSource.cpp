@@ -1,21 +1,12 @@
 #include <jdk/internal/net/http/SocketTube$SliceBufferSource.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/List.h>
 #include <java/util/Objects.h>
@@ -135,7 +126,7 @@ void SocketTube$SliceBufferSource::init$($Supplier* factory) {
 
 $ByteBuffer* SocketTube$SliceBufferSource::getBuffer() {
 	$var($ByteBuffer, buf, this->current);
-	$assign(buf, (buf == nullptr || !$nc(buf)->hasRemaining()) ? ($assignField(this, current, $cast($ByteBuffer, $nc(this->factory)->get()))) : buf);
+	$assign(buf, (buf == nullptr || !$nc(buf)->hasRemaining()) ? ($set(this, current, $cast($ByteBuffer, $nc(this->factory)->get()))) : buf);
 	if (!SocketTube$SliceBufferSource::$assertionsDisabled && !$nc(buf)->hasRemaining()) {
 		$throwNew($AssertionError);
 	}

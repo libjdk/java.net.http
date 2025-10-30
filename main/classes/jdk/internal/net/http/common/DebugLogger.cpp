@@ -1,27 +1,14 @@
 #include <jdk/internal/net/http/common/DebugLogger.h>
 
-#include <java/io/PrintStream.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
 #include <java/lang/System$Logger$Level.h>
 #include <java/lang/System$Logger.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/text/MessageFormat.h>
 #include <java/util/Objects.h>
 #include <java/util/ResourceBundle.h>
@@ -227,11 +214,9 @@ void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $Str
 	}
 	int32_t severity = $nc(level)->getSeverity();
 	if (this->errLevel != $System$Logger$Level::OFF && this->errLevel->getSeverity() <= severity) {
-		$init($System);
 		print($System::err, level, format, params, nullptr);
 	}
 	if (this->outLevel != $System$Logger$Level::OFF && this->outLevel->getSeverity() <= severity) {
-		$init($System);
 		print($System::out, level, format, params, nullptr);
 	}
 	if ($nc(this->logger)->isLoggable(level)) {
@@ -254,7 +239,6 @@ void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $Str
 		var$0 = var$1 <= $nc(level)->getSeverity();
 	}
 	if (var$0) {
-		$init($System);
 		print($System::err, level, msg, nullptr, thrown);
 	}
 	bool var$2 = this->outLevel != $System$Logger$Level::OFF;
@@ -263,7 +247,6 @@ void DebugLogger::log($System$Logger$Level* level, $ResourceBundle* unused, $Str
 		var$2 = var$3 <= $nc(level)->getSeverity();
 	}
 	if (var$2) {
-		$init($System);
 		print($System::out, level, msg, nullptr, thrown);
 	}
 	if ($nc(this->logger)->isLoggable(level)) {
@@ -312,7 +295,6 @@ $StringBuilder* DebugLogger::decorate($StringBuilder* sb, $String* msg) {
 }
 
 $StringBuilder* DebugLogger::getFormat($StringBuilder* sb, $String* format, $ObjectArray* params) {
-	$useLocalCurrentObjectStackCache();
 	if (format == nullptr || params == nullptr || $nc(params)->length == 0) {
 		return decorate(sb, format);
 	} else {
@@ -324,8 +306,7 @@ $StringBuilder* DebugLogger::getFormat($StringBuilder* sb, $String* format, $Obj
 			if (var$3 || format->contains("%d"_s)) {
 				try {
 					return decorate(sb, $($String::format(format, params)));
-				} catch ($Throwable&) {
-					$var($Throwable, t, $catch());
+				} catch ($Throwable& t) {
 					return decorate(sb, format);
 				}
 			} else {
@@ -348,8 +329,7 @@ $StringBuilder* DebugLogger::format($StringBuilder* sb, $String* format, $Object
 			if (var$3 || format->contains("%d"_s)) {
 				try {
 					return decorate(sb, $($String::format(format, params)));
-				} catch ($Throwable&) {
-					$var($Throwable, t, $catch());
+				} catch ($Throwable& t) {
 					return decorate(sb, format);
 				}
 			} else {

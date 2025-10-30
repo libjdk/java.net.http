@@ -1,13 +1,5 @@
 #include <jdk/internal/net/http/websocket/CheckFailedException.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jcpp.h>
 
 using $ClassInfo = ::java::lang::ClassInfo;
@@ -51,16 +43,10 @@ void CheckFailedException::init$($String* message) {
 CheckFailedException::CheckFailedException() {
 }
 
-CheckFailedException::CheckFailedException(const CheckFailedException& e) {
+CheckFailedException::CheckFailedException(const CheckFailedException& e) : $RuntimeException(e) {
 }
 
-CheckFailedException CheckFailedException::wrapper$() {
-	$pendingException(this);
-	return *this;
-}
-
-void CheckFailedException::throwWrapper$() {
-	$pendingException(this);
+void CheckFailedException::throw$() {
 	throw *this;
 }
 

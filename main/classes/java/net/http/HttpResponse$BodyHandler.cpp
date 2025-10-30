@@ -1,13 +1,5 @@
 #include <java/net/http/HttpResponse$BodyHandler.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/CompoundAttribute.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/net/http/HttpResponse$ResponseInfo.h>
 #include <java/net/http/HttpResponse.h>
@@ -24,11 +16,11 @@ using $HttpResponse$ResponseInfo = ::java::net::http::HttpResponse$ResponseInfo;
 namespace java {
 	namespace net {
 		namespace http {
+
 $CompoundAttribute _HttpResponse$BodyHandler_Annotations_[] = {
 	{"Ljava/lang/FunctionalInterface;", nullptr},
 	{}
 };
-
 
 $MethodInfo _HttpResponse$BodyHandler_MethodInfo_[] = {
 	{"apply", "(Ljava/net/http/HttpResponse$ResponseInfo;)Ljava/net/http/HttpResponse$BodySubscriber;", "(Ljava/net/http/HttpResponse$ResponseInfo;)Ljava/net/http/HttpResponse$BodySubscriber<TT;>;", $PUBLIC | $ABSTRACT},

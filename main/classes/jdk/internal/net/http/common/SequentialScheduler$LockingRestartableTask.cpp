@@ -1,16 +1,7 @@
 #include <jdk/internal/net/http/common/SequentialScheduler$LockingRestartableTask.h>
 
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/concurrent/locks/Lock.h>
 #include <java/util/concurrent/locks/ReentrantLock.h>
 #include <jdk/internal/net/http/common/SequentialScheduler$CompleteRestartableTask.h>
@@ -90,8 +81,8 @@ void SequentialScheduler$LockingRestartableTask::run() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->mainLoop)->run();
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			if (locked) {
 				$nc(this->lock)->unlock();

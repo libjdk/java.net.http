@@ -1,37 +1,18 @@
 #include <jdk/internal/net/http/HttpClientImpl$SelectorManager.h>
 
 #include <java/io/IOException.h>
-#include <java/io/PrintStream.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/Iterable.h>
-#include <java/lang/Long.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
 #include <java/lang/ThreadGroup.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/channels/CancelledKeyException.h>
 #include <java/nio/channels/ClosedChannelException.h>
 #include <java/nio/channels/SelectableChannel.h>
@@ -481,11 +462,10 @@ void HttpClientImpl$SelectorManager::shutdown() {
 			try {
 				try {
 					$nc(this->selector)->close();
-				} catch ($IOException&) {
-					$catch();
+				} catch ($IOException& ignored) {
 				}
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				$nc(this->owner)->stop();
 			}
@@ -556,8 +536,7 @@ void HttpClientImpl$SelectorManager::run() {
 										if (!chan->isOpen()) {
 											$throwNew($IOException, "Channel closed"_s);
 										}
-									} catch ($IOException&) {
-										$var($IOException, e, $catch());
+									} catch ($IOException& e) {
 										$Log::logTrace("{0}: {1}"_s, $$new($ObjectArray, {
 											$($of(getName())),
 											$of(e)
@@ -667,8 +646,7 @@ void HttpClientImpl$SelectorManager::run() {
 								int32_t eventsOccurred = 0;
 								try {
 									eventsOccurred = key->readyOps();
-								} catch ($CancelledKeyException&) {
-									$var($CancelledKeyException, ex, $catch());
+								} catch ($CancelledKeyException& ex) {
 									$var($IOException, io, $Utils::getIOException(ex));
 									$nc($nc(sa)->pending)->forEach(static_cast<$Consumer*>($$new(HttpClientImpl$SelectorManager$$Lambda$lambda$run$0, errorList, io)));
 									$nc(sa->pending)->clear();
@@ -688,8 +666,7 @@ void HttpClientImpl$SelectorManager::run() {
 					resetList->forEach(static_cast<$Consumer*>($$new(HttpClientImpl$SelectorManager$$Lambda$lambda$run$5$5)));
 					resetList->clear();
 				}
-			} catch ($Throwable&) {
-				$var($Throwable, e, $catch());
+			} catch ($Throwable& e) {
 				if (!this->closed) {
 					$var($String, err, $Utils::stackTrace(e));
 					$Log::logError("{0}: {1}: {2}"_s, $$new($ObjectArray, {
@@ -703,12 +680,11 @@ void HttpClientImpl$SelectorManager::run() {
 				}
 				$init($Utils);
 				if ($Utils::ASSERTIONSENABLED && !$nc(this->debug)->on()) {
-					$init($System);
 					e->printStackTrace($System::err);
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$2) {
+			$assign(var$0, var$2);
 		} $finally: {
 			if ($Log::channel()) {
 				$Log::logChannel($$str({$(getName()), ": stopping"_s}), $$new($ObjectArray, 0));

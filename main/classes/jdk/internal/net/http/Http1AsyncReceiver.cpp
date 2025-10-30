@@ -2,29 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/Thread.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/AbstractSet.h>
 #include <java/util/Arrays.h>
@@ -524,8 +508,7 @@ void Http1AsyncReceiver::flush() {
 					}
 				}
 				checkRequestMore();
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				$var($Throwable, x, this->error);
 				if (x == nullptr) {
 					$set(this, error, t);
@@ -534,8 +517,8 @@ void Http1AsyncReceiver::flush() {
 					$nc(this->debug)->log("Unexpected error caught in flush()"_s, t);
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$4) {
+			$assign(var$0, var$4);
 		} $finally: {
 			checkForErrors();
 		}
@@ -626,8 +609,8 @@ bool Http1AsyncReceiver::handlePendingDelegate() {
 			$var($Throwable, var$0, nullptr);
 			try {
 				pending->onSubscribe(subscription);
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				$set(this, delegate, ($assign(delegate, pending)));
 			}
@@ -637,12 +620,12 @@ bool Http1AsyncReceiver::handlePendingDelegate() {
 		}
 		$var($Object, captured, delegate);
 		if ($nc(this->debug)->on()) {
-			$var($String, var$5, $$str({"delegate is now "_s, captured, ", demand="_s}));
-			$var($String, var$4, $$concat(var$5, $$str($nc($(subscription->demand()))->get())));
-			$var($String, var$3, $$concat(var$4, ", canRequestMore="));
-			$var($String, var$2, $$concat(var$3, $$str($nc(this->canRequestMore)->get())));
-			$var($String, var$1, $$concat(var$2, ", queue.isEmpty="));
-			$nc(this->debug)->log($$concat(var$1, $$str($nc(this->queue)->isEmpty())));
+			$var($String, var$6, $$str({"delegate is now "_s, captured, ", demand="_s}));
+			$var($String, var$5, $$concat(var$6, $$str($nc($(subscription->demand()))->get())));
+			$var($String, var$4, $$concat(var$5, ", canRequestMore="));
+			$var($String, var$3, $$concat(var$4, $$str($nc(this->canRequestMore)->get())));
+			$var($String, var$2, $$concat(var$3, ", queue.isEmpty="));
+			$nc(this->debug)->log($$concat(var$2, $$str($nc(this->queue)->isEmpty())));
 		}
 		return true;
 	}
@@ -922,8 +905,8 @@ void Http1AsyncReceiver::lambda$handlePendingDelegate$3($Http1AsyncReceiver$Http
 			$nc(pending)->close(nullptr);
 			onReadError($$new($IOException, "subscription cancelled"_s));
 			unsubscribe(pending);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$var($Http1Exchange, exchg, this->owner);
 			stop();

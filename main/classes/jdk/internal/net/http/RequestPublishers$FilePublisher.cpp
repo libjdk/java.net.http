@@ -8,31 +8,16 @@
 #include <java/io/InputStream.h>
 #include <java/io/Serializable.h>
 #include <java/io/UncheckedIOException.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/Error.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/Iterable.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/RuntimeException.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/UnsupportedOperationException.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/lang/reflect/UndeclaredThrowableException.h>
 #include <java/nio/file/Files.h>
 #include <java/nio/file/LinkOption.h>
@@ -338,15 +323,13 @@ RequestPublishers$FilePublisher* RequestPublishers$FilePublisher::create($Path* 
 			sm->checkPermission(readPermission);
 			$assign(filePermission, readPermission);
 		}
-	} catch ($UnsupportedOperationException&) {
-		$var($UnsupportedOperationException, uoe, $catch());
+	} catch ($UnsupportedOperationException& uoe) {
 		defaultFS = false;
 		try {
 			if (sm != nullptr) {
 				$nc($($Files::newInputStream(path, $$new($OpenOptionArray, 0))))->close();
 			}
-		} catch ($IOException&) {
-			$var($IOException, ioe, $catch());
+		} catch ($IOException& ioe) {
 			if ($instanceOf($FileNotFoundException, ioe)) {
 				$throw($cast($FileNotFoundException, ioe));
 			} else {
@@ -369,8 +352,7 @@ RequestPublishers$FilePublisher* RequestPublishers$FilePublisher::create($Path* 
 	int64_t length = 0;
 	try {
 		length = $Files::size(path);
-	} catch ($IOException&) {
-		$var($IOException, ioe, $catch());
+	} catch ($IOException& ioe) {
 		length = -1;
 	}
 	return $new(RequestPublishers$FilePublisher, path, length, inputStreamSupplier);
@@ -387,11 +369,9 @@ $InputStream* RequestPublishers$FilePublisher::createInputStream($Path* path, $A
 		} else {
 			return defaultFS ? static_cast<$InputStream*>($new($FileInputStream, $($nc(path)->toFile()))) : $Files::newInputStream(path, $$new($OpenOptionArray, 0));
 		}
-	} catch ($PrivilegedActionException&) {
-		$var($PrivilegedActionException, pae, $catch());
+	} catch ($PrivilegedActionException& pae) {
 		$throw($(toUncheckedException($(pae->getCause()))));
-	} catch ($IOException&) {
-		$var($IOException, io, $catch());
+	} catch ($IOException& io) {
 		$throwNew($UncheckedIOException, io);
 	}
 	$shouldNotReachHere();
@@ -424,14 +404,11 @@ void RequestPublishers$FilePublisher::subscribe($Flow$Subscriber* subscriber) {
 	$var($Throwable, t, nullptr);
 	try {
 		$assign(is, $cast($InputStream, $nc(this->inputStreamSupplier)->apply(this->path)));
-	} catch ($UncheckedIOException&) {
-		$var($RuntimeException, ue, $catch());
+	} catch ($UncheckedIOException& ue) {
 		$assign(t, ue->getCause());
-	} catch ($UndeclaredThrowableException&) {
-		$var($RuntimeException, ue, $catch());
+	} catch ($UndeclaredThrowableException& ue) {
 		$assign(t, ue->getCause());
-	} catch ($Throwable&) {
-		$var($Throwable, th, $catch());
+	} catch ($Throwable& th) {
 		$assign(t, th);
 	}
 	$var($InputStream, fis, is);

@@ -4,25 +4,13 @@
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
 #include <java/io/UncheckedIOException.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/StackTraceElement.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/URI.h>
 #include <java/util/AbstractMap.h>
@@ -298,8 +286,7 @@ $CompletableFuture* Http2ClientImpl::getConnectionFor($HttpRequestImpl* req, $Ex
 					}
 					return $MinimalFuture::completedFuture(connection);
 				}
-			} catch ($IOException&) {
-				$var($IOException, e, $catch());
+			} catch ($IOException& e) {
 				return $MinimalFuture::failedFuture(e);
 			}
 		}
@@ -372,13 +359,11 @@ void Http2ClientImpl::stop() {
 void Http2ClientImpl::close($Http2Connection* h2c) {
 	try {
 		$nc(h2c)->close();
-	} catch ($Throwable&) {
-		$catch();
+	} catch ($Throwable& t) {
 	}
 	try {
 		$nc(h2c)->shutdown(this->STOPPED);
-	} catch ($Throwable&) {
-		$catch();
+	} catch ($Throwable& t) {
 	}
 }
 
@@ -428,13 +413,11 @@ $SettingsFrame* Http2ClientImpl::getClientSettings() {
 }
 
 void Http2ClientImpl::lambda$getConnectionFor$0($String* key, $Http2Connection* conn, $Throwable* t) {
-	$useLocalCurrentObjectStackCache();
 	$synchronized(this) {
 		if (conn != nullptr) {
 			try {
 				conn->reserveStream(true);
-			} catch ($IOException&) {
-				$var($IOException, e, $catch());
+			} catch ($IOException& e) {
 				$throwNew($UncheckedIOException, e);
 			}
 			offerConnection(conn);

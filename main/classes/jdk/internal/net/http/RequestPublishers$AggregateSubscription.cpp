@@ -1,26 +1,12 @@
 #include <jdk/internal/net/http/RequestPublishers$AggregateSubscription.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpRequest$BodyPublisher.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/AbstractQueue.h>
@@ -206,8 +192,7 @@ void RequestPublishers$AggregateSubscription::request(int64_t n) {
 	}
 	try {
 		$nc(this->demand)->increase(n);
-	} catch ($IllegalArgumentException&) {
-		$var($IllegalArgumentException, x, $catch());
+	} catch ($IllegalArgumentException& x) {
 		$set(this, illegalRequest, x);
 	}
 	$nc(this->scheduler)->runOrSchedule();
@@ -272,8 +257,7 @@ void RequestPublishers$AggregateSubscription::run() {
 				}
 			}
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		onError(t);
 	}
 }

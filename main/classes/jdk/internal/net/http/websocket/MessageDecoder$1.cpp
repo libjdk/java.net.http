@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/websocket/MessageDecoder$1.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/NoSuchFieldError.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/websocket/Frame$Opcode.h>
 #include <jdk/internal/net/http/websocket/MessageDecoder.h>
 #include <jcpp.h>
@@ -77,18 +68,15 @@ void clinit$MessageDecoder$1($Class* class$) {
 	{
 		try {
 			$nc(MessageDecoder$1::$SwitchMap$jdk$internal$net$http$websocket$Frame$Opcode)->set($Frame$Opcode::CLOSE->ordinal(), 1);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(MessageDecoder$1::$SwitchMap$jdk$internal$net$http$websocket$Frame$Opcode)->set($Frame$Opcode::PING->ordinal(), 2);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(MessageDecoder$1::$SwitchMap$jdk$internal$net$http$websocket$Frame$Opcode)->set($Frame$Opcode::PONG->ordinal(), 3);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 	}
 }

@@ -1,18 +1,7 @@
 #include <jdk/internal/net/http/websocket/TransportImpl$ReceiveTask.h>
 
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <jdk/internal/net/http/common/Demand.h>
 #include <jdk/internal/net/http/common/Logger.h>
@@ -129,14 +118,13 @@ void TransportImpl$ReceiveTask::run() {
 					if (!TransportImpl$ReceiveTask::$assertionsDisabled && !(oldPos != newPos)) {
 						$throwNew($AssertionError, $of(this->this$0->data));
 					}
-				} catch ($Throwable&) {
-					$var($Throwable, e, $catch());
+				} catch ($Throwable& e) {
 					$nc(this->this$0->receiveScheduler)->stop();
 					$nc(this->this$0->messageConsumer)->onError(e);
 				}
 				if (!$nc(this->this$0->data)->hasRemaining()) {
 					$init($TransportImpl$ChannelState);
-					rs = ($assignField(this->this$0, readState, $TransportImpl$ChannelState::UNREGISTERED));
+					rs = ($set(this->this$0, readState, $TransportImpl$ChannelState::UNREGISTERED));
 				}
 				continue;
 			}
@@ -157,10 +145,9 @@ void TransportImpl$ReceiveTask::run() {
 			{
 				try {
 					$init($TransportImpl$ChannelState);
-					rs = ($assignField(this->this$0, readState, $TransportImpl$ChannelState::WAITING));
+					rs = ($set(this->this$0, readState, $TransportImpl$ChannelState::WAITING));
 					$nc(this->this$0->channel)->registerEvent(this->this$0->readEvent);
-				} catch ($Throwable&) {
-					$var($Throwable, e, $catch());
+				} catch ($Throwable& e) {
 					$nc(this->this$0->receiveScheduler)->stop();
 					$nc(this->this$0->messageConsumer)->onError(e);
 				}
@@ -171,8 +158,7 @@ void TransportImpl$ReceiveTask::run() {
 			{
 				try {
 					$set(this->this$0, data, $nc(this->this$0->channel)->read());
-				} catch ($Throwable&) {
-					$var($Throwable, e, $catch());
+				} catch ($Throwable& e) {
 					$nc(this->this$0->receiveScheduler)->stop();
 					$nc(this->this$0->messageConsumer)->onError(e);
 					loop$break = true;
@@ -185,7 +171,7 @@ void TransportImpl$ReceiveTask::run() {
 					break;
 				} else if (!$nc(this->this$0->data)->hasRemaining()) {
 					$init($TransportImpl$ChannelState);
-					rs = ($assignField(this->this$0, readState, $TransportImpl$ChannelState::UNREGISTERED));
+					rs = ($set(this->this$0, readState, $TransportImpl$ChannelState::UNREGISTERED));
 				}
 				continue;
 			}

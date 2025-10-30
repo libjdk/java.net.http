@@ -1,20 +1,11 @@
 #include <jdk/internal/net/http/common/HttpHeadersBuilder.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpHeaders.h>
 #include <java/util/AbstractList.h>
 #include <java/util/AbstractMap.h>
@@ -131,7 +122,6 @@ $Object* allocate$HttpHeadersBuilder($Class* clazz) {
 }
 
 void HttpHeadersBuilder::init$() {
-	$init($String);
 	$set(this, headersMap, $new($TreeMap, $String::CASE_INSENSITIVE_ORDER));
 }
 

@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/Http1AsyncReceiver$Http1AsyncDelegateSubscription.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/function/Consumer.h>
 #include <jdk/internal/net/http/AbstractSubscription.h>
 #include <jdk/internal/net/http/Http1AsyncReceiver.h>
@@ -82,7 +73,6 @@ void Http1AsyncReceiver$Http1AsyncDelegateSubscription::init$($SequentialSchedul
 }
 
 void Http1AsyncReceiver$Http1AsyncDelegateSubscription::request(int64_t n) {
-	$useLocalCurrentObjectStackCache();
 	if (this->cancelled) {
 		return;
 	}
@@ -91,8 +81,7 @@ void Http1AsyncReceiver$Http1AsyncDelegateSubscription::request(int64_t n) {
 		if ($nc(demand)->increase(n)) {
 			$nc(this->scheduler)->runOrSchedule();
 		}
-	} catch ($IllegalArgumentException&) {
-		$var($IllegalArgumentException, x, $catch());
+	} catch ($IllegalArgumentException& x) {
 		this->cancelled = true;
 		$nc(this->onError)->accept(x);
 	}

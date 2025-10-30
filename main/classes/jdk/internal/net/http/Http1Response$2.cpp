@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/Http1Response$2.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/NoSuchFieldError.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/Http1Response$State.h>
 #include <jdk/internal/net/http/Http1Response.h>
 #include <jcpp.h>
@@ -75,13 +66,11 @@ void clinit$Http1Response$2($Class* class$) {
 	{
 		try {
 			$nc(Http1Response$2::$SwitchMap$jdk$internal$net$http$Http1Response$State)->set($Http1Response$State::READING_HEADERS->ordinal(), 1);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1Response$2::$SwitchMap$jdk$internal$net$http$Http1Response$State)->set($Http1Response$State::READING_BODY->ordinal(), 2);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 	}
 }

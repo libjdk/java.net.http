@@ -2,23 +2,12 @@
 
 #include <java/io/EOFException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/concurrent/CompletableFuture.h>
 #include <java/util/function/Consumer.h>
@@ -210,8 +199,7 @@ void Http1Response$BodyReader::onSubscribe($AbstractSubscription* s) {
 	$set(this, subscription$, s);
 	try {
 		$nc(this->parser)->onSubscribe(s);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$nc(this->cf)->completeExceptionally(t);
 		$throw(t);
 	}
@@ -232,8 +220,7 @@ void Http1Response$BodyReader::handle($ByteBuffer* b, $ResponseContent$BodyParse
 			$nc(this->this$0->debug)->log($$concat(var$0, " bytes to body parser"));
 		}
 		$nc(parser)->accept(b);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->this$0->debug)->on()) {
 			$nc(this->this$0->debug)->log($$str({"Body parser failed to handle buffer: "_s, t}));
 		}

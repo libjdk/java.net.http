@@ -5,28 +5,14 @@
 #include <java/io/FilePermission.h>
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/UnsupportedOperationException.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/nio/channels/Channel.h>
 #include <java/nio/channels/FileChannel.h>
@@ -304,8 +290,7 @@ ResponseSubscribers$PathSubscriber* ResponseSubscribers$PathSubscriber::create($
 			$var($FilePermission, writePermission, $new($FilePermission, fn, "write"_s));
 			sm->checkPermission(writePermission);
 			$assign(filePermission, writePermission);
-		} catch ($UnsupportedOperationException&) {
-			$catch();
+		} catch ($UnsupportedOperationException& ignored) {
 		}
 	}
 	if (!ResponseSubscribers$PathSubscriber::$assertionsDisabled && !(filePermission == nullptr || $nc($($nc(filePermission)->getActions()))->equals("write"_s))) {
@@ -331,8 +316,7 @@ bool ResponseSubscribers$PathSubscriber::isDefaultFS($Path* file) {
 	try {
 		$nc(file)->toFile();
 		return true;
-	} catch ($UnsupportedOperationException&) {
-		$var($UnsupportedOperationException, uoe, $catch());
+	} catch ($UnsupportedOperationException& uoe) {
 		return false;
 	}
 	$shouldNotReachHere();
@@ -350,8 +334,7 @@ void ResponseSubscribers$PathSubscriber::onSubscribe($Flow$Subscription* subscri
 	if (this->acc == nullptr) {
 		try {
 			$set(this, out, $FileChannel::open(this->file, this->options));
-		} catch ($IOException&) {
-			$var($IOException, ioe, $catch());
+		} catch ($IOException& ioe) {
 			$nc(this->result)->completeExceptionally(ioe);
 			subscription->cancel();
 			return;
@@ -360,14 +343,12 @@ void ResponseSubscribers$PathSubscriber::onSubscribe($Flow$Subscription* subscri
 		try {
 			$var($PrivilegedExceptionAction, pa, static_cast<$PrivilegedExceptionAction*>($new(ResponseSubscribers$PathSubscriber$$Lambda$lambda$onSubscribe$1$1, this)));
 			$set(this, out, this->isDefaultFS$ ? $cast($FileChannel, $AccessController::doPrivileged(pa, this->acc, $fcast($PermissionArray, this->filePermissions))) : $cast($FileChannel, $AccessController::doPrivileged(pa, this->acc)));
-		} catch ($PrivilegedActionException&) {
-			$var($PrivilegedActionException, pae, $catch());
+		} catch ($PrivilegedActionException& pae) {
 			$var($Throwable, t, pae->getCause() != nullptr ? pae->getCause() : static_cast<$Throwable*>(pae));
 			$nc(this->result)->completeExceptionally(t);
 			subscription->cancel();
 			return;
-		} catch ($Exception&) {
-			$var($Exception, e, $catch());
+		} catch ($Exception& e) {
 			$nc(this->result)->completeExceptionally(e);
 			subscription->cancel();
 			return;
@@ -377,12 +358,10 @@ void ResponseSubscribers$PathSubscriber::onSubscribe($Flow$Subscription* subscri
 }
 
 void ResponseSubscribers$PathSubscriber::onNext($List* items) {
-	$useLocalCurrentObjectStackCache();
 	try {
 		$init($Utils);
 		$nc(this->out)->write($fcast($ByteBufferArray, $($nc(items)->toArray($Utils::EMPTY_BB_ARRAY))));
-	} catch ($IOException&) {
-		$var($IOException, ex, $catch());
+	} catch ($IOException& ex) {
 		close();
 		$nc(this->subscription)->cancel();
 		$nc(this->result)->completeExceptionally(ex);

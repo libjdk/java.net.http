@@ -2,19 +2,7 @@
 
 #include <java/io/IOException.h>
 #include <java/lang/Appendable.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <jdk/internal/net/http/hpack/NaiveHuffman$Node.h>
 #include <jdk/internal/net/http/hpack/NaiveHuffman.h>
@@ -113,15 +101,13 @@ void NaiveHuffman$Reader::read($ByteBuffer* source, $Appendable* destination, bo
 				char16_t ch = 0;
 				try {
 					ch = c->getChar();
-				} catch ($IllegalStateException&) {
-					$var($IllegalStateException, e, $catch());
+				} catch ($IllegalStateException& e) {
 					source->position(pos);
 					$throwNew($IOException, static_cast<$Throwable*>(e));
 				}
 				try {
 					$nc(destination)->append(ch);
-				} catch ($IOException&) {
-					$var($IOException, e, $catch());
+				} catch ($IOException& e) {
 					source->position(pos);
 					$throw(e);
 				}

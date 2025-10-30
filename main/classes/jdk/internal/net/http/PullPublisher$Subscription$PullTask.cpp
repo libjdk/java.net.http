@@ -1,14 +1,5 @@
 #include <jdk/internal/net/http/PullPublisher$Subscription$PullTask.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/Iterator.h>
 #include <java/util/concurrent/Flow$Subscriber.h>
 #include <jdk/internal/net/http/PullPublisher$Subscription.h>
@@ -95,8 +86,7 @@ void PullPublisher$Subscription$PullTask::run() {
 				break;
 			}
 			$assign(next, $nc(this->this$1->iter)->next());
-		} catch ($Throwable&) {
-			$var($Throwable, t1, $catch());
+		} catch ($Throwable& t1) {
 			this->this$1->completed = true;
 			$nc(this->this$1->pullScheduler)->stop();
 			$nc(this->this$1->subscriber)->onError(t1);

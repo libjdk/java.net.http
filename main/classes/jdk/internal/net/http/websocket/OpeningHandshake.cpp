@@ -2,31 +2,17 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/Error.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InternalError.h>
 #include <java/lang/Iterable.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/Proxy$Type.h>
 #include <java/net/Proxy.h>
@@ -379,8 +365,7 @@ void OpeningHandshake::init$($BuilderImpl* b) {
 	{
 		try {
 			$set(this, sha1, $MessageDigest::getInstance("SHA-1"_s));
-		} catch ($NoSuchAlgorithmException&) {
-			$var($NoSuchAlgorithmException, e, $catch());
+		} catch ($NoSuchAlgorithmException& e) {
 			$throwNew($InternalError, "Minimum requirements"_s, e);
 		}
 	}
@@ -465,8 +450,7 @@ $URI* OpeningHandshake::createRequestURI($URI* uri) {
 	}
 	try {
 		return $new($URI, newUri);
-	} catch ($URISyntaxException&) {
-		$var($URISyntaxException, e, $catch());
+	} catch ($URISyntaxException& e) {
 		$throwNew($InternalError, static_cast<$Throwable*>(e));
 	}
 	$shouldNotReachHere();
@@ -484,14 +468,11 @@ $CompletableFuture* OpeningHandshake::resultFrom($HttpResponse* response) {
 	$var($Throwable, exception, nullptr);
 	try {
 		$assign(result, handleResponse(response));
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$assign(exception, e);
-	} catch ($Exception&) {
-		$var($Exception, e, $catch());
+	} catch ($Exception& e) {
 		$assign(exception, $$new($WebSocketHandshakeException, response)->initCause(e));
-	} catch ($Error&) {
-		$var($Error, e, $catch());
+	} catch ($Error& e) {
 		$assign(exception, e);
 	}
 	if (exception == nullptr) {
@@ -499,8 +480,7 @@ $CompletableFuture* OpeningHandshake::resultFrom($HttpResponse* response) {
 	}
 	try {
 		$nc(($cast($RawChannel$Provider, response)))->closeRawChannel();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(exception)->addSuppressed(e);
 	}
 	return $MinimalFuture::failedFuture(exception);
@@ -689,7 +669,6 @@ void clinit$OpeningHandshake($Class* class$) {
 	$assignStatic(OpeningHandshake::VERSION, "13"_s);
 	OpeningHandshake::$assertionsDisabled = !OpeningHandshake::class$->desiredAssertionStatus();
 	{
-		$init($String);
 		$assignStatic(OpeningHandshake::ILLEGAL_HEADERS, static_cast<$Set*>(static_cast<$AbstractSet*>($new($TreeSet, $String::CASE_INSENSITIVE_ORDER))));
 		$nc(OpeningHandshake::ILLEGAL_HEADERS)->addAll($($List::of(OpeningHandshake::HEADER_ACCEPT, OpeningHandshake::HEADER_EXTENSIONS, OpeningHandshake::HEADER_KEY, OpeningHandshake::HEADER_PROTOCOL, OpeningHandshake::HEADER_VERSION)));
 	}

@@ -2,26 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/URI.h>
 #include <java/net/http/HttpClient$Version.h>
@@ -981,8 +968,7 @@ $CompletableFuture* Http1Exchange::sendBodyAsync() {
 		} else {
 			$nc($($cast($CompletableFuture, $nc($nc(this->bodySubscriber)->whenSubscribed)->thenAccept(static_cast<$Consumer*>($$new(Http1Exchange$$Lambda$lambda$sendBodyAsync$7$6, this))))))->thenAccept(static_cast<$Consumer*>($$new(Http1Exchange$$Lambda$lambda$sendBodyAsync$8$7, this)));
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		cancelImpl(t);
 		$nc(this->bodySentCF)->completeExceptionally(t);
 	}
@@ -1002,13 +988,13 @@ $CompletableFuture* Http1Exchange::getResponseAsync($Executor* executor) {
 		$set(this, failed, nullptr);
 	}
 	if (cause != nullptr) {
-			int64_t var$0 = 0;
-			if ($nc($($nc(this->request$)->timeout()))->isPresent()) {
-				int64_t var$1 = $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getSeconds() * 1000;
-				var$0 = (var$1 + $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getNano() / 0x000F4240);
-			} else {
-				var$0 = -1;
-			}
+		int64_t var$0 = 0;
+		if ($nc($($nc(this->request$)->timeout()))->isPresent()) {
+			int64_t var$1 = $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getSeconds() * 1000;
+			var$0 = (var$1 + $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getNano() / 0x000F4240);
+		} else {
+			var$0 = -1;
+		}
 		$Log::logTrace("Http1Exchange: request [{0}/timeout={1}ms]\n\tCompleting exceptionally with {2}\n"_s, $$new($ObjectArray, {
 			$($of($nc(this->request$)->uri())),
 			$($of($Long::valueOf(var$0))),
@@ -1088,13 +1074,13 @@ void Http1Exchange::cancelImpl($Throwable* cause) {
 		}
 		$nc($nc(this->writePublisher)->writeScheduler)->stop();
 		if ($nc(this->operations)->isEmpty()) {
-				int64_t var$1 = 0;
-				if ($nc($($nc(this->request$)->timeout()))->isPresent()) {
-					int64_t var$2 = $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getSeconds() * 1000;
-					var$1 = (var$2 + $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getNano() / 0x000F4240);
-				} else {
-					var$1 = -1;
-				}
+			int64_t var$1 = 0;
+			if ($nc($($nc(this->request$)->timeout()))->isPresent()) {
+				int64_t var$2 = $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getSeconds() * 1000;
+				var$1 = (var$2 + $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getNano() / 0x000F4240);
+			} else {
+				var$1 = -1;
+			}
 			$Log::logTrace("Http1Exchange: request [{0}/timeout={1}ms] no pending operation.\n\tCan\'\'t cancel yet with {2}"_s, $$new($ObjectArray, {
 				$($of($nc(this->request$)->uri())),
 				$($of($Long::valueOf(var$1))),
@@ -1131,8 +1117,8 @@ void Http1Exchange::cancelImpl($Throwable* cause) {
 					$nc(exec)->execute(static_cast<$Runnable*>($$new(Http1Exchange$$Lambda$lambda$cancelImpl$9$9, this, cf, x)));
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$3, $catch());
+		} catch ($Throwable& var$4) {
+			$assign(var$3, var$4);
 		} /*finally*/ {
 			if (!this->upgraded$) {
 				$nc(this->connection$)->close();
@@ -1193,8 +1179,7 @@ void Http1Exchange::requestMoreBody() {
 			$nc(this->debug)->log("requesting more request body from the subscriber"_s);
 		}
 		$nc(this->bodySubscriber)->request(1);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Subscription::request failed"_s, t);
 		}
@@ -1357,8 +1342,7 @@ $CompletionStage* Http1Exchange::lambda$sendHeadersAsync$4($Void* unused) {
 		appendToOutgoing(data);
 		cf->complete(nullptr);
 		return cf;
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Failed to send headers: %s"_s, t);
 		}

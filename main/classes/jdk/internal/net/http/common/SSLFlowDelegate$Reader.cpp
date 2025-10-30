@@ -2,26 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/Iterator.h>
 #include <java/util/List.h>
@@ -440,8 +427,7 @@ void SSLFlowDelegate$Reader::processData() {
 				} else if (this->this$0->trySetALPN()) {
 					this->this$0->resumeActivity();
 				}
-			} catch ($IOException&) {
-				$var($IOException, ex, $catch());
+			} catch ($IOException& ex) {
 				$var($Throwable, cause, this->this$0->checkForHandshake(ex));
 				errorCommon(cause);
 				this->this$0->handleError(cause);
@@ -467,8 +453,7 @@ void SSLFlowDelegate$Reader::processData() {
 		} else {
 			requestMoreDataIfNeeded();
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, ex, $catch());
+	} catch ($Throwable& ex) {
 		$assign(ex, this->this$0->checkForHandshake(ex));
 		errorCommon(ex);
 		this->this$0->handleError(ex);
@@ -481,12 +466,12 @@ $SSLFlowDelegate$EngineResult* SSLFlowDelegate$Reader::unwrapBuffer($ByteBuffer*
 	int32_t len = $nc(src)->remaining();
 	while (true) {
 		$var($SSLEngineResult, sslResult, $nc(this->this$0->engine)->unwrap(src, dst));
-			$init($SSLFlowDelegate$1);
+		$init($SSLFlowDelegate$1);
 		{
 			int32_t appSize = 0;
 			$var($ByteBuffer, b, nullptr)
 			int32_t size = 0;
-			switch ($nc($SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$Status)->get($nc(($assignField(this, lastUnwrapStatus, $nc(sslResult)->getStatus())))->ordinal())) {
+			switch ($nc($SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$Status)->get($nc(($set(this, lastUnwrapStatus, $nc(sslResult)->getStatus())))->ordinal())) {
 			case 1:
 				{
 					appSize = (this->this$0->applicationBufferSize = $nc($($nc(this->this$0->engine)->getSession()))->getApplicationBufferSize());

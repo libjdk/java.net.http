@@ -1,28 +1,16 @@
 #include <jdk/internal/net/http/LineSubscriberAdapter$LineSubscription.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/nio/CharBuffer.h>
 #include <java/nio/charset/Charset.h>
@@ -428,7 +416,7 @@ $String* LineSubscriberAdapter$LineSubscription::nextLine() {
 			$nc(this->leftover)->position(0);
 			$nc(this->leftover)->limit($nc(this->leftover)->capacity());
 			$nc(this->decoder)->reset();
-			return $assignField(this, nextLine$, nextLine(this->builder, this->newline, endOfInput));
+			return $set(this, nextLine$, nextLine(this->builder, this->newline, endOfInput));
 		}
 		return nullptr;
 	}
@@ -492,14 +480,13 @@ void LineSubscriberAdapter$LineSubscription::loop() {
 				return;
 			}
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		{
 			$var($Throwable, var$5, nullptr);
 			try {
 				$nc(this->upstreamSubscription)->cancel();
-			} catch ($Throwable&) {
-				$assign(var$5, $catch());
+			} catch ($Throwable& var$6) {
+				$assign(var$5, var$6);
 			} /*finally*/ {
 				signalError(t);
 			}

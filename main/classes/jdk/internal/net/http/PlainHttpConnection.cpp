@@ -2,27 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/ConnectException.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/SocketAddress.h>
@@ -350,8 +336,7 @@ $CompletableFuture* PlainHttpConnection::connectAsync($Exchange* exchange) {
 		$var($PrivilegedExceptionAction, pa, static_cast<$PrivilegedExceptionAction*>($new(PlainHttpConnection$$Lambda$lambda$connectAsync$0, this)));
 		try {
 			finished = $nc(($cast($Boolean, $($AccessController::doPrivileged(pa)))))->booleanValue();
-		} catch ($PrivilegedActionException&) {
-			$var($PrivilegedActionException, e, $catch());
+		} catch ($PrivilegedActionException& e) {
 			$throw($(e->getCause()));
 		}
 		if (finished) {
@@ -367,13 +352,11 @@ $CompletableFuture* PlainHttpConnection::connectAsync($Exchange* exchange) {
 			$nc($(client()))->registerEvent($$new($PlainHttpConnection$ConnectEvent, this, cf, exchange));
 		}
 		$assign(cf, $nc(exchange)->checkCancelled(cf, this));
-	} catch ($Throwable&) {
-		$var($Throwable, throwable, $catch());
+	} catch ($Throwable& throwable) {
 		cf->completeExceptionally($($Utils::toConnectException(throwable)));
 		try {
 			close();
-		} catch ($Exception&) {
-			$var($Exception, x, $catch());
+		} catch ($Exception& x) {
 			if ($nc(this->debug)->on()) {
 				$nc(this->debug)->log("Failed to close channel after unsuccessful connect"_s);
 			}
@@ -476,8 +459,7 @@ void PlainHttpConnection::init$($InetSocketAddress* addr, $HttpClientImpl* clien
 		$var($HttpClientImpl, var$0, this->client());
 		$var($SocketChannel, var$1, this->chan);
 		$set(this, tube, $new($SocketTube, var$0, var$1, static_cast<$Supplier*>($$new(PlainHttpConnection$$Lambda$getBuffer$2))));
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$throwNew($InternalError, static_cast<$Throwable*>(e));
 	}
 }
@@ -487,8 +469,7 @@ int32_t PlainHttpConnection::getSoReceiveBufferSize() {
 	try {
 		$init($StandardSocketOptions);
 		return $nc(($cast($Integer, $($nc(this->chan)->getOption($StandardSocketOptions::SO_RCVBUF)))))->intValue();
-	} catch ($IOException&) {
-		$var($IOException, x, $catch());
+	} catch ($IOException& x) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Failed to get initial receive buffer size on %s"_s, $$new($ObjectArray, {$of(this->chan)}));
 		}
@@ -501,8 +482,7 @@ int32_t PlainHttpConnection::getSoSendBufferSize() {
 	try {
 		$init($StandardSocketOptions);
 		return $nc(($cast($Integer, $($nc(this->chan)->getOption($StandardSocketOptions::SO_SNDBUF)))))->intValue();
-	} catch ($IOException&) {
-		$var($IOException, x, $catch());
+	} catch ($IOException& x) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Failed to get initial receive buffer size on %s"_s, $$new($ObjectArray, {$of(this->chan)}));
 		}
@@ -518,8 +498,7 @@ bool PlainHttpConnection::trySetReceiveBufferSize(int32_t bufsize) {
 			$nc(this->chan)->setOption($StandardSocketOptions::SO_RCVBUF, $($Integer::valueOf(bufsize)));
 			return true;
 		}
-	} catch ($IOException&) {
-		$var($IOException, x, $catch());
+	} catch ($IOException& x) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Failed to set receive buffer size to %d on %s"_s, $$new($ObjectArray, {
 				$($of($Integer::valueOf(bufsize))),
@@ -538,8 +517,7 @@ bool PlainHttpConnection::trySetSendBufferSize(int32_t bufsize) {
 			$nc(this->chan)->setOption($StandardSocketOptions::SO_SNDBUF, $($Integer::valueOf(bufsize)));
 			return true;
 		}
-	} catch ($IOException&) {
-		$var($IOException, x, $catch());
+	} catch ($IOException& x) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Failed to set send buffer size to %d on %s"_s, $$new($ObjectArray, {
 				$($of($Integer::valueOf(bufsize))),
@@ -576,8 +554,7 @@ void PlainHttpConnection::close() {
 		}
 		$nc(this->chan)->close();
 		$nc(this->tube)->signalClosed();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$Log::logTrace($$str({"Closing resulted in "_s, e}), $$new($ObjectArray, 0));
 	}
 }

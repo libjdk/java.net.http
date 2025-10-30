@@ -1,17 +1,8 @@
 #include <jdk/internal/net/http/FilterFactory.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/ReflectiveOperationException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/Iterator.h>
 #include <java/util/LinkedList.h>
 #include <jdk/internal/net/http/HeaderFilter.h>
@@ -79,8 +70,7 @@ $LinkedList* FilterFactory::getFilterChain() {
 				try {
 					$var($HeaderFilter, headerFilter, $cast($HeaderFilter, $nc($($nc(clazz)->getConstructor($$new($ClassArray, 0))))->newInstance($$new($ObjectArray, 0))));
 					l->add(headerFilter);
-				} catch ($ReflectiveOperationException&) {
-					$var($ReflectiveOperationException, e, $catch());
+				} catch ($ReflectiveOperationException& e) {
 					$throwNew($InternalError, static_cast<$Throwable*>(e));
 				}
 			}

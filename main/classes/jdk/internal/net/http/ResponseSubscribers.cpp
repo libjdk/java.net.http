@@ -6,25 +6,13 @@
 #include <java/io/InputStreamReader.h>
 #include <java/io/Reader.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/nio/charset/Charset.h>
 #include <java/nio/charset/StandardCharsets.h>
@@ -408,8 +396,7 @@ $CompletableFuture* ResponseSubscribers::getBodyAsync($Executor* e$renamed, $Htt
 		}
 		$nc(e)->execute(static_cast<$Runnable*>($$new(ResponseSubscribers$$Lambda$lambda$getBodyAsync$3$2, bs, cf, errorHandler)));
 		return cf;
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$nc(errorHandler)->accept(t);
 	}
 	return cf;
@@ -420,8 +407,7 @@ void ResponseSubscribers::lambda$getBodyAsync$3($HttpResponse$BodySubscriber* bs
 	$useLocalCurrentObjectStackCache();
 	try {
 		$nc($($nc(bs)->getBody()))->whenComplete(static_cast<$BiConsumer*>($$new(ResponseSubscribers$$Lambda$lambda$getBodyAsync$2$3, cf)));
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$nc(errorHandler)->accept(t);
 	}
 }

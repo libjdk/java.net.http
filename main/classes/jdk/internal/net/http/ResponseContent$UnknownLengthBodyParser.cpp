@@ -1,24 +1,13 @@
 #include <jdk/internal/net/http/ResponseContent$UnknownLengthBodyParser.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/List.h>
@@ -177,7 +166,7 @@ void ResponseContent$UnknownLengthBodyParser::onSubscribe($AbstractSubscription*
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"onSubscribe: "_s, $($nc($of(this->this$0->pusher))->getClass()->getName())}));
 	}
-	$nc(this->this$0->pusher)->onSubscribe(($assignField(this, sub, sub)));
+	$nc(this->this$0->pusher)->onSubscribe(($set(this, sub, sub)));
 }
 
 $String* ResponseContent$UnknownLengthBodyParser::currentStateMessage() {
@@ -206,8 +195,7 @@ void ResponseContent$UnknownLengthBodyParser::accept($ByteBuffer* b) {
 			this->breceived += b->remaining();
 			$nc(this->this$0->pusher)->onNext($($List::of($($of(b->asReadOnlyBuffer())))));
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Unexpected exception"_s, t);
 		}

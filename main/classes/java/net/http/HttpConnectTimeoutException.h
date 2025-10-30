@@ -16,8 +16,10 @@ public:
 	void init$($String* message);
 	static const int64_t serialVersionUID = 332; // (int64_t)321 + (int64_t)11
 	HttpConnectTimeoutException(const HttpConnectTimeoutException& e);
-	HttpConnectTimeoutException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline HttpConnectTimeoutException* operator ->() {
+		return (HttpConnectTimeoutException*)throwing$;
+	}
 };
 
 		} // http

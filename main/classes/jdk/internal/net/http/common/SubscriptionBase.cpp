@@ -1,16 +1,6 @@
 #include <jdk/internal/net/http/common/SubscriptionBase.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/concurrent/atomic/AtomicBoolean.h>
 #include <java/util/function/Consumer.h>
 #include <jdk/internal/net/http/common/Demand.h>
@@ -93,8 +83,7 @@ void SubscriptionBase::request(int64_t n) {
 		if ($nc(this->demand)->increase(n)) {
 			$nc(this->scheduler)->runOrSchedule();
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if (this->onError != nullptr) {
 			if ($nc(this->cancelled)->getAndSet(true)) {
 				return;

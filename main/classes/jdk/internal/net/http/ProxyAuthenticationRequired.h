@@ -29,8 +29,10 @@ public:
 	static const int64_t serialVersionUID = 0;
 	::jdk::internal::net::http::Response* proxyResponse = nullptr;
 	ProxyAuthenticationRequired(const ProxyAuthenticationRequired& e);
-	ProxyAuthenticationRequired wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline ProxyAuthenticationRequired* operator ->() {
+		return (ProxyAuthenticationRequired*)throwing$;
+	}
 };
 
 			} // http

@@ -1,23 +1,12 @@
 #include <jdk/internal/net/http/common/MinimalFuture.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/UnsupportedOperationException.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/Objects.h>
 #include <java/util/concurrent/CompletableFuture.h>
 #include <java/util/concurrent/CompletionStage.h>
@@ -168,8 +157,7 @@ $CompletableFuture* MinimalFuture::supply($MinimalFuture$ExceptionalSupplier* su
 	try {
 		$var($Object, value, $nc(supplier)->get());
 		cf->complete(value);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		cf->completeExceptionally(t);
 	}
 	return cf;

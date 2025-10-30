@@ -1,19 +1,7 @@
 #include <jdk/internal/net/http/websocket/TransportImpl$SendTask.h>
 
 #include <java/io/IOException.h>
-#include <java/lang/Array.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/concurrent/CompletableFuture.h>
 #include <java/util/concurrent/atomic/AtomicReference.h>
@@ -161,8 +149,7 @@ void TransportImpl$SendTask::run() {
 				$nc(this->this$0->encoder)->reset();
 				removeAndComplete(nullptr);
 			}
-		} catch ($Throwable&) {
-			$var($Throwable, t, $catch());
+		} catch ($Throwable& t) {
 			if ($nc($TransportImpl::debug)->on()) {
 				$nc($TransportImpl::debug)->log("send task exception %s"_s, $$new($ObjectArray, {$of(t)}));
 			}
@@ -190,7 +177,7 @@ bool TransportImpl$SendTask::tryCompleteWrite() {
 		if ($nc($TransportImpl::debug)->on()) {
 			$nc($TransportImpl::debug)->log("write state: %s"_s, $$new($ObjectArray, {$of(ws)}));
 		}
-			$init($TransportImpl$1);
+		$init($TransportImpl$1);
 		{
 			bool written = false;
 			switch ($nc($TransportImpl$1::$SwitchMap$jdk$internal$net$http$websocket$TransportImpl$ChannelState)->get((ws)->ordinal())) {
@@ -266,8 +253,8 @@ void TransportImpl$SendTask::removeAndComplete($Throwable* error) {
 			$var($Throwable, var$0, nullptr);
 			try {
 				$nc(this->action)->accept(nullptr, error);
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				$nc(this->future)->completeExceptionally(error);
 			}
@@ -277,16 +264,16 @@ void TransportImpl$SendTask::removeAndComplete($Throwable* error) {
 		}
 	} else {
 		{
-			$var($Throwable, var$1, nullptr);
+			$var($Throwable, var$2, nullptr);
 			try {
 				$nc(this->action)->accept(this->attachment, nullptr);
-			} catch ($Throwable&) {
-				$assign(var$1, $catch());
+			} catch ($Throwable& var$3) {
+				$assign(var$2, var$3);
 			} /*finally*/ {
 				$nc(this->future)->complete(this->attachment);
 			}
-			if (var$1 != nullptr) {
-				$throw(var$1);
+			if (var$2 != nullptr) {
+				$throw(var$2);
 			}
 		}
 	}

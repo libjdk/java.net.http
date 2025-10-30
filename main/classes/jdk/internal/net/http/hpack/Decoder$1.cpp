@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/hpack/Decoder$1.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/NoSuchFieldError.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/hpack/Decoder$State.h>
 #include <jdk/internal/net/http/hpack/Decoder.h>
 #include <jcpp.h>
@@ -80,33 +71,27 @@ void clinit$Decoder$1($Class* class$) {
 	{
 		try {
 			$nc(Decoder$1::$SwitchMap$jdk$internal$net$http$hpack$Decoder$State)->set($Decoder$State::READY->ordinal(), 1);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Decoder$1::$SwitchMap$jdk$internal$net$http$hpack$Decoder$State)->set($Decoder$State::INDEXED->ordinal(), 2);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Decoder$1::$SwitchMap$jdk$internal$net$http$hpack$Decoder$State)->set($Decoder$State::LITERAL->ordinal(), 3);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Decoder$1::$SwitchMap$jdk$internal$net$http$hpack$Decoder$State)->set($Decoder$State::LITERAL_WITH_INDEXING->ordinal(), 4);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Decoder$1::$SwitchMap$jdk$internal$net$http$hpack$Decoder$State)->set($Decoder$State::LITERAL_NEVER_INDEXED->ordinal(), 5);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Decoder$1::$SwitchMap$jdk$internal$net$http$hpack$Decoder$State)->set($Decoder$State::SIZE_UPDATE->ordinal(), 6);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 	}
 }

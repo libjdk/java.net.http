@@ -3,29 +3,11 @@
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
 #include <java/io/UncheckedIOException.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/Error.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InterruptedException.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/RuntimeException.h>
 #include <java/lang/SecurityException.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
-#include <java/lang/Thread.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
@@ -33,8 +15,6 @@
 #include <java/lang/invoke/MethodType.h>
 #include <java/lang/ref/Reference.h>
 #include <java/lang/ref/WeakReference.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/Authenticator.h>
 #include <java/net/ConnectException.h>
 #include <java/net/CookieHandler.h>
@@ -681,8 +661,7 @@ void HttpClientImpl::init$($HttpClientBuilderImpl* builder, $HttpClientImpl$Sing
 	if ($nc(builder)->sslContext$ == nullptr) {
 		try {
 			$set(this, sslContext$, $SSLContext::getDefault());
-		} catch ($NoSuchAlgorithmException&) {
-			$var($NoSuchAlgorithmException, ex, $catch());
+		} catch ($NoSuchAlgorithmException& ex) {
 			$throwNew($UncheckedIOException, $$new($IOException, static_cast<$Throwable*>(ex)));
 		}
 	} else {
@@ -727,8 +706,7 @@ void HttpClientImpl::init$($HttpClientBuilderImpl* builder, $HttpClientImpl$Sing
 	$set(this, timeouts, $new($TreeSet));
 	try {
 		$set(this, selmgr, $new($HttpClientImpl$SelectorManager, this));
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$throwNew($UncheckedIOException, e);
 	}
 	$nc(this->selmgr)->setDaemon(true);
@@ -903,14 +881,12 @@ $HttpResponse* HttpClientImpl::send($HttpRequest* req, $HttpResponse$BodyHandler
 	try {
 		$assign(cf, sendAsync(req, responseHandler, nullptr, nullptr));
 		return $cast($HttpResponse, $nc(cf)->get());
-	} catch ($InterruptedException&) {
-		$var($InterruptedException, ie, $catch());
+	} catch ($InterruptedException& ie) {
 		if (cf != nullptr) {
 			cf->cancel(true);
 		}
 		$throw(ie);
-	} catch ($ExecutionException&) {
-		$var($ExecutionException, e, $catch());
+	} catch ($ExecutionException& e) {
 		$var($Throwable, throwable, e->getCause());
 		$var($String, msg, $nc(throwable)->getMessage());
 		if ($instanceOf($IllegalArgumentException, throwable)) {
@@ -978,8 +954,7 @@ $CompletableFuture* HttpClientImpl::sendAsync($HttpRequest* userRequest, $HttpRe
 			$assign(res, $cast($CompletableFuture, $nc(res)->whenCompleteAsync(static_cast<$BiConsumer*>($$new(HttpClientImpl$$Lambda$lambda$sendAsync$2$6)), HttpClientImpl::ASYNC_POOL)));
 		}
 		return res;
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		unreference();
 		debugCompleted("ClientImpl (async)"_s, start, userRequest);
 		$throw(t);
@@ -999,8 +974,7 @@ $String* HttpClientImpl::debugInterestOps($SelectableChannel* channel) {
 			$of(keyInterestOps),
 			$($of($Integer::valueOf($nc(($cast($HttpClientImpl$SelectorAttachment, $(key->attachment()))))->interestOps)))
 		}));
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		return $String::valueOf($of(t));
 	}
 	$shouldNotReachHere();
@@ -1143,8 +1117,7 @@ int64_t HttpClientImpl::purgeTimeoutsAndReturnNextDeadline() {
 					try {
 						$Log::logTrace("Firing timer {0}"_s, $$new($ObjectArray, {$of(event)}));
 						$nc(event)->handle();
-					} catch ($Error&) {
-						$var($Throwable, e, $catch());
+					} catch ($Error& e) {
 						if (failed == nullptr) {
 							$assign(failed, e);
 						} else {
@@ -1154,8 +1127,7 @@ int64_t HttpClientImpl::purgeTimeoutsAndReturnNextDeadline() {
 							$of(event),
 							$of(e)
 						}));
-					} catch ($RuntimeException&) {
-						$var($Throwable, e, $catch());
+					} catch ($RuntimeException& e) {
 						if (failed == nullptr) {
 							$assign(failed, e);
 						} else {

@@ -2,28 +2,14 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/nio/CharBuffer.h>
 #include <java/util/concurrent/CompletableFuture.h>
@@ -299,8 +285,7 @@ $CompletableFuture* TransportImpl::sendText($CharSequence* message, bool isLast,
 	try {
 		$nc(this->queue)->addText(text, isLast, attachment, action, f);
 		$nc(this->sendScheduler)->runOrSchedule();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(action)->accept(nullptr, e);
 		f->completeExceptionally(e);
 	}
@@ -328,8 +313,7 @@ $CompletableFuture* TransportImpl::sendBinary($ByteBuffer* message, bool isLast,
 	try {
 		$nc(this->queue)->addBinary(message, isLast, attachment, action, f);
 		$nc(this->sendScheduler)->runOrSchedule();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(action)->accept(nullptr, e);
 		f->completeExceptionally(e);
 	}
@@ -356,8 +340,7 @@ $CompletableFuture* TransportImpl::sendPing($ByteBuffer* message, Object$* attac
 	try {
 		$nc(this->queue)->addPing(message, attachment, action, f);
 		$nc(this->sendScheduler)->runOrSchedule();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(action)->accept(nullptr, e);
 		f->completeExceptionally(e);
 	}
@@ -384,8 +367,7 @@ $CompletableFuture* TransportImpl::sendPong($ByteBuffer* message, Object$* attac
 	try {
 		$nc(this->queue)->addPong(message, attachment, action, static_cast<$CompletableFuture*>(f));
 		$nc(this->sendScheduler)->runOrSchedule();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(action)->accept(nullptr, e);
 		f->completeExceptionally(e);
 	}
@@ -412,8 +394,7 @@ $CompletableFuture* TransportImpl::sendPong($Supplier* message, Object$* attachm
 	try {
 		$nc(this->queue)->addPong(message, attachment, action, static_cast<$CompletableFuture*>(f));
 		$nc(this->sendScheduler)->runOrSchedule();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(action)->accept(nullptr, e);
 		f->completeExceptionally(e);
 	}
@@ -441,8 +422,7 @@ $CompletableFuture* TransportImpl::sendClose(int32_t statusCode, $String* reason
 	try {
 		$nc(this->queue)->addClose(statusCode, $($CharBuffer::wrap(static_cast<$CharSequence*>(reason))), attachment, action, f);
 		$nc(this->sendScheduler)->runOrSchedule();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$nc(action)->accept(nullptr, e);
 		f->completeExceptionally(e);
 	}
@@ -483,8 +463,8 @@ void TransportImpl::closeOutput() {
 				$var($Throwable, var$0, nullptr);
 				try {
 					$nc(this->channel)->shutdownOutput();
-				} catch ($Throwable&) {
-					$assign(var$0, $catch());
+				} catch ($Throwable& var$1) {
+					$assign(var$0, var$1);
 				} /*finally*/ {
 					$init($TransportImpl$ChannelState);
 					$nc(this->writeState)->set($TransportImpl$ChannelState::CLOSED);
@@ -518,8 +498,8 @@ void TransportImpl::closeInput() {
 				try {
 					$nc(this->receiveScheduler)->stop();
 					$nc(this->channel)->shutdownInput();
-				} catch ($Throwable&) {
-					$assign(var$0, $catch());
+				} catch ($Throwable& var$1) {
+					$assign(var$0, var$1);
 				} /*finally*/ {
 					if (this->outputClosed) {
 						$TransportImpl$ChannelState* s = $cast($TransportImpl$ChannelState, $nc(this->writeState)->get());

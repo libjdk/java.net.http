@@ -2,32 +2,15 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
 #include <java/lang/SecurityException.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/ProxySelector.h>
 #include <java/net/URI.h>
@@ -1150,13 +1133,13 @@ void Exchange::checkCancelled() {
 		impl->cancel(cause);
 		$set(this, failed, nullptr);
 	} else {
-			int64_t var$0 = 0;
-			if ($nc($($nc(this->request$)->timeout()))->isPresent()) {
-				int64_t var$1 = $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getSeconds() * 1000;
-				var$0 = (var$1 + $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getNano() / 0x000F4240);
-			} else {
-				var$0 = -1;
-			}
+		int64_t var$0 = 0;
+		if ($nc($($nc(this->request$)->timeout()))->isPresent()) {
+			int64_t var$1 = $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getSeconds() * 1000;
+			var$0 = (var$1 + $nc(($cast($Duration, $($nc($($nc(this->request$)->timeout()))->get()))))->getNano() / 0x000F4240);
+		} else {
+			var$0 = -1;
+		}
 		$Log::logTrace("Exchange: request [{0}/timeout={1}ms] no impl is set.\n\tCan\'\'t cancel yet with {2}"_s, $$new($ObjectArray, {
 			$($of($nc(this->request$)->uri())),
 			$($of($Long::valueOf(var$0))),
@@ -1198,7 +1181,7 @@ $CompletableFuture* Exchange::establishExchange($HttpConnection* connection) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("exchange was cancelled: returned failed cf (%s)"_s, $$new($ObjectArray, {$($of($String::valueOf($of(t))))}));
 		}
-		return $assignField(this, exchangeCF, $MinimalFuture::failedFuture(t));
+		return $set(this, exchangeCF, $MinimalFuture::failedFuture(t));
 	}
 	$var($CompletableFuture, cf, nullptr);
 	$var($CompletableFuture, res, nullptr);
@@ -1329,8 +1312,7 @@ $URI* Exchange::getURIForSecurityCheck() {
 			$var($String, var$0, "socket"_s);
 			$var($String, var$1, $nc(authority)->getHostString());
 			$assign(u, $new($URI, var$0, nullptr, var$1, authority->getPort(), nullptr, nullptr, nullptr));
-		} catch ($URISyntaxException&) {
-			$var($URISyntaxException, e, $catch());
+		} catch ($URISyntaxException& e) {
 			$throwNew($InternalError, static_cast<$Throwable*>(e));
 		}
 	} else {
@@ -1364,8 +1346,7 @@ $SecurityException* Exchange::checkPermissions() {
 			$throwNew($AssertionError);
 		}
 		$nc(sm)->checkPermission(p, this->acc);
-	} catch ($SecurityException&) {
-		$var($SecurityException, e, $catch());
+	} catch ($SecurityException& e) {
 		return e;
 	}
 	$var($String, hostHeader, $cast($String, $nc($($nc(userHeaders)->firstValue("Host"_s)))->orElse(nullptr)));
@@ -1377,8 +1358,7 @@ $SecurityException* Exchange::checkPermissions() {
 				$throwNew($AssertionError);
 			}
 			$nc(sm)->checkPermission(p1, this->acc);
-		} catch ($SecurityException&) {
-			$var($SecurityException, e, $catch());
+		} catch ($SecurityException& e) {
 			return e;
 		}
 	}
@@ -1389,8 +1369,7 @@ $SecurityException* Exchange::checkPermissions() {
 			if (proxyPerm != nullptr) {
 				try {
 					$nc(sm)->checkPermission(proxyPerm, this->acc);
-				} catch ($SecurityException&) {
-					$var($SecurityException, e, $catch());
+				} catch ($SecurityException& e) {
 					return e;
 				}
 			}
@@ -1558,8 +1537,7 @@ $CompletableFuture* Exchange::lambda$checkCancelled$1($HttpConnection* connectio
 				}
 				try {
 					$nc(connection)->close();
-				} catch ($Throwable&) {
-					$var($Throwable, x, $catch());
+				} catch ($Throwable& x) {
 					if ($nc(this->debug)->on()) {
 						$nc(this->debug)->log("Failed to close connection"_s, x);
 					}

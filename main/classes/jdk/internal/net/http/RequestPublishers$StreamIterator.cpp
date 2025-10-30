@@ -4,21 +4,11 @@
 #include <java/io/InputStream.h>
 #include <java/io/Serializable.h>
 #include <java/io/UncheckedIOException.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/NoSuchElementException.h>
 #include <java/util/function/Supplier.h>
@@ -162,15 +152,13 @@ int32_t RequestPublishers$StreamIterator::read() {
 void RequestPublishers$StreamIterator::closeStream() {
 	try {
 		$nc(this->is)->close();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		$throwNew($UncheckedIOException, e);
 	}
 }
 
 bool RequestPublishers$StreamIterator::hasNext() {
 	$synchronized(this) {
-		$useLocalCurrentObjectStackCache();
 		if (this->need2Read) {
 			{
 				$var($Throwable, var$0, nullptr);
@@ -180,14 +168,13 @@ bool RequestPublishers$StreamIterator::hasNext() {
 						if (this->haveNext) {
 							this->need2Read = false;
 						}
-					} catch ($IOException&) {
-						$var($IOException, e, $catch());
+					} catch ($IOException& e) {
 						this->haveNext = false;
 						this->need2Read = false;
 						$throwNew($UncheckedIOException, e);
 					}
-				} catch ($Throwable&) {
-					$assign(var$0, $catch());
+				} catch ($Throwable& var$1) {
+					$assign(var$0, var$1);
 				} /*finally*/ {
 					if (!this->haveNext) {
 						closeStream();

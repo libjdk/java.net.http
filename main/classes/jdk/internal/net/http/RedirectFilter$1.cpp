@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/RedirectFilter$1.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/NoSuchFieldError.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpClient$Redirect.h>
 #include <java/net/http/HttpClient.h>
 #include <jdk/internal/net/http/RedirectFilter.h>
@@ -78,18 +69,15 @@ void clinit$RedirectFilter$1($Class* class$) {
 	{
 		try {
 			$nc(RedirectFilter$1::$SwitchMap$java$net$http$HttpClient$Redirect)->set($HttpClient$Redirect::ALWAYS->ordinal(), 1);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(RedirectFilter$1::$SwitchMap$java$net$http$HttpClient$Redirect)->set($HttpClient$Redirect::NEVER->ordinal(), 2);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(RedirectFilter$1::$SwitchMap$java$net$http$HttpClient$Redirect)->set($HttpClient$Redirect::NORMAL->ordinal(), 3);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 	}
 }

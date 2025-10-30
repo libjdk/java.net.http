@@ -1,16 +1,7 @@
 #include <jdk/internal/net/http/SocketTube$SocketFlowTask.h>
 
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/concurrent/locks/Lock.h>
 #include <java/util/concurrent/locks/ReentrantLock.h>
 #include <jdk/internal/net/http/SocketTube.h>
@@ -93,8 +84,8 @@ void SocketTube$SocketFlowTask::run($SequentialScheduler$DeferredCompleter* task
 				$var($Throwable, var$1, nullptr);
 				try {
 					$nc(this->task)->run();
-				} catch ($Throwable&) {
-					$assign(var$1, $catch());
+				} catch ($Throwable& var$2) {
+					$assign(var$1, var$2);
 				} /*finally*/ {
 					if (locked) {
 						$nc(this->lock)->unlock();
@@ -104,8 +95,8 @@ void SocketTube$SocketFlowTask::run($SequentialScheduler$DeferredCompleter* task
 					$throw(var$1);
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} /*finally*/ {
 			$nc(taskCompleter)->complete();
 		}

@@ -2,25 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/channels/SocketChannel.h>
 #include <java/util/List.h>
 #include <java/util/concurrent/Flow$Subscription.h>
@@ -312,7 +300,6 @@ void SocketTube$InternalWriteSubscriber::init$($SocketTube* this$0) {
 }
 
 void SocketTube$InternalWriteSubscriber::onSubscribe($Flow$Subscription* subscription) {
-	$useLocalCurrentObjectStackCache();
 	$var($SocketTube$InternalWriteSubscriber$WriteSubscription, previous, this->subscription);
 	if ($nc(this->this$0->debug)->on()) {
 		$nc(this->this$0->debug)->log("subscribed for writing"_s);
@@ -331,8 +318,7 @@ void SocketTube$InternalWriteSubscriber::onSubscribe($Flow$Subscription* subscri
 			}
 			$nc(this->this$0->client)->registerEvent(this->startSubscription$);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		signalError(t);
 	}
 }
@@ -393,8 +379,7 @@ void SocketTube$InternalWriteSubscriber::tryFlushCurrent(bool inSelectorThread) 
 		} else {
 			resumeWriteEvent(inSelectorThread);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		signalError(t);
 	}
 }
@@ -416,8 +401,7 @@ void SocketTube$InternalWriteSubscriber::startSubscription() {
 			$nc(this->this$0->debug)->log("write: offloading requestMore"_s);
 		}
 		$nc($($nc(this->this$0->client)->theExecutor()))->execute(static_cast<$Runnable*>($$new(SocketTube$InternalWriteSubscriber$$Lambda$requestMore$2, this)));
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		signalError(t);
 	}
 }

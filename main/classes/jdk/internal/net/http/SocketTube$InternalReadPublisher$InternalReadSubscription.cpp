@@ -2,27 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/channels/SocketChannel.h>
 #include <java/util/List.h>
 #include <java/util/concurrent/atomic/AtomicReference.h>
@@ -292,8 +278,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::signalSubscribe(
 				$nc($nc(this->this$1->this$0)->debug)->log("registering subscribe event"_s);
 			}
 			$nc($nc(this->this$1->this$0)->client)->registerEvent(this->subscribeEvent);
-		} catch ($Throwable&) {
-			$var($Throwable, t, $catch());
+		} catch ($Throwable& t) {
 			signalError(t);
 			handlePending();
 		}
@@ -498,8 +483,7 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::read() {
 								$nc(this->this$1->this$0)->debugState("leaving read() loop with no bytes"_s);
 								return;
 							}
-						} catch ($Throwable&) {
-							$var($Throwable, x, $catch());
+						} catch ($Throwable& x) {
 							signalError(x);
 							continue;
 						}
@@ -514,15 +498,14 @@ void SocketTube$InternalReadPublisher$InternalReadSubscription::read() {
 						break;
 					}
 				}
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				if ($nc($nc(this->this$1->this$0)->debug)->on()) {
 					$nc($nc(this->this$1->this$0)->debug)->log("Unexpected exception in read loop"_s, t);
 				}
 				signalError(t);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$2) {
+			$assign(var$0, var$2);
 		} $finally: {
 			if ($nc(this->readScheduler)->isStopped()) {
 				if ($nc($nc(this->this$1->this$0)->debug)->on()) {

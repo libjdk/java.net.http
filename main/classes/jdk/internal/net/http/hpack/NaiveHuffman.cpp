@@ -1,18 +1,8 @@
 #include <jdk/internal/net/http/hpack/NaiveHuffman.h>
 
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/hpack/NaiveHuffman$1.h>
 #include <jdk/internal/net/http/hpack/NaiveHuffman$Code.h>
 #include <jdk/internal/net/http/hpack/NaiveHuffman$Node.h>
@@ -90,7 +80,6 @@ $Object* allocate$NaiveHuffman($Class* clazz) {
 }
 
 bool NaiveHuffman::$assertionsDisabled = false;
-
 NaiveHuffman* NaiveHuffman::INSTANCE = nullptr;
 
 void NaiveHuffman::init$() {

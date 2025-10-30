@@ -1,17 +1,6 @@
 #include <jdk/internal/net/http/common/SubscriberWrapper$DownstreamPusher.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/List.h>
 #include <java/util/concurrent/CompletableFuture.h>
 #include <java/util/concurrent/ConcurrentLinkedQueue.h>
@@ -99,11 +88,9 @@ void SubscriberWrapper$DownstreamPusher::init$($SubscriberWrapper* this$0) {
 }
 
 void SubscriberWrapper$DownstreamPusher::run() {
-	$useLocalCurrentObjectStackCache();
 	try {
 		run1();
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->this$0->debug)->on()) {
 			$nc(this->this$0->debug)->log($$str({"DownstreamPusher threw: "_s, t}));
 		}

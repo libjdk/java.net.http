@@ -1,12 +1,5 @@
 #include <jdk/internal/net/http/ResponseSubscribers$TrustedSubscriber.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <jdk/internal/net/http/ResponseSubscribers.h>
 #include <jcpp.h>

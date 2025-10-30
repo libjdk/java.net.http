@@ -1,17 +1,6 @@
 #include <jdk/internal/net/http/Http1Exchange$Http1BodySubscriber.h>
 
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/List.h>
 #include <java/util/concurrent/Flow$Subscription.h>
@@ -95,7 +84,6 @@ $Object* allocate$Http1Exchange$Http1BodySubscriber($Class* clazz) {
 }
 
 bool Http1Exchange$Http1BodySubscriber::$assertionsDisabled = false;
-
 $List* Http1Exchange$Http1BodySubscriber::COMPLETED = nullptr;
 
 void Http1Exchange$Http1BodySubscriber::init$($Logger* debug) {
@@ -130,8 +118,7 @@ void Http1Exchange$Http1BodySubscriber::cancelSubscription() {
 	$useLocalCurrentObjectStackCache();
 	try {
 		$nc(this->subscription)->cancel();
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$var($String, msg, "Ignoring exception raised when canceling BodyPublisher subscription"_s);
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("%s: %s"_s, $$new($ObjectArray, {

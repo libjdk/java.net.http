@@ -4,40 +4,21 @@
 #include <java/io/Closeable.h>
 #include <java/io/IOException.h>
 #include <java/io/OutputStream.h>
-#include <java/io/PrintStream.h>
 #include <java/io/Serializable.h>
 #include <java/io/UncheckedIOException.h>
 #include <java/lang/AbstractStringBuilder.h>
 #include <java/lang/Appendable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Character.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/Error.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/SecurityException.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
 #include <java/lang/System$Logger$Level.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/ConnectException.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/SocketException.h>
@@ -1120,7 +1101,6 @@ bool Utils::hostnameVerificationDisabledValue() {
 $Set* Utils::getDisallowedHeaders() {
 	$init(Utils);
 	$useLocalCurrentObjectStackCache();
-	$init($String);
 	$var($Set, headers, static_cast<$Set*>(static_cast<$AbstractSet*>($new($TreeSet, $String::CASE_INSENSITIVE_ORDER))));
 	headers->addAll($($Set::of("connection"_s, "content-length"_s, "expect"_s, "host"_s, "upgrade"_s)));
 	$var($String, v, getNetProperty("jdk.httpclient.allowRestrictedHeaders"_s));
@@ -1639,8 +1619,7 @@ void Utils::close($CloseableArray* closeables) {
 			{
 				try {
 					$nc(c)->close();
-				} catch ($IOException&) {
-					$catch();
+				} catch ($IOException& ignored) {
 				}
 			}
 		}
@@ -1679,8 +1658,7 @@ $Charset* Utils::charsetFrom($HttpHeaders* headers) {
 			return $StandardCharsets::UTF_8;
 		}
 		return $Charset::forName(value);
-	} catch ($Throwable&) {
-		$var($Throwable, x, $catch());
+	} catch ($Throwable& x) {
 		$Log::logTrace("Can\'t find charset in \"{0}\" ({1})"_s, $$new($ObjectArray, {
 			$of(type),
 			$of(x)
@@ -1852,8 +1830,7 @@ $String* Utils::encode($String* s) {
 		$init($StandardCharsets);
 		$init($CodingErrorAction);
 		$assign(bb, $nc($($nc($($nc($($nc($StandardCharsets::UTF_8)->newEncoder()))->onMalformedInput($CodingErrorAction::REPORT)))->onUnmappableCharacter($CodingErrorAction::REPORT)))->encode($($CharBuffer::wrap(static_cast<$CharSequence*>(ns)))));
-	} catch ($CharacterCodingException&) {
-		$var($CharacterCodingException, x, $catch());
+	} catch ($CharacterCodingException& x) {
 		if (!Utils::$assertionsDisabled) {
 			$throwNew($AssertionError, $of(x));
 		}

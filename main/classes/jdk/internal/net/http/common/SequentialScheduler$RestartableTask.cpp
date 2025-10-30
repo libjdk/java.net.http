@@ -1,13 +1,5 @@
 #include <jdk/internal/net/http/common/SequentialScheduler$RestartableTask.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/CompoundAttribute.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/common/SequentialScheduler$DeferredCompleter.h>
 #include <jdk/internal/net/http/common/SequentialScheduler.h>
 #include <jcpp.h>
@@ -24,11 +16,11 @@ namespace jdk {
 		namespace net {
 			namespace http {
 				namespace common {
+
 $CompoundAttribute _SequentialScheduler$RestartableTask_Annotations_[] = {
 	{"Ljava/lang/FunctionalInterface;", nullptr},
 	{}
 };
-
 
 $MethodInfo _SequentialScheduler$RestartableTask_MethodInfo_[] = {
 	{"run", "(Ljdk/internal/net/http/common/SequentialScheduler$DeferredCompleter;)V", nullptr, $PUBLIC | $ABSTRACT},

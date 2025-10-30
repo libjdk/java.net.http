@@ -2,27 +2,13 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/channels/CancelledKeyException.h>
 #include <java/nio/channels/ClosedChannelException.h>
 #include <java/nio/channels/SelectableChannel.h>
@@ -235,8 +221,7 @@ void HttpClientImpl$SelectorAttachment::register$($AsyncEvent* e) {
 	if (reRegister) {
 		try {
 			$nc(this->chan)->register$(this->selector, this->interestOps, this);
-		} catch ($Throwable&) {
-			$var($Throwable, x, $catch());
+		} catch ($Throwable& x) {
 			abortPending(x);
 		}
 	} else if (!$nc(this->chan)->isOpen()) {
@@ -283,8 +268,7 @@ void HttpClientImpl$SelectorAttachment::resetInterestOps(int32_t interestOps) {
 			if (!HttpClientImpl$SelectorAttachment::$assertionsDisabled && !(key->interestOps() == newOps)) {
 				$throwNew($AssertionError);
 			}
-		} catch ($CancelledKeyException&) {
-			$var($CancelledKeyException, x, $catch());
+		} catch ($CancelledKeyException& x) {
 			if ($nc(HttpClientImpl$SelectorAttachment::debug)->on()) {
 				$nc(HttpClientImpl$SelectorAttachment::debug)->log($$str({"key cancelled for "_s, this->chan}));
 			}

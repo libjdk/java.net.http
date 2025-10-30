@@ -3,25 +3,15 @@
 #include <java/io/IOException.h>
 #include <java/io/InputStream.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InterruptedException.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/Iterator.h>
 #include <java/util/List.h>
@@ -277,8 +267,7 @@ $ByteBuffer* ResponseSubscribers$HttpResponseInputStream::current() {
 				$nc(ResponseSubscribers$HttpResponseInputStream::debug)->log("Next Buffer"_s);
 			}
 			$set(this, currentBuffer, $cast($ByteBuffer, $nc(this->currentListItr)->next()));
-		} catch ($InterruptedException&) {
-			$catch();
+		} catch ($InterruptedException& ex) {
 		}
 	}
 	if (!ResponseSubscribers$HttpResponseInputStream::$assertionsDisabled && !(this->currentBuffer == ResponseSubscribers$HttpResponseInputStream::LAST_BUFFER || $nc(this->currentBuffer)->hasRemaining())) {
@@ -364,19 +353,17 @@ void ResponseSubscribers$HttpResponseInputStream::onSubscribe($Flow$Subscription
 			}
 			s->request($Math::max(1, $nc(this->buffers)->remainingCapacity() - 1));
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$set(this, failed, t);
 		{
 			$var($Throwable, var$0, nullptr);
 			try {
 				try {
 					close();
-				} catch ($IOException&) {
-					$catch();
+				} catch ($IOException& x) {
 				}
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				onError(t);
 			}
@@ -388,7 +375,6 @@ void ResponseSubscribers$HttpResponseInputStream::onSubscribe($Flow$Subscription
 }
 
 void ResponseSubscribers$HttpResponseInputStream::onNext($List* t) {
-	$useLocalCurrentObjectStackCache();
 	$Objects::requireNonNull(t);
 	try {
 		if ($nc(ResponseSubscribers$HttpResponseInputStream::debug)->on()) {
@@ -400,19 +386,17 @@ void ResponseSubscribers$HttpResponseInputStream::onNext($List* t) {
 		if ($nc(ResponseSubscribers$HttpResponseInputStream::debug)->on()) {
 			$nc(ResponseSubscribers$HttpResponseInputStream::debug)->log("item offered"_s);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, ex, $catch());
+	} catch ($Throwable& ex) {
 		$set(this, failed, ex);
 		{
 			$var($Throwable, var$0, nullptr);
 			try {
 				try {
 					close();
-				} catch ($IOException&) {
-					$catch();
+				} catch ($IOException& ex1) {
 				}
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				onError(ex);
 			}
@@ -451,8 +435,8 @@ void ResponseSubscribers$HttpResponseInputStream::close() {
 			if (s != nullptr) {
 				s->cancel();
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->buffers)->offer(ResponseSubscribers$HttpResponseInputStream::LAST_LIST);
 			$InputStream::close();

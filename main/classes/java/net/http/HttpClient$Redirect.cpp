@@ -1,15 +1,6 @@
 #include <java/net/http/HttpClient$Redirect.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/Enum.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpClient.h>
 #include <jcpp.h>
 
@@ -70,11 +61,8 @@ $Object* allocate$HttpClient$Redirect($Class* clazz) {
 	return $of($alloc(HttpClient$Redirect));
 }
 
-
 HttpClient$Redirect* HttpClient$Redirect::NEVER = nullptr;
-
 HttpClient$Redirect* HttpClient$Redirect::ALWAYS = nullptr;
-
 HttpClient$Redirect* HttpClient$Redirect::NORMAL = nullptr;
 $HttpClient$RedirectArray* HttpClient$Redirect::$VALUES = nullptr;
 

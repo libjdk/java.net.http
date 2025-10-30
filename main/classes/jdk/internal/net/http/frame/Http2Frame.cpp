@@ -1,14 +1,5 @@
 #include <jdk/internal/net/http/frame/Http2Frame.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/frame/ContinuationFrame.h>
 #include <jdk/internal/net/http/frame/DataFrame.h>
 #include <jdk/internal/net/http/frame/GoAwayFrame.h>

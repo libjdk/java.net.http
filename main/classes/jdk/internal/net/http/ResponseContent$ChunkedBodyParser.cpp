@@ -2,26 +2,14 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/AbstractList.h>
@@ -266,8 +254,7 @@ void ResponseContent$ChunkedBodyParser::debugBuffer($ByteBuffer* b) {
 	try {
 		$var($String, str, $new($String, bytes, "UTF-8"_s));
 		$plusAssign(msg, str);
-	} catch ($Exception&) {
-		$var($Exception, x, $catch());
+	} catch ($Exception& x) {
 		$plusAssign(msg, x);
 		x->printStackTrace();
 	}
@@ -280,7 +267,7 @@ void ResponseContent$ChunkedBodyParser::onSubscribe($AbstractSubscription* sub) 
 	if ($nc(this->debug)->on()) {
 		$nc(this->debug)->log($$str({"onSubscribe: "_s, $($nc($of(this->this$0->pusher))->getClass()->getName())}));
 	}
-	$nc(this->this$0->pusher)->onSubscribe(($assignField(this, sub, sub)));
+	$nc(this->this$0->pusher)->onSubscribe(($set(this, sub, sub)));
 }
 
 $String* ResponseContent$ChunkedBodyParser::currentStateMessage() {
@@ -344,8 +331,7 @@ void ResponseContent$ChunkedBodyParser::accept($ByteBuffer* b) {
 		if (!ResponseContent$ChunkedBodyParser::$assertionsDisabled && !(this->state == $ResponseContent$ChunkState::DONE || !b->hasRemaining())) {
 			$throwNew($AssertionError);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("Error while processing buffer: %s"_s, $$new($ObjectArray, {$of(t)}));
 		}
@@ -455,7 +441,7 @@ $ByteBuffer* ResponseContent$ChunkedBodyParser::tryReadOneHunk($ByteBuffer* chun
 		if (clen == 0) {
 			toconsume = (this->bytesToConsume = 2);
 		} else {
-			st = ($assignField(this, state, $ResponseContent$ChunkState::READING_DATA));
+			st = ($set(this, state, $ResponseContent$ChunkState::READING_DATA));
 		}
 	}
 	if (toconsume > 0) {

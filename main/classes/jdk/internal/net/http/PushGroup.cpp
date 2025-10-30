@@ -1,24 +1,11 @@
 #include <jdk/internal/net/http/PushGroup.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpRequest.h>
 #include <java/net/http/HttpResponse$BodyHandler.h>
 #include <java/net/http/HttpResponse$PushPromiseHandler.h>
@@ -169,8 +156,7 @@ $PushGroup$Acceptor* PushGroup::acceptPushRequest($HttpRequest* pushRequest) {
 	$var($PushGroup$AcceptorImpl, acceptor, $new($PushGroup$AcceptorImpl, this->executor));
 	try {
 		$nc(this->pushPromiseHandler)->applyPushPromise(this->initiatingRequest, pushRequest, static_cast<$Function*>($$new(PushGroup$$Lambda$accept, static_cast<$PushGroup$AcceptorImpl*>(acceptor))));
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if (acceptor->accepted()) {
 			$var($CompletableFuture, cf, acceptor->cf());
 			$nc(cf)->completeExceptionally(t);

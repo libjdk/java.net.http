@@ -1,14 +1,6 @@
 #include <jdk/internal/net/http/Http2Connection$ALPNException.h>
 
 #include <java/io/IOException.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/AbstractAsyncSSLConnection.h>
 #include <jdk/internal/net/http/Http2Connection.h>
 #include <jcpp.h>
@@ -75,16 +67,10 @@ $AbstractAsyncSSLConnection* Http2Connection$ALPNException::getConnection() {
 Http2Connection$ALPNException::Http2Connection$ALPNException() {
 }
 
-Http2Connection$ALPNException::Http2Connection$ALPNException(const Http2Connection$ALPNException& e) {
+Http2Connection$ALPNException::Http2Connection$ALPNException(const Http2Connection$ALPNException& e) : $IOException(e) {
 }
 
-Http2Connection$ALPNException Http2Connection$ALPNException::wrapper$() {
-	$pendingException(this);
-	return *this;
-}
-
-void Http2Connection$ALPNException::throwWrapper$() {
-	$pendingException(this);
+void Http2Connection$ALPNException::throw$() {
 	throw *this;
 }
 

@@ -1,17 +1,6 @@
 #include <jdk/internal/net/http/hpack/NaiveHuffman$Node.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Character.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/hpack/NaiveHuffman.h>
 #include <jcpp.h>
 
@@ -119,10 +108,10 @@ NaiveHuffman$Node* NaiveHuffman$Node::addChildIfAbsent(int32_t i) {
 	$var(NaiveHuffman$Node, child, nullptr);
 	if (i == 0) {
 		if (($assign(child, this->left)) == nullptr) {
-			$assign(child, ($assignField(this, left, $new(NaiveHuffman$Node))));
+			$assign(child, ($set(this, left, $new(NaiveHuffman$Node))));
 		}
 	} else if (($assign(child, this->right)) == nullptr) {
-		$assign(child, ($assignField(this, right, $new(NaiveHuffman$Node))));
+		$assign(child, ($set(this, right, $new(NaiveHuffman$Node))));
 	}
 	return child;
 }

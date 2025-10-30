@@ -29,8 +29,10 @@ public:
 	static const int64_t serialVersionUID = (int64_t)0;
 	::jdk::internal::net::http::AbstractAsyncSSLConnection* connection = nullptr;
 	Http2Connection$ALPNException(const Http2Connection$ALPNException& e);
-	Http2Connection$ALPNException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline Http2Connection$ALPNException* operator ->() {
+		return (Http2Connection$ALPNException*)throwing$;
+	}
 };
 
 			} // http

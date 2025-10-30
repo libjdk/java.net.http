@@ -2,25 +2,12 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/nio/channels/SocketChannel.h>
 #include <java/util/AbstractList.h>
@@ -316,8 +303,7 @@ $List* SocketTube::readAvailable($SocketTube$BufferSource* buffersSource) {
 					break;
 				}
 			}
-		} catch ($IOException&) {
-			$var($IOException, x, $catch());
+		} catch ($IOException& x) {
 			if (buf->position() == pos && list == nullptr) {
 				buffersSource->returnUnused(buf);
 				$throw(x);
@@ -392,8 +378,7 @@ int64_t SocketTube::writeAvailable($List* bytes) {
 				break;
 			}
 			written += w;
-		} catch ($IOException&) {
-			$var($IOException, x, $catch());
+		} catch ($IOException& x) {
 			if (written == 0) {
 				$throw(x);
 			} else {
@@ -416,8 +401,7 @@ void SocketTube::resumeEvent($SocketTube$SocketFlowEvent* event, $Consumer* erro
 		} else {
 			$nc(this->client)->eventUpdated(event);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$nc(errorSignaler)->accept(t);
 	}
 }
@@ -428,8 +412,7 @@ void SocketTube::pauseEvent($SocketTube$SocketFlowEvent* event, $Consumer* error
 	}
 	try {
 		$nc(this->client)->eventUpdated(event);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$nc(errorSignaler)->accept(t);
 	}
 }

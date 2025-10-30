@@ -1,14 +1,6 @@
 #include <jdk/internal/net/http/Response.h>
 
 #include <java/io/IOException.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/SocketAddress.h>
 #include <java/net/URI.h>
@@ -100,8 +92,7 @@ void Response::init$($HttpRequestImpl* req, $Exchange* exchange, $HttpHeaders* h
 		$var($InetSocketAddress, a, nullptr);
 		try {
 			$assign(a, $cast($InetSocketAddress, $nc($(connection->channel()))->getLocalAddress()));
-		} catch ($IOException&) {
-			$var($IOException, e, $catch());
+		} catch ($IOException& e) {
 			$assign(a, nullptr);
 		}
 		$set(this, localAddress, a);

@@ -1,14 +1,6 @@
 #include <java/net/http/WebSocketHandshakeException.h>
 
 #include <java/io/IOException.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse.h>
 #include <jcpp.h>
 
@@ -64,16 +56,10 @@ WebSocketHandshakeException* WebSocketHandshakeException::initCause($Throwable* 
 WebSocketHandshakeException::WebSocketHandshakeException() {
 }
 
-WebSocketHandshakeException::WebSocketHandshakeException(const WebSocketHandshakeException& e) {
+WebSocketHandshakeException::WebSocketHandshakeException(const WebSocketHandshakeException& e) : $IOException(e) {
 }
 
-WebSocketHandshakeException WebSocketHandshakeException::wrapper$() {
-	$pendingException(this);
-	return *this;
-}
-
-void WebSocketHandshakeException::throwWrapper$() {
-	$pendingException(this);
+void WebSocketHandshakeException::throw$() {
 	throw *this;
 }
 

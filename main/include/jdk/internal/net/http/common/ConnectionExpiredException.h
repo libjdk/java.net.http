@@ -24,8 +24,10 @@ public:
 	void init$($Throwable* cause);
 	static const int64_t serialVersionUID = 0;
 	ConnectionExpiredException(const ConnectionExpiredException& e);
-	ConnectionExpiredException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline ConnectionExpiredException* operator ->() {
+		return (ConnectionExpiredException*)throwing$;
+	}
 };
 
 				} // common

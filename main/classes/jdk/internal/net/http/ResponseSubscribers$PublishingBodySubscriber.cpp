@@ -1,30 +1,16 @@
 #include <jdk/internal/net/http/ResponseSubscribers$PublishingBodySubscriber.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
 #include <java/lang/Error.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
 #include <java/lang/IllegalStateException.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/VirtualMachineError.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/List.h>
 #include <java/util/Objects.h>
 #include <java/util/concurrent/CompletableFuture.h>
@@ -404,7 +390,6 @@ void ResponseSubscribers$PublishingBodySubscriber::init$() {
 }
 
 void ResponseSubscribers$PublishingBodySubscriber::complete($ResponseSubscribers$PublishingBodySubscriber$SubscriberRef* ref, $Throwable* t) {
-	$useLocalCurrentObjectStackCache();
 	if (!ResponseSubscribers$PublishingBodySubscriber::$assertionsDisabled && !(ref != nullptr)) {
 		$throwNew($AssertionError);
 	}
@@ -415,8 +400,7 @@ void ResponseSubscribers$PublishingBodySubscriber::complete($ResponseSubscribers
 	if (t == nullptr) {
 		try {
 			$nc(s)->onComplete();
-		} catch ($Throwable&) {
-			$var($Throwable, x, $catch());
+		} catch ($Throwable& x) {
 			$nc(s)->onError(x);
 		}
 	} else {
@@ -472,8 +456,7 @@ void ResponseSubscribers$PublishingBodySubscriber::onNext($List* item) {
 		if (subscriber != nullptr) {
 			subscriber->onNext(item);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, err, $catch());
+	} catch ($Throwable& err) {
 		signalError(err);
 		$nc(this->subscriptionCF)->thenAccept(static_cast<$Consumer*>($$new(ResponseSubscribers$PublishingBodySubscriber$$Lambda$lambda$onNext$4$3)));
 	}
@@ -526,8 +509,7 @@ void ResponseSubscribers$PublishingBodySubscriber::lambda$subscribe$3($ResponseS
 	try {
 		subscription->subscribe();
 		$nc(this->subscribedCF)->complete(ref);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($Log::errors()) {
 			$Log::logError($$str({"Failed to call onSubscribe: cancelling subscription: "_s, t}), $$new($ObjectArray, 0));
 			$Log::logError(t);

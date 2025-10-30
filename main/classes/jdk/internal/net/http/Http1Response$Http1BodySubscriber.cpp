@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/Http1Response$Http1BodySubscriber.h>
 
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/util/List.h>
 #include <java/util/concurrent/CompletionStage.h>
@@ -114,8 +105,8 @@ void Http1Response$Http1BodySubscriber::propagateError($Throwable* t) {
 				$init($Http1Response);
 				$nc(this->userSubscriber)->onSubscribe($Http1Response::NOP);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->userSubscriber)->onError(t);
 		}
@@ -126,19 +117,17 @@ void Http1Response$Http1BodySubscriber::propagateError($Throwable* t) {
 }
 
 void Http1Response$Http1BodySubscriber::complete($Throwable* t$renamed) {
-	$useLocalCurrentObjectStackCache();
 	$var($Throwable, t, t$renamed);
 	if ($nc(this->completed)->compareAndSet(false, true)) {
-		$assign(t, ($assignField(this, withError, $Utils::getCompletionCause(t))));
+		$assign(t, ($set(this, withError, $Utils::getCompletionCause(t))));
 		if (t == nullptr) {
 			if (!Http1Response$Http1BodySubscriber::$assertionsDisabled && !this->subscribed) {
 				$throwNew($AssertionError);
 			}
 			try {
 				$nc(this->userSubscriber)->onComplete();
-			} catch ($Throwable&) {
-				$var($Throwable, x, $catch());
-				propagateError($assign(t, ($assignField(this, withError, $Utils::getCompletionCause(x)))));
+			} catch ($Throwable& x) {
+				propagateError($assign(t, ($set(this, withError, $Utils::getCompletionCause(x)))));
 			}
 		} else {
 			propagateError(t);

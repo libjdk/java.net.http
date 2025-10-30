@@ -1,23 +1,11 @@
 #include <java/net/http/HttpHeaders.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/AbstractCollection.h>
 #include <java/util/AbstractList.h>
 #include <java/util/AbstractMap.h>
@@ -335,7 +323,6 @@ int32_t HttpHeaders::entryHash($Map$Entry* e) {
 HttpHeaders* HttpHeaders::headersOf($Map* map, $BiPredicate* filter) {
 	$init(HttpHeaders);
 	$useLocalCurrentObjectStackCache();
-	$init($String);
 	$var($TreeMap, other, $new($TreeMap, $String::CASE_INSENSITIVE_ORDER));
 	$var($TreeSet, notAdded, $new($TreeSet, $String::CASE_INSENSITIVE_ORDER));
 	$var($ArrayList, tempList, $new($ArrayList));

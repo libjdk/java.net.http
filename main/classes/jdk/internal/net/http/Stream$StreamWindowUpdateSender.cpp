@@ -1,13 +1,5 @@
 #include <jdk/internal/net/http/Stream$StreamWindowUpdateSender.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/Http2Connection.h>
 #include <jdk/internal/net/http/Stream.h>
 #include <jdk/internal/net/http/WindowUpdateSender.h>
@@ -82,7 +74,7 @@ $String* Stream$StreamWindowUpdateSender::dbgString() {
 		return $str({$($nc(this->connection)->dbgString()), ":WindowUpdateSender(stream: ?)"_s});
 	} else {
 		$assign(dbg, $str({$($nc(this->connection)->dbgString()), ":WindowUpdateSender(stream: "_s, $$str(this->this$0->streamid), ")"_s}));
-		return $assignField(this, dbgString$, dbg);
+		return $set(this, dbgString$, dbg);
 	}
 }
 

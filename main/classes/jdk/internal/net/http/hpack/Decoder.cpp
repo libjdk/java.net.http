@@ -4,32 +4,15 @@
 #include <java/io/Serializable.h>
 #include <java/lang/AbstractStringBuilder.h>
 #include <java/lang/Appendable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
 #include <java/lang/IndexOutOfBoundsException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/System.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/List.h>
 #include <java/util/Objects.h>
@@ -933,8 +916,8 @@ void Decoder::resumeIndexed($ByteBuffer* input, $DecodingCallback* action) {
 		try {
 			$var($SimpleHeaderTable$HeaderField, f, getHeaderFieldAt(this->intValue));
 			$nc(action)->onIndexed(this->intValue, $nc(f)->name, f->value);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$init($Decoder$State);
 			$set(this, state, $Decoder$State::READY);
@@ -946,12 +929,10 @@ void Decoder::resumeIndexed($ByteBuffer* input, $DecodingCallback* action) {
 }
 
 $SimpleHeaderTable$HeaderField* Decoder::getHeaderFieldAt(int32_t index) {
-	$useLocalCurrentObjectStackCache();
 	$var($SimpleHeaderTable$HeaderField, f, nullptr);
 	try {
 		$assign(f, $nc(this->table)->get(index));
-	} catch ($IndexOutOfBoundsException&) {
-		$var($IndexOutOfBoundsException, e, $catch());
+	} catch ($IndexOutOfBoundsException& e) {
 		$throwNew($IOException, "header fields table index"_s, e);
 	}
 	return f;
@@ -979,8 +960,8 @@ void Decoder::resumeLiteral($ByteBuffer* input, $DecodingCallback* action) {
 				}
 				$nc(action)->onLiteral(static_cast<$CharSequence*>(this->name), this->nameHuffmanEncoded, static_cast<$CharSequence*>(this->value), this->valueHuffmanEncoded);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			cleanUpAfterReading();
 		}
@@ -1017,8 +998,8 @@ void Decoder::resumeLiteralWithIndexing($ByteBuffer* input, $DecodingCallback* a
 				$nc(action)->onLiteralWithIndexing(static_cast<$CharSequence*>(n), this->nameHuffmanEncoded, static_cast<$CharSequence*>(v), this->valueHuffmanEncoded);
 			}
 			$nc(this->table)->put(n, v);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			cleanUpAfterReading();
 		}
@@ -1050,8 +1031,8 @@ void Decoder::resumeLiteralNeverIndexed($ByteBuffer* input, $DecodingCallback* a
 				}
 				$nc(action)->onLiteralNeverIndexed(static_cast<$CharSequence*>(this->name), this->nameHuffmanEncoded, static_cast<$CharSequence*>(this->value), this->valueHuffmanEncoded);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			cleanUpAfterReading();
 		}
@@ -1086,8 +1067,8 @@ void Decoder::resumeSizeUpdate($ByteBuffer* input, $DecodingCallback* action) {
 		try {
 			$nc(action)->onSizeUpdate(this->intValue);
 			$nc(this->table)->setMaxSize(this->intValue);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$init($Decoder$State);
 			$set(this, state, $Decoder$State::READY);

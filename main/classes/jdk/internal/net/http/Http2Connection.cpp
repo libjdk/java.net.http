@@ -4,30 +4,14 @@
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
 #include <java/io/UncheckedIOException.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/SocketAddress.h>
 #include <java/net/URI.h>
@@ -1210,8 +1194,7 @@ void Http2Connection::asyncReceive($ByteBuffer* buffer) {
 				$nc(this->debug)->log("H2 processed(%d)"_s, $$new($ObjectArray, {$($of($Long::valueOf(c)))}));
 			}
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, e, $catch());
+	} catch ($Throwable& e) {
 		$var($String, msg, $Utils::stackTrace(e));
 		$Log::logTrace(msg, $$new($ObjectArray, 0));
 		shutdown(e);
@@ -1255,8 +1238,7 @@ void Http2Connection::shutdown($Throwable* t) {
 			{
 				try {
 					$nc(s)->connectionClosing(t);
-				} catch ($Throwable&) {
-					$var($Throwable, e, $catch());
+				} catch ($Throwable& e) {
 					$Log::logError("Failed to close stream {0}: {1}"_s, $$new($ObjectArray, {
 						$($of($Integer::valueOf($nc(s)->streamid))),
 						$of(e)
@@ -1305,8 +1287,7 @@ void Http2Connection::processFrame($Http2Frame* frame) {
 				$var($DecodingCallback, decoder, $new($Http2Connection$ValidatingHeadersConsumer));
 				try {
 					decodeHeaders($cast($HeaderFrame, frame), decoder);
-				} catch ($UncheckedIOException&) {
-					$var($UncheckedIOException, e, $catch());
+				} catch ($UncheckedIOException& e) {
 					protocolError($ResetFrame::PROTOCOL_ERROR, $(e->getMessage()));
 					return;
 				}
@@ -1331,16 +1312,14 @@ void Http2Connection::processFrame($Http2Frame* frame) {
 			$var($PushPromiseFrame, pp, $cast($PushPromiseFrame, frame));
 			try {
 				handlePushPromise(stream, pp);
-			} catch ($UncheckedIOException&) {
-				$var($UncheckedIOException, e, $catch());
+			} catch ($UncheckedIOException& e) {
 				protocolError($ResetFrame::PROTOCOL_ERROR, $(e->getMessage()));
 				return;
 			}
 		} else if ($instanceOf($HeaderFrame, frame)) {
 			try {
 				decodeHeaders($cast($HeaderFrame, frame), $($nc(stream)->rspHeadersConsumer()));
-			} catch ($UncheckedIOException&) {
-				$var($UncheckedIOException, e, $catch());
+			} catch ($UncheckedIOException& e) {
 				$nc(this->debug)->log($$str({"Error decoding headers: "_s, $(e->getMessage())}), static_cast<$Throwable*>(e));
 				protocolError($ResetFrame::PROTOCOL_ERROR, $(e->getMessage()));
 				return;
@@ -1367,7 +1346,6 @@ void Http2Connection::dropDataFrame($DataFrame* df) {
 }
 
 void Http2Connection::ensureWindowUpdated($DataFrame* df) {
-	$useLocalCurrentObjectStackCache();
 	try {
 		if (this->closed) {
 			return;
@@ -1376,8 +1354,7 @@ void Http2Connection::ensureWindowUpdated($DataFrame* df) {
 		if (length > 0) {
 			$nc(this->windowUpdater)->update(length);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		$Log::logError("Unexpected exception while updating window: {0}"_s, $$new($ObjectArray, {$of(t)}));
 	}
 }
@@ -1452,8 +1429,8 @@ void Http2Connection::resetStream(int32_t streamid, int32_t code) {
 			} else if ($nc(this->debug)->on()) {
 				$nc(this->debug)->log("Channel already closed, no need to reset stream %d"_s, $$new($ObjectArray, {$($of($Integer::valueOf(streamid)))}));
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			decrementStreamsCount(streamid);
 			closeStream(streamid);
@@ -1759,8 +1736,7 @@ void Http2Connection::sendFrame($Http2Frame* frame) {
 			}
 		}
 		$nc(publisher)->signalEnqueued();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		if (!this->closed) {
 			$Log::logError(e);
 			shutdown(e);
@@ -1779,8 +1755,7 @@ void Http2Connection::sendDataFrame($DataFrame* frame) {
 		$var($HttpConnection$HttpPublisher, publisher, this->publisher());
 		$nc(publisher)->enqueue($(encodeFrame(frame)));
 		publisher->signalEnqueued();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		if (!this->closed) {
 			$Log::logError(e);
 			shutdown(e);
@@ -1794,8 +1769,7 @@ void Http2Connection::sendUnorderedFrame($Http2Frame* frame) {
 		$var($HttpConnection$HttpPublisher, publisher, this->publisher());
 		$nc(publisher)->enqueueUnordered($(encodeFrame(frame)));
 		publisher->signalEnqueued();
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		if (!this->closed) {
 			$Log::logError(e);
 			shutdown(e);
@@ -1915,8 +1889,7 @@ $CompletionStage* Http2Connection::lambda$createAsync$3($HttpRequestImpl* reques
 	try {
 		$var(Http2Connection, hc, $new(Http2Connection, request, h2client, connection));
 		cf->complete(hc);
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		cf->completeExceptionally(e);
 	}
 	return cf;

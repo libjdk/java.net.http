@@ -1,12 +1,5 @@
 #include <jdk/internal/net/http/websocket/TransportFactory.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/CompoundAttribute.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/websocket/MessageQueue.h>
 #include <jdk/internal/net/http/websocket/MessageStreamConsumer.h>
 #include <jdk/internal/net/http/websocket/Transport.h>
@@ -24,11 +17,11 @@ namespace jdk {
 		namespace net {
 			namespace http {
 				namespace websocket {
+
 $CompoundAttribute _TransportFactory_Annotations_[] = {
 	{"Ljava/lang/FunctionalInterface;", nullptr},
 	{}
 };
-
 
 $MethodInfo _TransportFactory_MethodInfo_[] = {
 	{"createTransport", "(Ljdk/internal/net/http/websocket/MessageQueue;Ljdk/internal/net/http/websocket/MessageStreamConsumer;)Ljdk/internal/net/http/websocket/Transport;", nullptr, $PUBLIC | $ABSTRACT},

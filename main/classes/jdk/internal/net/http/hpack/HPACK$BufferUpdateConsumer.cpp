@@ -1,13 +1,5 @@
 #include <jdk/internal/net/http/hpack/HPACK$BufferUpdateConsumer.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/CompoundAttribute.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/hpack/HPACK.h>
 #include <jcpp.h>
 
@@ -22,11 +14,11 @@ namespace jdk {
 		namespace net {
 			namespace http {
 				namespace hpack {
+
 $CompoundAttribute _HPACK$BufferUpdateConsumer_Annotations_[] = {
 	{"Ljava/lang/FunctionalInterface;", nullptr},
 	{}
 };
-
 
 $MethodInfo _HPACK$BufferUpdateConsumer_MethodInfo_[] = {
 	{"accept", "(JI)V", nullptr, $PUBLIC | $ABSTRACT},

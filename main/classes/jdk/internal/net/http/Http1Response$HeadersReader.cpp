@@ -1,22 +1,12 @@
 #include <jdk/internal/net/http/Http1Response$HeadersReader.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/concurrent/CompletableFuture.h>
 #include <java/util/function/Consumer.h>
@@ -236,8 +226,7 @@ void Http1Response$HeadersReader::handle($ByteBuffer* b, $Http1HeaderParser* par
 			$nc(this->onComplete)->accept($Http1Response$State::READING_HEADERS);
 			$nc(cf)->complete($Http1Response$State::READING_HEADERS);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->this$0->debug)->on()) {
 			$nc(this->this$0->debug)->log($$str({"Header parser failed to handle buffer: "_s, t}));
 		}

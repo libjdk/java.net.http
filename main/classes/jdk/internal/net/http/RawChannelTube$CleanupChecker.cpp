@@ -1,15 +1,7 @@
 #include <jdk/internal/net/http/RawChannelTube$CleanupChecker.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
 #include <java/lang/System$Logger$Level.h>
 #include <java/lang/System$Logger.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/concurrent/atomic/AtomicBoolean.h>
 #include <jdk/internal/net/http/RawChannelTube.h>
 #include <jcpp.h>

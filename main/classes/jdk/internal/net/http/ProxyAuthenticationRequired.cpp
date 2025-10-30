@@ -2,13 +2,6 @@
 
 #include <java/io/IOException.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/Response.h>
 #include <jcpp.h>
 
@@ -66,16 +59,10 @@ void clinit$ProxyAuthenticationRequired($Class* class$) {
 ProxyAuthenticationRequired::ProxyAuthenticationRequired() {
 }
 
-ProxyAuthenticationRequired::ProxyAuthenticationRequired(const ProxyAuthenticationRequired& e) {
+ProxyAuthenticationRequired::ProxyAuthenticationRequired(const ProxyAuthenticationRequired& e) : $IOException(e) {
 }
 
-ProxyAuthenticationRequired ProxyAuthenticationRequired::wrapper$() {
-	$pendingException(this);
-	return *this;
-}
-
-void ProxyAuthenticationRequired::throwWrapper$() {
-	$pendingException(this);
+void ProxyAuthenticationRequired::throw$() {
 	throw *this;
 }
 

@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/Http1HeaderParser$1.h>
 
-#include <java/lang/Array.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/EnclosingMethodInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/NoSuchFieldError.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/Http1HeaderParser$State.h>
 #include <jdk/internal/net/http/Http1HeaderParser.h>
 #include <jcpp.h>
@@ -86,68 +77,55 @@ void clinit$Http1HeaderParser$1($Class* class$) {
 	{
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::INITIAL->ordinal(), 1);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::STATUS_LINE->ordinal(), 2);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::STATUS_LINE_FOUND_CR->ordinal(), 3);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::STATUS_LINE_FOUND_LF->ordinal(), 4);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::STATUS_LINE_END->ordinal(), 5);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::STATUS_LINE_END_CR->ordinal(), 6);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::STATUS_LINE_END_LF->ordinal(), 7);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::HEADER->ordinal(), 8);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::HEADER_FOUND_CR->ordinal(), 9);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::HEADER_FOUND_LF->ordinal(), 10);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::HEADER_FOUND_CR_LF->ordinal(), 11);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::HEADER_FOUND_CR_LF_CR->ordinal(), 12);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 		try {
 			$nc(Http1HeaderParser$1::$SwitchMap$jdk$internal$net$http$Http1HeaderParser$State)->set($Http1HeaderParser$State::FINISHED->ordinal(), 13);
-		} catch ($NoSuchFieldError&) {
-			$catch();
+		} catch ($NoSuchFieldError& ex) {
 		}
 	}
 }

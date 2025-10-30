@@ -1,26 +1,15 @@
 #include <jdk/internal/net/http/WindowController.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
 #include <java/lang/Iterable.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/AbstractList.h>
 #include <java/util/AbstractMap.h>
 #include <java/util/ArrayList.h>
@@ -210,8 +199,8 @@ void WindowController::registerStream(int32_t streamid, int32_t initialStreamWin
 			if (old != nullptr) {
 				$throwNew($InternalError, $$str({"Unexpected entry ["_s, old, "] for streamid: "_s, $$str(streamid)}));
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$2) {
+			$assign(var$0, var$2);
 		} /*finally*/ {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -234,8 +223,8 @@ void WindowController::removeStream(int32_t streamid) {
 			} else if (old != nullptr && !isClientStream) {
 				$throwNew($InternalError, $$str({"Unexpected entry for streamid: "_s, $$str(streamid)}));
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -290,8 +279,8 @@ int32_t WindowController::tryAcquire(int32_t requestAmount, int32_t streamid, $S
 			var$2 = x;
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$4) {
+			$assign(var$0, var$4);
 		} $finally: {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -348,8 +337,8 @@ bool WindowController::increaseConnectionWindow(int32_t amount) {
 					}
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -405,8 +394,8 @@ bool WindowController::increaseStreamWindow(int32_t amount, int32_t streamid) {
 					}
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -453,8 +442,8 @@ void WindowController::adjustActiveStreams(int32_t adjustAmount) {
 					}
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -474,8 +463,8 @@ int32_t WindowController::connectionWindowSize() {
 			var$2 = this->connectionWindowSize$;
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$nc(this->controllerLock)->unlock();
 		}
@@ -504,8 +493,8 @@ int32_t WindowController::streamWindowSize(int32_t streamid) {
 			var$2 = $nc(size)->intValue();
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$nc(this->controllerLock)->unlock();
 		}

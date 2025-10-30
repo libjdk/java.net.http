@@ -1,12 +1,5 @@
 #include <jdk/internal/net/http/frame/HeadersFrame.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/List.h>
 #include <jdk/internal/net/http/frame/HeaderFrame.h>

@@ -1,19 +1,9 @@
 #include <jdk/internal/net/http/ResponseBodyHandlers$PathBodyHandler.h>
 
 #include <java/io/FilePermission.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/SecurityManager.h>
-#include <java/lang/String.h>
-#include <java/lang/System.h>
 #include <java/lang/UnsupportedOperationException.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
 #include <java/net/http/HttpResponse$ResponseInfo.h>
 #include <java/nio/file/Path.h>
@@ -107,8 +97,7 @@ ResponseBodyHandlers$PathBodyHandler* ResponseBodyHandlers$PathBodyHandler::crea
 			$var($FilePermission, writePermission, $new($FilePermission, fn, "write"_s));
 			sm->checkPermission(writePermission);
 			$assign(filePermission, writePermission);
-		} catch ($UnsupportedOperationException&) {
-			$catch();
+		} catch ($UnsupportedOperationException& ignored) {
 		}
 	}
 	if (!ResponseBodyHandlers$PathBodyHandler::$assertionsDisabled && !(filePermission == nullptr || $nc($($nc(filePermission)->getActions()))->equals("write"_s))) {

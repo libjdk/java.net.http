@@ -3,26 +3,12 @@
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
 #include <java/lang/Appendable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <jdk/internal/net/http/hpack/HPACK$BufferUpdateConsumer.h>
 #include <jdk/internal/net/http/hpack/HPACK.h>
@@ -147,7 +133,6 @@ void ISO_8859_1$Reader::init$() {
 }
 
 void ISO_8859_1$Reader::read($ByteBuffer* source, $Appendable* destination) {
-	$useLocalCurrentObjectStackCache();
 	while (true) {
 		int32_t nBytes = $HPACK::read(source, this->buffer, this->bufferLen, this->UPDATER);
 		if (nBytes == 0) {
@@ -160,8 +145,7 @@ void ISO_8859_1$Reader::read($ByteBuffer* source, $Appendable* destination) {
 			char16_t c = (char16_t)((int64_t)((uint64_t)this->buffer >> 56));
 			try {
 				$nc(destination)->append(c);
-			} catch ($IOException&) {
-				$var($IOException, e, $catch());
+			} catch ($IOException& e) {
 				$throwNew($IOException, "Error appending to the destination"_s, e);
 			}
 			this->buffer <<= 8;

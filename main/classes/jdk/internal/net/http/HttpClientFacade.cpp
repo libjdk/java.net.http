@@ -1,15 +1,6 @@
 #include <jdk/internal/net/http/HttpClientFacade.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/ref/Reference.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpClient$Redirect.h>
 #include <java/net/http/HttpClient$Version.h>
 #include <java/net/http/HttpClient.h>
@@ -173,8 +164,8 @@ $HttpResponse* HttpClientFacade::send($HttpRequest* req, $HttpResponse$BodyHandl
 			$assign(var$2, $nc(this->impl)->send(req, responseBodyHandler));
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$Reference::reachabilityFence(this);
 		}
@@ -198,8 +189,8 @@ $CompletableFuture* HttpClientFacade::sendAsync($HttpRequest* req, $HttpResponse
 			$assign(var$2, $nc(this->impl)->sendAsync(req, responseBodyHandler));
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$Reference::reachabilityFence(this);
 		}
@@ -223,8 +214,8 @@ $CompletableFuture* HttpClientFacade::sendAsync($HttpRequest* req, $HttpResponse
 			$assign(var$2, $nc(this->impl)->sendAsync(req, responseBodyHandler, pushPromiseHandler));
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$Reference::reachabilityFence(this);
 		}
@@ -248,8 +239,8 @@ $WebSocket$Builder* HttpClientFacade::newWebSocketBuilder() {
 			$assign(var$2, $nc(this->impl)->newWebSocketBuilder());
 			return$1 = true;
 			goto $finally;
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} $finally: {
 			$Reference::reachabilityFence(this);
 		}

@@ -2,28 +2,15 @@
 
 #include <java/io/EOFException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
 #include <java/lang/System$Logger$Level.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/http/HttpClient$Version.h>
 #include <java/net/http/HttpHeaders.h>
 #include <java/net/http/HttpResponse$BodySubscriber.h>
@@ -901,13 +888,13 @@ $Http1Response$State* Http1Response::advance($Http1Response$State* previous) {
 		{
 			$nc(this->asyncReceiver)->unsubscribe(this->headersReader);
 			$init($Http1Response$State);
-			return $assignField(this, readProgress, $Http1Response$State::READING_BODY);
+			return $set(this, readProgress, $Http1Response$State::READING_BODY);
 		}
 	case 2:
 		{
 			$nc(this->asyncReceiver)->unsubscribe(this->bodyReader);
 			$init($Http1Response$State);
-			return $assignField(this, readProgress, $Http1Response$State::DONE);
+			return $set(this, readProgress, $Http1Response$State::DONE);
 		}
 	default:
 		{
@@ -986,8 +973,7 @@ void Http1Response::lambda$readBody$3(int64_t clen, $Http1Response$Http1BodySubs
 				}
 				$var($CompletableFuture, trailingOp, $cast($CompletableFuture, $nc(bodyReaderCF)->whenComplete(static_cast<$BiConsumer*>($$new(Http1Response$$Lambda$lambda$readBody$2$10, this, subscriber, cf, refCountTracker)))));
 				$nc(this->connection)->addTrailingOperation(trailingOp);
-			} catch ($Throwable&) {
-				$var($Throwable, t, $catch());
+			} catch ($Throwable& t) {
 				if ($nc(this->debug)->on()) {
 					$nc(this->debug)->log($$str({"Failed reading body: "_s, t}));
 				}
@@ -996,8 +982,8 @@ void Http1Response::lambda$readBody$3(int64_t clen, $Http1Response$Http1BodySubs
 					try {
 						$nc(subscriber)->onError(t);
 						$nc(cf)->completeExceptionally(t);
-					} catch ($Throwable&) {
-						$assign(var$2, $catch());
+					} catch ($Throwable& var$3) {
+						$assign(var$2, var$3);
 					} /*finally*/ {
 						$nc(this->asyncReceiver)->onReadError(t);
 					}
@@ -1006,8 +992,8 @@ void Http1Response::lambda$readBody$3(int64_t clen, $Http1Response$Http1BodySubs
 					}
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$4) {
+			$assign(var$0, var$4);
 		} $finally: {
 			$nc($($nc(this->connection)->client()))->unreference();
 		}
@@ -1041,12 +1027,11 @@ void Http1Response::lambda$readBody$2($Http1Response$Http1BodySubscriber* subscr
 					$nc(subscriber)->onError(t);
 					$nc(cf)->completeExceptionally(t);
 				}
-			} catch ($Throwable&) {
-				$var($Throwable, x, $catch());
+			} catch ($Throwable& x) {
 				$nc(this->asyncReceiver)->onReadError(x);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(refCountTracker)->tryRelease();
 		}
@@ -1066,8 +1051,8 @@ void Http1Response::lambda$readBody$1($Http1Response$Http1BodySubscriber* subscr
 					$var($Throwable, var$1, nullptr);
 					try {
 						$nc(subscriber)->onError(t);
-					} catch ($Throwable&) {
-						$assign(var$1, $catch());
+					} catch ($Throwable& var$2) {
+						$assign(var$1, var$2);
 					} /*finally*/ {
 						$nc(cf)->completeExceptionally(t);
 					}
@@ -1076,8 +1061,8 @@ void Http1Response::lambda$readBody$1($Http1Response$Http1BodySubscriber* subscr
 					}
 				}
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$3) {
+			$assign(var$0, var$3);
 		} /*finally*/ {
 			$nc(this->bodyReader)->onComplete(t);
 			if (t != nullptr) {

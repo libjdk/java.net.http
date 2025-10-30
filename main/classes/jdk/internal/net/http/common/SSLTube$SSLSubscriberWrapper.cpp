@@ -1,16 +1,6 @@
 #include <jdk/internal/net/http/common/SSLTube$SSLSubscriberWrapper.h>
 
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/util/List.h>
 #include <java/util/concurrent/CompletableFuture.h>
 #include <java/util/concurrent/Flow$Subscriber.h>
@@ -241,8 +231,8 @@ void SSLTube$SSLSubscriberWrapper::complete($SSLTube$DelegateWrapper* subscriber
 			if ($nc(this->this$0->debug)->on()) {
 				$nc(this->this$0->debug)->log("subscriber completed %s"_s, $$new($ObjectArray, {((t == nullptr) ? $of("normally"_s) : ($of($$str({"with error: "_s, t}))))}));
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->this$0->writeSubscription)->cancel();
 		}

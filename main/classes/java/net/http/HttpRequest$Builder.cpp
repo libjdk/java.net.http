@@ -1,12 +1,5 @@
 #include <java/net/http/HttpRequest$Builder.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/URI.h>
 #include <java/net/http/HttpClient$Version.h>
 #include <java/net/http/HttpRequest$BodyPublisher.h>

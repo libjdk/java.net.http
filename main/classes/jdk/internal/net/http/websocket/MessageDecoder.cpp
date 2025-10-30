@@ -2,29 +2,14 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
 #include <java/lang/CharSequence.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
 #include <java/lang/InternalError.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/nio/CharBuffer.h>
 #include <java/nio/charset/CharacterCodingException.h>
@@ -354,8 +339,7 @@ void MessageDecoder::payloadData($ByteBuffer* data) {
 			$var($CharBuffer, textData, nullptr);
 			try {
 				$assign(textData, $nc(this->decoder)->decode(data, last));
-			} catch ($CharacterCodingException&) {
-				$var($CharacterCodingException, e, $catch());
+			} catch ($CharacterCodingException& e) {
 				$throw($($$new($FailWebSocketException, $$str({"Invalid UTF-8 in frame "_s, this->opcode$}), $StatusCodes::NOT_CONSISTENT)->initCause(e)));
 			}
 			if (!(binaryNonEmpty && !$nc(textData)->hasRemaining())) {
@@ -373,7 +357,7 @@ void MessageDecoder::endFrame() {
 	if ($nc(this->opcode$)->isControl()) {
 		$nc(this->binaryData)->flip();
 	}
-		$init($MessageDecoder$1);
+	$init($MessageDecoder$1);
 	{
 		char16_t statusCode = 0;
 		$var($String, reason, nullptr)
@@ -397,8 +381,7 @@ void MessageDecoder::endFrame() {
 					try {
 						$init($StandardCharsets);
 						$assign(reason, $nc($($nc($($nc($StandardCharsets::UTF_8)->newDecoder()))->decode(this->binaryData)))->toString());
-					} catch ($CharacterCodingException&) {
-						$var($CharacterCodingException, e, $catch());
+					} catch ($CharacterCodingException& e) {
 						$throw($($$new($FailWebSocketException, "Illegal close reason"_s)->initCause(e)));
 					}
 				}

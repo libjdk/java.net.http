@@ -1,15 +1,5 @@
 #include <jdk/internal/net/http/LineSubscriberAdapter.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/IllegalArgumentException.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/charset/Charset.h>
 #include <java/util/List.h>
 #include <java/util/Objects.h>
@@ -121,8 +111,7 @@ void LineSubscriberAdapter::onNext($List* item) {
 	$Objects::requireNonNull(item);
 	try {
 		$nc(this->downstream)->submit(item);
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		onError(t);
 	}
 }
@@ -133,8 +122,8 @@ void LineSubscriberAdapter::onError($Throwable* throwable) {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->downstream)->signalError(throwable);
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->cf)->completeExceptionally(throwable);
 		}
@@ -150,8 +139,8 @@ void LineSubscriberAdapter::onComplete() {
 		$var($Throwable, var$0, nullptr);
 		try {
 			$nc(this->downstream)->signalComplete();
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$1) {
+			$assign(var$0, var$1);
 		} /*finally*/ {
 			$nc(this->cf)->complete($($nc(this->finisher)->apply(this->subscriber)));
 		}

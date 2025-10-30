@@ -1,24 +1,12 @@
 #include <jdk/internal/net/http/common/SSLFlowDelegate$Writer.h>
 
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/AbstractList.h>
 #include <java/util/AbstractSequentialList.h>
@@ -380,8 +368,7 @@ void SSLFlowDelegate$Writer::processData() {
 			$init($SSLFlowDelegate);
 			$nc(this->this$0->writer)->addData($SSLFlowDelegate::HS_TRIGGER);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, ex, $catch());
+	} catch ($Throwable& ex) {
 		$assign(ex, this->this$0->checkForHandshake(ex));
 		errorCommon(ex);
 		this->this$0->handleError(ex);
@@ -396,7 +383,7 @@ $SSLFlowDelegate$EngineResult* SSLFlowDelegate$Writer::wrapBuffers($ByteBufferAr
 	}
 	$var($ByteBuffer, dst, this->writeBuffer);
 	if (dst == nullptr) {
-		$assign(dst, ($assignField(this, writeBuffer, this->this$0->getNetBuffer())));
+		$assign(dst, ($set(this, writeBuffer, this->this$0->getNetBuffer())));
 	}
 	if (!SSLFlowDelegate$Writer::$assertionsDisabled && !($nc(dst)->position() == 0)) {
 		$throwNew($AssertionError, $of($$str({"buffer position is "_s, $$str(dst->position())})));
@@ -409,19 +396,19 @@ $SSLFlowDelegate$EngineResult* SSLFlowDelegate$Writer::wrapBuffers($ByteBufferAr
 		if ($nc(this->debugw)->on()) {
 			$nc(this->debugw)->log($$str({"SSLResult: "_s, sslResult}));
 		}
-			$init($SSLFlowDelegate$1);
+		$init($SSLFlowDelegate$1);
 		{
 			int32_t netSize = 0;
 			$var($ByteBuffer, b, nullptr)
 			$var($ByteBuffer, dest, nullptr)
-			switch ($nc($SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$Status)->get($nc(($assignField(this, lastWrappedStatus, $nc(sslResult)->getStatus())))->ordinal())) {
+			switch ($nc($SSLFlowDelegate$1::$SwitchMap$javax$net$ssl$SSLEngineResult$Status)->get($nc(($set(this, lastWrappedStatus, $nc(sslResult)->getStatus())))->ordinal())) {
 			case 1:
 				{
 					if ($nc(this->debugw)->on()) {
 						$nc(this->debugw)->log("BUFFER_OVERFLOW"_s);
 					}
 					netSize = (this->this$0->packetBufferSize = $nc($($nc(this->this$0->engine)->getSession()))->getPacketBufferSize());
-					$assign(b, ($assignField(this, writeBuffer, $ByteBuffer::allocate(netSize + $nc(dst)->position()))));
+					$assign(b, ($set(this, writeBuffer, $ByteBuffer::allocate(netSize + $nc(dst)->position()))));
 					$nc(dst)->flip();
 					$nc(b)->put(dst);
 					$assign(dst, b);

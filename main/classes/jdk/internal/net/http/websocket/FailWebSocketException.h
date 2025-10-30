@@ -28,8 +28,10 @@ public:
 	static const int64_t serialVersionUID = (int64_t)1;
 	int32_t statusCode = 0;
 	FailWebSocketException(const FailWebSocketException& e);
-	FailWebSocketException wrapper$();
-	virtual void throwWrapper$() override;
+	virtual void throw$() override;
+	inline FailWebSocketException* operator ->() {
+		return (FailWebSocketException*)throwing$;
+	}
 };
 
 				} // websocket

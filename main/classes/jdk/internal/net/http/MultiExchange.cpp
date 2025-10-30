@@ -2,25 +2,12 @@
 
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
 #include <java/lang/invoke/MethodHandles$Lookup.h>
 #include <java/lang/invoke/MethodType.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/ConnectException.h>
 #include <java/net/InetSocketAddress.h>
 #include <java/net/SocketException.h>
@@ -788,9 +775,7 @@ $Object* allocate$MultiExchange($Class* clazz) {
 bool MultiExchange::$assertionsDisabled = false;
 $Logger* MultiExchange::debug = nullptr;
 int32_t MultiExchange::max_attempts = 0;
-
 bool MultiExchange::RETRY_ALWAYS = false;
-
 bool MultiExchange::RETRY_CONNECT = false;
 
 void MultiExchange::init$($HttpRequest* userRequest, $HttpRequestImpl* requestImpl, $HttpClientImpl* client, $HttpResponse$BodyHandler* responseHandler, $HttpResponse$PushPromiseHandler* pushPromiseHandler, $AccessControlContext* acc) {
@@ -988,8 +973,7 @@ $CompletableFuture* MultiExchange::responseAsyncImpl() {
 			if (this->currentreq != this->previousreq) {
 				requestFilters(this->currentreq);
 			}
-		} catch ($IOException&) {
-			$var($IOException, e, $catch());
+		} catch ($IOException& e) {
 			return $MinimalFuture::failedFuture(e);
 		}
 		$var($Exchange, exch, getExchange());
@@ -1165,8 +1149,7 @@ $CompletionStage* MultiExchange::lambda$responseAsyncImpl$6($Exchange* exch, $Re
 	$var($HttpRequestImpl, newrequest, nullptr);
 	try {
 		$assign(newrequest, responseFilters(response));
-	} catch ($IOException&) {
-		$var($IOException, e, $catch());
+	} catch ($IOException& e) {
 		return $MinimalFuture::failedFuture(e);
 	}
 	if (newrequest == nullptr) {

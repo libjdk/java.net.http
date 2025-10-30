@@ -3,26 +3,11 @@
 #include <java/io/EOFException.h>
 #include <java/io/IOException.h>
 #include <java/io/Serializable.h>
-#include <java/lang/Array.h>
 #include <java/lang/AssertionError.h>
-#include <java/lang/Boolean.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/Exception.h>
 #include <java/lang/ExceptionInInitializerError.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/Integer.h>
-#include <java/lang/Long.h>
 #include <java/lang/Math.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/NullPointerException.h>
 #include <java/lang/Runnable.h>
-#include <java/lang/String.h>
-#include <java/lang/StringBuilder.h>
-#include <java/lang/Throwable.h>
 #include <java/lang/UnsupportedOperationException.h>
-#include <java/lang/Void.h>
 #include <java/lang/invoke/CallSite.h>
 #include <java/lang/invoke/LambdaMetafactory.h>
 #include <java/lang/invoke/MethodHandle.h>
@@ -30,8 +15,6 @@
 #include <java/lang/invoke/MethodHandles.h>
 #include <java/lang/invoke/MethodType.h>
 #include <java/lang/invoke/VarHandle.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/net/URI.h>
 #include <java/net/http/HttpClient$Version.h>
 #include <java/net/http/HttpClient.h>
@@ -883,7 +866,7 @@ void Stream::schedule() {
 		try {
 			try {
 				if (subscriber == nullptr) {
-					$assign(subscriber, ($assignField(this, responseSubscriber, this->pendingResponseSubscriber)));
+					$assign(subscriber, ($set(this, responseSubscriber, this->pendingResponseSubscriber)));
 					if (subscriber == nullptr) {
 						return$1 = true;
 						goto $finally;
@@ -929,8 +912,7 @@ void Stream::schedule() {
 						}
 						try {
 							$nc(subscriber)->onNext(dsts);
-						} catch ($Throwable&) {
-							$var($Throwable, t, $catch());
+						} catch ($Throwable& t) {
 							$nc(this->connection$)->dropDataFrame(df);
 							$throw(t);
 						}
@@ -955,12 +937,11 @@ void Stream::schedule() {
 						goto $finally;
 					}
 				}
-			} catch ($Throwable&) {
-				$var($Throwable, throwable, $catch());
+			} catch ($Throwable& throwable) {
 				$nc(this->errorRef)->compareAndSet(nullptr, throwable);
 			}
-		} catch ($Throwable&) {
-			$assign(var$0, $catch());
+		} catch ($Throwable& var$2) {
+			$assign(var$0, var$2);
 		} $finally: {
 			if ($nc(this->sched)->isStopped()) {
 				drainInputQueue();
@@ -977,7 +958,7 @@ void Stream::schedule() {
 	if (t != nullptr) {
 		$nc(this->sched)->stop();
 		{
-			$var($Throwable, var$2, nullptr);
+			$var($Throwable, var$3, nullptr);
 			try {
 				try {
 					if (!onCompleteCalled) {
@@ -988,18 +969,17 @@ void Stream::schedule() {
 					} else if ($nc(this->debug)->on()) {
 						$nc(this->debug)->log("already completed: dropping error %s"_s, $$new($ObjectArray, {$of(t)}));
 					}
-				} catch ($Throwable&) {
-					$var($Throwable, x, $catch());
+				} catch ($Throwable& x) {
 					$Log::logError("Subscriber::onError threw exception: {0}"_s, $$new($ObjectArray, {$of(t)}));
 				}
-			} catch ($Throwable&) {
-				$assign(var$2, $catch());
+			} catch ($Throwable& var$4) {
+				$assign(var$3, var$4);
 			} /*finally*/ {
 				cancelImpl(t);
 				drainInputQueue();
 			}
-			if (var$2 != nullptr) {
-				$throw(var$2);
+			if (var$3 != nullptr) {
+				$throw(var$3);
 			}
 		}
 	}
@@ -1052,8 +1032,7 @@ $CompletableFuture* Stream::readBodyAsync($HttpResponse$BodyHandler* handler, bo
 			$assign(cf, $cast($CompletableFuture, $nc(cf)->whenComplete(static_cast<$BiConsumer*>($$new(Stream$$Lambda$lambda$readBodyAsync$0$4, pg)))));
 		}
 		return cf;
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		cancelImpl(t);
 		return $MinimalFuture::failedFuture(t);
 	}
@@ -1272,8 +1251,8 @@ void Stream::handleReset($ResetFrame* frame, $Flow$Subscriber* subscriber) {
 				if (this->responseBodyCF != nullptr) {
 					$nc(this->responseBodyCF)->completeExceptionally($cast($Throwable, $($nc(this->errorRef)->get())));
 				}
-			} catch ($Throwable&) {
-				$assign(var$0, $catch());
+			} catch ($Throwable& var$1) {
+				$assign(var$0, var$1);
 			} /*finally*/ {
 				$nc(this->connection$)->decrementStreamsCount(this->streamid);
 				$nc(this->connection$)->closeStream(this->streamid);
@@ -1328,8 +1307,7 @@ void Stream::incoming_pushPromise($HttpRequestImpl* pushRequest, $Stream$PushedS
 	try {
 		$assign(acceptor, $nc(pushGroup)->acceptPushRequest(pushRequest));
 		accepted = $nc(acceptor)->accepted();
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		if ($nc(this->debug)->on()) {
 			$nc(this->debug)->log("PushPromiseHandler::applyPushPromise threw exception %s"_s, $$new($ObjectArray, {$of(t)}));
 		}
@@ -1525,8 +1503,7 @@ $CompletableFuture* Stream::ignoreBody() {
 	try {
 		$nc(this->connection$)->resetStream(this->streamid, $ResetFrame::STREAM_CLOSED);
 		return $MinimalFuture::completedFuture(nullptr);
-	} catch ($Throwable&) {
-		$var($Throwable, e, $catch());
+	} catch ($Throwable& e) {
 		$Log::logTrace("Error resetting stream {0}"_s, $$new($ObjectArray, {$($of(e->toString()))}));
 		return $MinimalFuture::failedFuture(e);
 	}
@@ -1661,12 +1638,11 @@ $CompletableFuture* Stream::sendBodyImpl() {
 	try {
 		if (this->requestPublisher != nullptr) {
 			$var($Stream$RequestSubscriber, subscriber, $new($Stream$RequestSubscriber, this, this->requestContentLen));
-			$nc(this->requestPublisher)->subscribe(($assignField(this, requestSubscriber, subscriber)));
+			$nc(this->requestPublisher)->subscribe(($set(this, requestSubscriber, subscriber)));
 		} else {
 			$nc(this->requestBodyCF)->complete(nullptr);
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, t, $catch());
+	} catch ($Throwable& t) {
 		cancelImpl(t);
 		$nc(this->requestBodyCF)->completeExceptionally(t);
 	}
@@ -1760,8 +1736,7 @@ void Stream::cancelImpl($Throwable* e$renamed) {
 				sendCancelStreamFrame();
 			}
 		}
-	} catch ($Throwable&) {
-		$var($Throwable, ex, $catch());
+	} catch ($Throwable& ex) {
 		$Log::logError(ex);
 	}
 }
@@ -1874,8 +1849,7 @@ void clinit$Stream($Class* class$) {
 			$assignStatic(Stream::STREAM_STATE, $nc($($MethodHandles::lookup()))->findVarHandle(Stream::class$, "streamState"_s, $Integer::TYPE));
 			$init($Boolean);
 			$assignStatic(Stream::DEREGISTERED, $nc($($MethodHandles::lookup()))->findVarHandle(Stream::class$, "deRegistered"_s, $Boolean::TYPE));
-		} catch ($Exception&) {
-			$var($Exception, x, $catch());
+		} catch ($Exception& x) {
 			$throwNew($ExceptionInInitializerError, static_cast<$Throwable*>(x));
 		}
 	}

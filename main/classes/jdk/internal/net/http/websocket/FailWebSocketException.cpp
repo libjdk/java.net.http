@@ -1,14 +1,5 @@
 #include <jdk/internal/net/http/websocket/FailWebSocketException.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/RuntimeException.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jcpp.h>
 
 using $ClassInfo = ::java::lang::ClassInfo;
@@ -69,16 +60,10 @@ FailWebSocketException* FailWebSocketException::initCause($Throwable* cause) {
 FailWebSocketException::FailWebSocketException() {
 }
 
-FailWebSocketException::FailWebSocketException(const FailWebSocketException& e) {
+FailWebSocketException::FailWebSocketException(const FailWebSocketException& e) : $RuntimeException(e) {
 }
 
-FailWebSocketException FailWebSocketException::wrapper$() {
-	$pendingException(this);
-	return *this;
-}
-
-void FailWebSocketException::throwWrapper$() {
-	$pendingException(this);
+void FailWebSocketException::throw$() {
 	throw *this;
 }
 

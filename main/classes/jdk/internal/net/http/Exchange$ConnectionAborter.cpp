@@ -1,14 +1,5 @@
 #include <jdk/internal/net/http/Exchange$ConnectionAborter.h>
 
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/Throwable.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <jdk/internal/net/http/Exchange.h>
 #include <jdk/internal/net/http/HttpConnection.h>
 #include <jcpp.h>
@@ -81,8 +72,7 @@ void Exchange$ConnectionAborter::closeConnection() {
 	if (connection != nullptr) {
 		try {
 			connection->close();
-		} catch ($Throwable&) {
-			$catch();
+		} catch ($Throwable& t) {
 		}
 	}
 }

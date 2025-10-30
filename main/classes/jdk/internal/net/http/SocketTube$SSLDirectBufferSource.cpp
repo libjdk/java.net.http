@@ -1,14 +1,6 @@
 #include <jdk/internal/net/http/SocketTube$SSLDirectBufferSource.h>
 
 #include <java/lang/AssertionError.h>
-#include <java/lang/Class.h>
-#include <java/lang/ClassInfo.h>
-#include <java/lang/FieldInfo.h>
-#include <java/lang/InnerClassInfo.h>
-#include <java/lang/MethodInfo.h>
-#include <java/lang/String.h>
-#include <java/lang/reflect/Constructor.h>
-#include <java/lang/reflect/Method.h>
 #include <java/nio/ByteBuffer.h>
 #include <java/util/List.h>
 #include <java/util/Objects.h>
@@ -91,7 +83,7 @@ $ByteBuffer* SocketTube$SSLDirectBufferSource::getBuffer() {
 	}
 	$var($ByteBuffer, buf, this->current);
 	if (buf == nullptr) {
-		$assign(buf, ($assignField(this, current, $cast($ByteBuffer, $nc(this->factory)->get()))));
+		$assign(buf, ($set(this, current, $cast($ByteBuffer, $nc(this->factory)->get()))));
 	}
 	if (!SocketTube$SSLDirectBufferSource::$assertionsDisabled && !$nc(buf)->hasRemaining()) {
 		$throwNew($AssertionError);
