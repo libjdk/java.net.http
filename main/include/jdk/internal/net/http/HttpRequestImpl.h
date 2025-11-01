@@ -78,7 +78,6 @@ class $import HttpRequestImpl : public ::java::net::http::HttpRequest, public ::
 	$class(HttpRequestImpl, 0, ::java::net::http::HttpRequest, ::jdk::internal::net::http::websocket::WebSocketRequest)
 public:
 	HttpRequestImpl();
-	virtual ::java::lang::Object0* toObject0$() const override {return (::java::lang::Object0*)(void*)this;}
 	virtual $Object* clone() override;
 	virtual bool equals(Object$* obj) override;
 	virtual void finalize() override;

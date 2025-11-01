@@ -28,7 +28,6 @@ namespace jdk {
 class $import FlowTube : public ::java::util::concurrent::Flow$Publisher, public ::java::util::concurrent::Flow$Subscriber {
 	$interface(FlowTube, $NO_CLASS_INIT, ::java::util::concurrent::Flow$Publisher, ::java::util::concurrent::Flow$Subscriber)
 public:
-	virtual ::java::lang::Object0* toObject0$() const override {return (::java::lang::Object0*)(void*)this;}
 	static ::jdk::internal::net::http::common::FlowTube$TubePublisher* asTubePublisher(::java::util::concurrent::Flow$Publisher* p);
 	static ::jdk::internal::net::http::common::FlowTube$TubeSubscriber* asTubeSubscriber(::java::util::concurrent::Flow$Subscriber* s);
 	virtual $Object* clone() override;

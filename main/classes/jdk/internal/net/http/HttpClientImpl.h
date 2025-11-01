@@ -134,7 +134,6 @@ class $export HttpClientImpl : public ::java::net::http::HttpClient, public ::jd
 	$class(HttpClientImpl, 0, ::java::net::http::HttpClient, ::jdk::internal::net::http::common::OperationTrackers$Trackable)
 public:
 	HttpClientImpl();
-	virtual ::java::lang::Object0* toObject0$() const override {return (::java::lang::Object0*)(void*)this;}
 	virtual $Object* clone() override;
 	virtual bool equals(Object$* arg0) override;
 	virtual void finalize() override;

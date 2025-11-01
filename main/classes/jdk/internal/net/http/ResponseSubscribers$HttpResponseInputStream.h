@@ -70,7 +70,6 @@ class $export ResponseSubscribers$HttpResponseInputStream : public ::java::io::I
 	$class(ResponseSubscribers$HttpResponseInputStream, 0, ::java::io::InputStream, ::jdk::internal::net::http::ResponseSubscribers$TrustedSubscriber)
 public:
 	ResponseSubscribers$HttpResponseInputStream();
-	virtual ::java::lang::Object0* toObject0$() const override {return (::java::lang::Object0*)(void*)this;}
 	virtual $Object* clone() override;
 	virtual bool equals(Object$* arg0) override;
 	virtual void finalize() override;
